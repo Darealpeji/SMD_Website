@@ -41,7 +41,7 @@ services:
 
   www:
     build: docker
-    container_name: www_smb_project
+    container_name: www_smd_project
     restart: always
     ports:
       - "8000:80"
