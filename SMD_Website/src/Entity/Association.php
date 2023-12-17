@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\AssociationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AssociationRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AssociationRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Le nom doit être unique.')]
 class Association
 {
     #[ORM\Id]
@@ -15,6 +18,8 @@ class Association
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -27,12 +32,25 @@ class Association
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adress = null;
 
+    #[Assert\Regex(
+        pattern: '/^\d{5}([A-Z]{2})?$/i',
+        message: 'Le code postal doit être composé de cinq chiffres, éventuellement suivis de deux lettres.'
+    )]
+    #[Assert\Length(
+        max: 7,
+        maxMessage: 'Le code postal ne doit pas dépasser {{ limit }} caractères.'
+    )]
     #[ORM\Column(length: 7, nullable: true)]
     private ?string $postalCode = null;
 
+    #[Assert\Regex(
+        pattern: '/^(0[1-9]|00[1-9]\d)(\d{2}){4}(\d{2})?$/',
+        message: 'Le numéro de téléphone doit être au format français.'
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
 
+    #[Assert\Email]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
@@ -191,5 +209,22 @@ class Association
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }
