@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SectionRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Le nom doit être unique.')]
 class Section
 {
     #[ORM\Id]
@@ -13,6 +18,8 @@ class Section
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -28,12 +35,28 @@ class Section
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adress = null;
 
+    #[Assert\Regex(
+        pattern: '/^\d{5}([A-Z]{2})?$/i',
+        message: 'Le code postal doit être composé de cinq chiffres, éventuellement suivis de deux lettres.'
+    )]
+    #[Assert\Length(
+        max: 7,
+        maxMessage: 'Le code postal ne doit pas dépasser {{ limit }} caractères.'
+    )]
     #[ORM\Column(length: 7, nullable: true)]
     private ?string $postalCode = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
+    #[Assert\Regex(
+        pattern: '/^(0[1-9]|00[1-9]\d)(\d{2}){4}(\d{2})?$/',
+        message: 'Le numéro de téléphone doit être au format français.'
+    )]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
 
+    #[Assert\Email]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
@@ -49,6 +72,14 @@ class Section
     #[ORM\ManyToOne(inversedBy: 'sections')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Association $association = null;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: NavBarLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $navBarLinks;
+
+    public function __construct()
+    {
+        $this->navBarLinks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,6 +158,18 @@ class Section
         return $this;
     }
 
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
     public function getPhone(): ?string
     {
         return $this->phone;
@@ -195,6 +238,53 @@ class Section
     public function setAssociation(?Association $association): static
     {
         $this->association = $association;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Collection<int, NavBarLink>
+     */
+    public function getNavBarLinks(): Collection
+    {
+        return $this->navBarLinks;
+    }
+
+    public function addNavBarLink(NavBarLink $navBarLink): static
+    {
+        if (!$this->navBarLinks->contains($navBarLink)) {
+            $this->navBarLinks->add($navBarLink);
+            $navBarLink->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNavBarLink(NavBarLink $navBarLink): static
+    {
+        if ($this->navBarLinks->removeElement($navBarLink)) {
+            // set the owning side to null (unless already changed)
+            if ($navBarLink->getSection() === $this) {
+                $navBarLink->setSection(null);
+            }
+        }
 
         return $this;
     }

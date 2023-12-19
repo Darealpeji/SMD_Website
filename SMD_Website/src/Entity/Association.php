@@ -43,6 +43,9 @@ class Association
     #[ORM\Column(length: 7, nullable: true)]
     private ?string $postalCode = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
     #[Assert\Regex(
         pattern: '/^(0[1-9]|00[1-9]\d)(\d{2}){4}(\d{2})?$/',
         message: 'Le numéro de téléphone doit être au format français.'
@@ -63,9 +66,13 @@ class Association
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Section::class, orphanRemoval: true)]
     private Collection $sections;
 
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: NavBarLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $navBarLinks;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->navBarLinks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +140,18 @@ class Association
         return $this;
     }
 
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
     public function getPhone(): ?string
     {
         return $this->phone;
@@ -162,23 +181,9 @@ class Association
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     /**
@@ -211,20 +216,51 @@ class Association
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Collection<int, NavBarLink>
+     */
+    public function getNavBarLinks(): Collection
+    {
+        return $this->navBarLinks;
+    }
+
+    public function addNavBarLink(NavBarLink $navBarLink): static
+    {
+        if (!$this->navBarLinks->contains($navBarLink)) {
+            $this->navBarLinks->add($navBarLink);
+            $navBarLink->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNavBarLink(NavBarLink $navBarLink): static
+    {
+        if ($this->navBarLinks->removeElement($navBarLink)) {
+            // set the owning side to null (unless already changed)
+            if ($navBarLink->getAssociation() === $this) {
+                $navBarLink->setAssociation(null);
+            }
+        }
+
+        return $this;
     }
 }
