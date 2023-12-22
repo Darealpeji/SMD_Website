@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SectionRepository;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
 #[UniqueEntity(fields: ['name'], message: 'Le nom doit être unique.')]
@@ -27,10 +27,7 @@ class Section
     private ?string $motto = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $pathName = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adressName = null;
+    private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adress = null;
@@ -74,11 +71,15 @@ class Section
     private ?Association $association = null;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: NavBarLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $navBarLinks;
+    private $navBarLinks;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $articles;
 
     public function __construct()
     {
         $this->navBarLinks = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,26 +111,14 @@ class Section
         return $this;
     }
 
-    public function getPathName(): ?string
+    public function getSlug(): ?string
     {
-        return $this->pathName;
+        return $this->slug;
     }
 
-    public function setPathName(?string $pathName): static
+    public function setSlug(?string $slug): static
     {
-        $this->pathName = $pathName;
-
-        return $this;
-    }
-
-    public function getAdressName(): ?string
-    {
-        return $this->adressName;
-    }
-
-    public function setAdressName(?string $adressName): static
-    {
-        $this->adressName = $adressName;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -283,6 +272,36 @@ class Section
             // set the owning side to null (unless already changed)
             if ($navBarLink->getSection() === $this) {
                 $navBarLink->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): static
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): static
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getSection() === $this) {
+                $article->setSection(null);
             }
         }
 

@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Section;
 use App\Entity\NavBarLink;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Association;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<NavBarLink>
@@ -21,28 +23,27 @@ class NavBarLinkRepository extends ServiceEntityRepository
         parent::__construct($registry, NavBarLink::class);
     }
 
-//    /**
-//     * @return NavBarLink[] Returns an array of NavBarLink objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getNavBarByAssociation(Association $association)
+    {
+        return $this->createQueryBuilder('nbl')
+            ->select('nbl', 'nbdl')
+            ->leftJoin('nbl.navBarDdLinks', 'nbdl')
+            ->leftJoin('nbl.association', 'a')
+            ->where('nbl.association = :association')
+            ->setParameter('association', $association)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?NavBarLink
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getNavBarBySection(Section $section)
+    {
+        return $this->createQueryBuilder('nbl')
+            ->select('nbl', 'nbdl')
+            ->leftJoin('nbl.navBarDdLinks', 'nbdl')
+            ->leftJoin('nbl.section', 's')
+            ->where('nbl.section = :section')
+            ->setParameter('section', $section)
+            ->getQuery()
+            ->getResult();
+    }
 }

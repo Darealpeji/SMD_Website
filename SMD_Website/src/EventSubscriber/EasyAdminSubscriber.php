@@ -2,9 +2,10 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Article;
 use App\Entity\Section;
-use App\Entity\NavBarLink;
 use App\Entity\Association;
+use App\Entity\ArticleCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
@@ -37,14 +38,26 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         $entityInstance->setCreatedAtValue();
 
-        $navBarLinks = $entityInstance->getNavBarLinks();
-        foreach ($navBarLinks as $navBarLink) {
+        if (method_exists($entityInstance, 'getNavBarLinks')) {
+
+            $navBarLinks = $entityInstance->getNavBarLinks();
             
-            if ($navBarLink->getCreatedAt() === null) {
-                $navBarLink->setCreatedAtValue();
+            foreach ($navBarLinks as $navBarLink) {
+
+                $navBarDdLinks = $navBarLink->getNavBarDdLinks();
+                
+                if ($navBarLink->getCreatedAt() === null) {
+                    $navBarLink->setCreatedAtValue();
+                }
+
+                foreach ($navBarDdLinks as $navBarDdLink) {
+
+                    if ($navBarDdLink->getCreatedAt() === null) {
+                        $navBarDdLink->setCreatedAtValue();
+                    }
+                }
             }
         }
-
     }
 
     public function setUpdatedAtValue(BeforeEntityUpdatedEvent $event): void
@@ -62,35 +75,73 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         }
 
-        $navBarLinks = $entityInstance->getNavBarLinks();
-        foreach ($navBarLinks as $navBarLink) {
+        if (method_exists($entityInstance, 'getNavBarLinks')) {
 
-            $section = $navBarLink->getSection();
-            $association = $navBarLink->getAssociation();
+            $navBarLinks = $entityInstance->getNavBarLinks();
+            
+            foreach ($navBarLinks as $navBarLink) {
 
-            if ($navBarLink->getCreatedAt() === null) {
-                $navBarLink->setCreatedAtValue();
+                $section = $navBarLink->getSection();
+                $association = $navBarLink->getAssociation();
+                $navBarDdLinks = $navBarLink->getNavBarDdLinks();
 
-                if ($section !== null) {
-                    $section->setUpdatedAtValue();
+                if ($navBarLink->getCreatedAt() === null) {
+                    $navBarLink->setCreatedAtValue();
+
+                    if ($section !== null) {
+                        $section->setUpdatedAtValue();
+                    }
+
+                    if ($association !== null) {
+                        $association->setUpdatedAtValue();
+                    }
                 }
 
-                if ($association !== null) {
-                    $association->setUpdatedAtValue();
+                $originalNavBarLink = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarLink);
+
+                if ($this->hasChanges($navBarLink, $originalNavBarLink)) {
+                    $navBarLink->setUpdatedAtValue();
+
+                    if ($section !== null) {
+                        $section->setUpdatedAtValue();
+                    }
+
+                    if ($association !== null) {
+                        $association->setUpdatedAtValue();
+                    }
                 }
-            }
 
-            $originalNavBarLink = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarLink);
+                foreach ($navBarDdLinks as $navBarDdLink) {
 
-            if ($this->hasChanges($navBarLink, $originalNavBarLink)) {
-                $navBarLink->setUpdatedAtValue();
+                    if ($navBarDdLink->getCreatedAt() === null) {
+                        $navBarDdLink->setCreatedAtValue();
+        
+                        if ($section !== null) {
+                            $section->setUpdatedAtValue();
+                        }
+        
+                        if ($association !== null) {
+                            $association->setUpdatedAtValue();
+                        }
 
-                if ($section !== null) {
-                    $section->setUpdatedAtValue();
-                }
+                        $navBarLink->setUpdatedAtValue();
+                    }
 
-                if ($association !== null) {
-                    $association->setUpdatedAtValue();
+                    $originalNavBarDdLink = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarDdLink);
+
+                    if ($this->hasChanges($navBarDdLink, $originalNavBarDdLink)) {
+                        $navBarDdLink->setUpdatedAtValue();
+
+                        if ($section !== null) {
+                            $section->setUpdatedAtValue();
+                        }
+
+                        if ($association !== null) {
+                            $association->setUpdatedAtValue();
+                        }
+
+                        $navBarLink->setUpdatedAtValue();
+                    }
                 }
             }
         }
@@ -99,8 +150,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     private function supportsEntity($entity): bool
     {
         return $entity instanceof Association 
-            || $entity instanceof Section 
-            || $entity instanceof NavBarLink;
+            || $entity instanceof Section
+            || $entity instanceof Article
+            || $entity instanceof ArticleCategory;
     }
 
     private function hasChanges($entity, $originalData): bool

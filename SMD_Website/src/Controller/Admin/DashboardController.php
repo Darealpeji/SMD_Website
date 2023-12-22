@@ -2,9 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\NavBarLink;
+use App\Entity\Article;
 use App\Entity\Section;
+use App\Entity\NavBarLink;
 use App\Entity\Association;
+use App\Entity\NavBarDdLink;
+use App\Entity\ArticleCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -52,7 +55,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section("Gestion des Sections");
         yield MenuItem::linkToCrud('Sections', 'fas fa-building', Section::class);
 
+        yield MenuItem::section("Gestion des Articles");
+        yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', Article::class);
+        yield MenuItem::linkToCrud('Catégorie Actualités', 'fas fa-folder', ArticleCategory::class);
+
         yield MenuItem::section("Gestion des Liens");
-        yield MenuItem::linkToCrud('Liens de la Barre de Navigation', 'fas fa-building', NavBarLink::class);
+        yield MenuItem::linkToCrud('Menus de la Barre de Navigation', 'fas fa-building', NavBarLink::class);
+        yield MenuItem::linkToCrud('Sous-Menus de la Barre de Navigation', 'fas fa-building', NavBarDdLink::class);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Association;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Controller\Admin\NavBarLinkCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -31,6 +32,7 @@ class AssociationCrudController extends AbstractCrudController
             ->setPageTitle('edit', "Modification de l'%entity_label_singular%")
             ->setDefaultSort(['name' => 'ASC'])
             ->showEntityActionsInlined()
+            ->hideNullValues()
             ->renderContentMaximized();
     }
 
@@ -92,22 +94,22 @@ class AssociationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            FormField::addTab('Données Générales'),
+            
             FormField::addFieldset('Informations Générales'),
             TextField::new('name', "Nom de l'Association :")->setColumns(6),
-            FormField::addFieldset(),
             TextField::new('motto', 'Devise :')->setColumns(6)->hideOnIndex(),
 
             FormField::addFieldset('Coordonnées'),
-            TextField::new('adressName', "Titre de l'adresse :")->setColumns(2)->hideOnIndex(),
-            TextField::new('adress', 'Adresse :')->setColumns(4)->hideOnIndex(),
+            TextField::new('adress', 'Adresse :')->setColumns(6)->hideOnIndex(),
             FormField::addFieldset(),
             TextField::new('postalCode', 'Code Postal :')->setColumns(2)->hideOnIndex(),
             TextField::new('city', 'Ville :')->setColumns(4)->hideOnIndex(),
-            FormField::addFieldset(),
             TextField::new('phone', 'Téléphone :')->setColumns(2)->hideOnIndex(),
             TextField::new('mail', 'Email :')->setColumns(4)->hideOnIndex(),
-            FormField::addFieldset('Liens'),
-            CollectionField::new('navBarLinks', 'Barre de Navigation :')->useEntryCrudForm(NavBarLinkCrudController::class)->setColumns(12)->hideOnIndex(),
+
+            FormField::addTab('Barre de Navigation'),
+            CollectionField::new('navBarLinks', 'Barre de Navigation :')->useEntryCrudForm(NavBarLinkCrudController::class)->setColumns(8)->hideOnIndex(),
 
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),

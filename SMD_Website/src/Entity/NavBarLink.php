@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\NavBarLinkRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\NavBarLinkRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: NavBarLinkRepository::class)]
 class NavBarLink
@@ -18,10 +20,10 @@ class NavBarLink
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $linkTitle = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $pathName = null;
+    private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
     private ?string $path = null;
@@ -41,6 +43,14 @@ class NavBarLink
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'navBarLink', targetEntity: NavBarDdLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $navBarDdLinks;
+
+    public function __construct()
+    {
+        $this->navBarDdLinks = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,26 +68,26 @@ class NavBarLink
         return $this;
     }
 
-    public function getLinkTitle(): ?string
+    public function getTitle(): ?string
     {
-        return $this->linkTitle;
+        return $this->title;
     }
 
-    public function setLinkTitle(string $linkTitle): static
+    public function setTitle(string $title): static
     {
-        $this->linkTitle = $linkTitle;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getPathName(): ?string
+    public function getSlug(): ?string
     {
-        return $this->pathName;
+        return $this->slug;
     }
 
-    public function setPathName(string $pathName): static
+    public function setSlug(string $slug): static
     {
-        $this->pathName = $pathName;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -146,7 +156,6 @@ class NavBarLink
         $this->createdAt = new \DateTimeImmutable();
     }
 
-
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void
@@ -157,5 +166,35 @@ class NavBarLink
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, NavBarDdLink>
+     */
+    public function getNavBarDdLinks(): Collection
+    {
+        return $this->navBarDdLinks;
+    }
+
+    public function addNavBarDdLink(NavBarDdLink $navBarDdLink): static
+    {
+        if (!$this->navBarDdLinks->contains($navBarDdLink)) {
+            $this->navBarDdLinks->add($navBarDdLink);
+            $navBarDdLink->setNavBarLink($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNavBarDdLink(NavBarDdLink $navBarDdLink): static
+    {
+        if ($this->navBarDdLinks->removeElement($navBarDdLink)) {
+            // set the owning side to null (unless already changed)
+            if ($navBarDdLink->getNavBarLink() === $this) {
+                $navBarDdLink->setNavBarLink(null);
+            }
+        }
+
+        return $this;
     }
 }

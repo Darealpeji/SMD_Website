@@ -35,11 +35,9 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
 RUN curl -sS https://getcomposer.org/installer | php -- \
     && mv composer.phar /usr/local/bin/composer
 
-# Installation de Node.js
-RUN curl -SLO https://deb.nodesource.com/nsolid_setup_deb.sh \
-    && chmod 500 nsolid_setup_deb.sh \
-    && ./nsolid_setup_deb.sh 20 \
-    && apt-get install nodejs -y
+# Téléchargement et installation de Node.js et NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
 
 # Installation du CLI Symfony
 RUN curl -sS https://get.symfony.com/cli/installer | bash \

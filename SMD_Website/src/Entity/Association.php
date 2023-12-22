@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AssociationRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AssociationRepository::class)]
 #[UniqueEntity(fields: ['name'], message: 'Le nom doit être unique.')]
@@ -25,9 +25,6 @@ class Association
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $motto = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adressName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adress = null;
@@ -67,12 +64,16 @@ class Association
     private Collection $sections;
 
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: NavBarLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $navBarLinks;
+    private $navBarLinks;
+
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $articles;
 
     public function __construct()
     {
         $this->sections = new ArrayCollection();
         $this->navBarLinks = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,18 +101,6 @@ class Association
     public function setMotto(?string $motto): static
     {
         $this->motto = $motto;
-
-        return $this;
-    }
-
-    public function getAdressName(): ?string
-    {
-        return $this->adressName;
-    }
-
-    public function setAdressName(?string $adressName): static
-    {
-        $this->adressName = $adressName;
 
         return $this;
     }
@@ -181,9 +170,22 @@ class Association
         return $this->createdAt;
     }
 
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     /**
@@ -216,24 +218,6 @@ class Association
         return $this;
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
-
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new \DateTimeImmutable();
-    }
-
-    public function __toString()
-    {
-        return $this->name;
-    }
-
     /**
      * @return Collection<int, NavBarLink>
      */
@@ -258,6 +242,41 @@ class Association
             // set the owning side to null (unless already changed)
             if ($navBarLink->getAssociation() === $this) {
                 $navBarLink->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): static
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): static
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getAssociation() === $this) {
+                $article->setAssociation(null);
             }
         }
 
