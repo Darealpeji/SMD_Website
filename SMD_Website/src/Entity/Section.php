@@ -76,10 +76,14 @@ class Section
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $articles;
 
+    #[ORM\ManyToMany(targetEntity: ActivityPlace::class, mappedBy: 'sections')]
+    private Collection $activityPlaces;
+
     public function __construct()
     {
         $this->navBarLinks = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->activityPlaces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -303,6 +307,33 @@ class Section
             if ($article->getSection() === $this) {
                 $article->setSection(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ActivityPlace>
+     */
+    public function getActivityPlaces(): Collection
+    {
+        return $this->activityPlaces;
+    }
+
+    public function addActivityPlace(ActivityPlace $activityPlace): static
+    {
+        if (!$this->activityPlaces->contains($activityPlace)) {
+            $this->activityPlaces->add($activityPlace);
+            $activityPlace->addSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivityPlace(ActivityPlace $activityPlace): static
+    {
+        if ($this->activityPlaces->removeElement($activityPlace)) {
+            $activityPlace->removeSection($this);
         }
 
         return $this;

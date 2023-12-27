@@ -54,7 +54,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
         $infos_pratiques_petanque->setName("Pétanque - Infos Pratiques");
         $infos_pratiques_petanque->setTitle("Infos Pratiques");
         $infos_pratiques_petanque->setSlug($this->slugify->slugify($infos_pratiques_petanque->getTitle()));
-        $infos_pratiques_petanque->setRouteName('');
+        $infos_pratiques_petanque->setRouteName('useful_informations_section');
         $infos_pratiques_petanque->setRanking(3);
         $infos_pratiques_petanque->setSection($this->getReference(AssoSectionsFixtures::PETANQUE));
         $infos_pratiques_petanque->setCreatedAtValue();

@@ -152,7 +152,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         return $entity instanceof Association 
             || $entity instanceof Section
             || $entity instanceof Article
-            || $entity instanceof ArticleCategory;
+            || $entity instanceof ArticleCategory
+            || $entity instanceof ActivityPlace;
     }
 
     private function hasChanges($entity, $originalData): bool

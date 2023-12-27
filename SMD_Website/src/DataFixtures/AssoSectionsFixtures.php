@@ -2,14 +2,16 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Association;
 use App\Entity\Section;
 use Cocur\Slugify\Slugify;
+use App\Entity\Association;
 use Doctrine\Persistence\ObjectManager;
 use App\Repository\AssociationRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\ActivityPlacesFixtures;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class AssoSectionsFixtures extends Fixture
+class AssoSectionsFixtures extends Fixture implements DependentFixtureInterface
 {
     public const ASSOCIATION = 'association';
     public const BASKET = 'basket';
@@ -43,6 +45,10 @@ class AssoSectionsFixtures extends Fixture
         $association->setcity("Nantes");
         $association->setPhone("0981393509");
         $association->setMail("accueil@saintmedard-nantes.fr");
+        $association->addActivityPlace($this->getReference(ActivityPlacesFixtures::STADE_RENE_CHEVALIER));
+        $association->addActivityPlace($this->getReference(ActivityPlacesFixtures::PLAINE_JEUX_AUDUBON));
+        $association->addActivityPlace($this->getReference(ActivityPlacesFixtures::TERRAIN_LOUETTRIE));
+        $association->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_DOULON));
         $association->setCreatedAtValue();
 
         $manager->persist($association);
@@ -63,6 +69,11 @@ class AssoSectionsFixtures extends Fixture
         $basket->setSlug($this->slugify->slugify($basket->getName()));
         $basket->setScoreNCoCode("");
         $basket->setAssociation($association);
+        $basket->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_DOULON));
+        $basket->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_TOUTES_AIDES));
+        $basket->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_COLINIERE));
+        $basket->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_RAPHAEL_LEBEL));
+        $basket->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_CIFAM));
         $basket->setCreatedAtValue();
 
         $manager->persist($basket);
@@ -80,6 +91,7 @@ class AssoSectionsFixtures extends Fixture
         $chorale->setSlug($this->slugify->slugify($chorale->getName()));
         $chorale->setScoreNCoCode("");
         $chorale->setAssociation($association);
+        $chorale->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_ETIENNE_LANDAIS));
         $chorale->setCreatedAtValue();
 
         $manager->persist($chorale);
@@ -97,6 +109,7 @@ class AssoSectionsFixtures extends Fixture
         $danse->setSlug($this->slugify->slugify($danse->getName()));
         $danse->setScoreNCoCode("");
         $danse->setAssociation($association);
+        $danse->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_DANSE));
         $danse->setCreatedAtValue();
 
         $manager->persist($danse);
@@ -114,6 +127,7 @@ class AssoSectionsFixtures extends Fixture
         $football->setSlug($this->slugify->slugify($football->getName()));
         $football->setScoreNCoCode("");
         $football->setAssociation($association);
+        $football->addActivityPlace($this->getReference(ActivityPlacesFixtures::PLAINE_JEUX_AUDUBON));
         $football->setCreatedAtValue();
 
         $manager->persist($football);
@@ -131,6 +145,7 @@ class AssoSectionsFixtures extends Fixture
         $gym_sportive->setSlug($this->slugify->slugify($gym_sportive->getName()));
         $gym_sportive->setScoreNCoCode("");
         $gym_sportive->setAssociation($association);
+        $gym_sportive->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_HENRI_LOIRET));
         $gym_sportive->setCreatedAtValue();
 
         $manager->persist($gym_sportive);
@@ -148,6 +163,9 @@ class AssoSectionsFixtures extends Fixture
         $gym_tonique->setSlug($this->slugify->slugify($gym_tonique->getName()));
         $gym_tonique->setScoreNCoCode("");
         $gym_tonique->setAssociation($association);
+        $gym_tonique->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_ETIENNE_LANDAIS));
+        $gym_tonique->addActivityPlace($this->getReference(ActivityPlacesFixtures::GYMNASE_TOUTES_AIDES));
+        $gym_tonique->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_DANSE));
         $gym_tonique->setCreatedAtValue();
 
         $manager->persist($gym_tonique);
@@ -165,6 +183,7 @@ class AssoSectionsFixtures extends Fixture
         $loisirs->setSlug($this->slugify->slugify($loisirs->getName()));
         $loisirs->setScoreNCoCode("");
         $loisirs->setAssociation($association);
+        $loisirs->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_ETIENNE_LANDAIS));
         $loisirs->setCreatedAtValue();
 
         $manager->persist($loisirs);
@@ -182,6 +201,7 @@ class AssoSectionsFixtures extends Fixture
         $petanque->setSlug($this->slugify->slugify($petanque->getName()));
         $petanque->setScoreNCoCode("");
         $petanque->setAssociation($association);
+        $petanque->addActivityPlace($this->getReference(ActivityPlacesFixtures::TERRAIN_LOUETTRIE));
         $petanque->setCreatedAtValue();
 
         $manager->persist($petanque);
@@ -199,6 +219,7 @@ class AssoSectionsFixtures extends Fixture
         $tennis_de_table->setSlug($this->slugify->slugify($tennis_de_table->getName()));
         $tennis_de_table->setScoreNCoCode("");
         $tennis_de_table->setAssociation($association);
+        $tennis_de_table->addActivityPlace($this->getReference(ActivityPlacesFixtures::SALLE_ROGER_CORBARD));
         $tennis_de_table->setCreatedAtValue();
 
         $manager->persist($tennis_de_table);
@@ -215,5 +236,12 @@ class AssoSectionsFixtures extends Fixture
         $this->addReference(self::LOISIRS, $loisirs);
         $this->addReference(self::PETANQUE, $petanque);
         $this->addReference(self::TENNIS_DE_TABLE, $tennis_de_table);
+    }
+
+    public function getDependencies()
+    {
+        return [
+            ActivityPlacesFixtures::class,
+        ];
     }
 }

@@ -2,37 +2,34 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Section;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\ActivityPlace;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use App\Controller\Admin\NavBarLinkCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class SectionCrudController extends AbstractCrudController
+class ActivityPlaceCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Section::class;
+        return ActivityPlace::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInPlural("Sections")
-            ->setEntityLabelInSingular("Section")
-            ->setPageTitle('index', "Gestion de la %entity_label_singular%")
-            ->setPageTitle('new', "Création d'une %entity_label_singular%")
-            ->setPageTitle('detail', "Détail de la %entity_label_singular%")
-            ->setPageTitle('edit', "Modification de la %entity_label_singular%")
+            ->setEntityLabelInPlural("Lieux d'Activités")
+            ->setEntityLabelInSingular("Lieu d'Activité")
+            ->setPageTitle('index', "Gestion des %entity_label_plural%")
+            ->setPageTitle('new', "Création d'un %entity_label_singular%")
+            ->setPageTitle('detail', "Détail du %entity_label_singular%")
+            ->setPageTitle('edit', "Modification du %entity_label_singular%")
             ->setDefaultSort(['name' => 'ASC'])
             ->showEntityActionsInlined()
             ->hideNullValues()
@@ -97,34 +94,15 @@ class SectionCrudController extends AbstractCrudController
     {
         return [
             IntegerField::new('id', 'ID :')->onlyOnIndex(),
-            
-            FormField::addTab('Données Générales'),
-
             FormField::addFieldset('Informations Générales'),
-            TextField::new('name', "Nom de la Section :")->setColumns(3),
-            AssociationField::new('association', 'Association :')->setColumns(3)->hideOnIndex(),
-            TextField::new('motto', 'Devise :')->setColumns(6)->hideOnIndex(),
-
-            FormField::addFieldset('Coordonnées'),
+            IntegerField::new('name', 'Nom du Lieu :')->setColumns(6),
+            FormField::addRow(),
             TextField::new('adress', 'Adresse :')->setColumns(6)->hideOnIndex(),
-            FormField::addFieldset(),
             TextField::new('postalCode', 'Code Postal :')->setColumns(2)->hideOnIndex(),
             TextField::new('city', 'Ville :')->setColumns(4)->hideOnIndex(),
-            TextField::new('phone', 'Téléphone :')->setColumns(2)->hideOnIndex(),
-            TextField::new('mail', 'Email :')->setColumns(4)->hideOnIndex(),
-
-            FormField::addFieldset('Liens'),
-            SlugField::new('slug', "Nom dans l'url :")->setTargetFieldName('name')->setColumns(6)->hideOnIndex()
-            ->setUnlockConfirmationMessage(
-                "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"),
-            TextField::new('scoreNCoCode', "Lien Score'n'Co :")->setColumns(6)->hideOnIndex(),
+            TextField::new('googleMapLink', 'Lien Google Map :')->setColumns(6)->hideOnIndex(),
+            TextEditorField::new('recommendedRoute', "Itinéraire(s) Conseillé(s) :")->setColumns(12)->hideOnIndex(),
             
-            FormField::addTab('Barre de Navigation'),
-            CollectionField::new('navBarLinks', 'Barre de Navigation :')->useEntryCrudForm(NavBarLinkCrudController::class)->setColumns(8)->hideOnIndex(),
-
-            FormField::addTab('Infos Pratiques'),
-            AssociationField::new('activityPlaces', "Lieu(x) d'activités :")->setColumns(6)->hideOnIndex(),
-
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),
         ];

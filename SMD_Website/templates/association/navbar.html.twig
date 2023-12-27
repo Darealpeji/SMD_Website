@@ -15,7 +15,7 @@
                                 {{ navBarDdLink.name }}
                             {% else %}
                                 {% if navBarDdLink.routeName == 'home_section' %}
-                                    <a href="{{ path(navBarDdLink.routeName, {'slug': navBarDdLink.slug}) }}">{{ navBarDdLink.name }}</a>
+                                    <a href="{{ path(navBarDdLink.routeName, {'slugSection': navBarDdLink.slug}) }}">{{ navBarDdLink.name }}</a>
                                 {% else %}
                                     <li><a href="{{ path(navBarDdLink.routeName) }}">{{ navBarDdLink.name }}</a></li>
                                 {% endif %}

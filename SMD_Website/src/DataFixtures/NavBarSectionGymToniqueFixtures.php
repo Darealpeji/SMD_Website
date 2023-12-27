@@ -66,7 +66,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
         $infos_pratiques_gym_tonique->setName("Gym Tonique - Infos Pratiques");
         $infos_pratiques_gym_tonique->setTitle("Infos Pratiques");
         $infos_pratiques_gym_tonique->setSlug($this->slugify->slugify($infos_pratiques_gym_tonique->getTitle()));
-        $infos_pratiques_gym_tonique->setRouteName('');
+        $infos_pratiques_gym_tonique->setRouteName('useful_informations_section');
         $infos_pratiques_gym_tonique->setRanking(4);
         $infos_pratiques_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $infos_pratiques_gym_tonique->setCreatedAtValue();

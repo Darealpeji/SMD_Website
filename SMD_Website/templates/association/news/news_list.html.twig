@@ -10,7 +10,7 @@
     <ul>
         {% if articles is defined %}
             {% for article in association.articles %}
-                <li><a href="{{ path('detail_news_association', {'slug': article.slug, 'id': article.id}) }}">{{ article.title }} - {{ article.articleCategory }}</a></li>
+                <li><a href="{{ path('detail_news_association', {'slugArticle': article.slug, 'idArticle': article.id}) }}">{{ article.title }} - {{ article.articleCategory }}</a></li>
             {% endfor %}
         {% else %}
             <li>Aucun Article disponible</li>

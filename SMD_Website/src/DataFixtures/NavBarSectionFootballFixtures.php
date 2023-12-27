@@ -79,7 +79,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
         $infos_pratiques_football->setName("Football - Infos Pratiques");
         $infos_pratiques_football->setTitle("Infos Pratiques");
         $infos_pratiques_football->setSlug($this->slugify->slugify($infos_pratiques_football->getTitle()));
-        $infos_pratiques_football->setRouteName('');
+        $infos_pratiques_football->setRouteName('useful_informations_section');
         $infos_pratiques_football->setRanking(6);
         $infos_pratiques_football->setSection($this->getReference(AssoSectionsFixtures::FOOTBALL));
         $infos_pratiques_football->setCreatedAtValue();

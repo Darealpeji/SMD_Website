@@ -66,7 +66,7 @@ class NavBarSectionChoraleFixtures extends Fixture implements DependentFixtureIn
         $infos_pratiques_chorale->setName("Chorale - Infos Pratiques");
         $infos_pratiques_chorale->setTitle("Infos Pratiques");
         $infos_pratiques_chorale->setSlug($this->slugify->slugify($infos_pratiques_chorale->getTitle()));
-        $infos_pratiques_chorale->setRouteName('');
+        $infos_pratiques_chorale->setRouteName('useful_informations_section');
         $infos_pratiques_chorale->setRanking(4);
         $infos_pratiques_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
         $infos_pratiques_chorale->setCreatedAtValue();

@@ -66,7 +66,7 @@ class NavBarAssociationFixtures extends Fixture implements DependentFixtureInter
         $infos_pratiques_association->setName("Association - Infos Pratiques");
         $infos_pratiques_association->setTitle("Infos Pratiques");
         $infos_pratiques_association->setSlug($this->slugify->slugify($infos_pratiques_association->getTitle()));
-        $infos_pratiques_association->setRouteName('');
+        $infos_pratiques_association->setRouteName('useful_informations_association');
         $infos_pratiques_association->setRanking(4);
         $infos_pratiques_association->setAssociation($this->getReference(AssoSectionsFixtures::ASSOCIATION));
         $infos_pratiques_association->setCreatedAtValue();

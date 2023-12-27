@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association Activity Places{% endblock %}
+
+{% block body %}
+    <h1>Lieux d'Activités {{association.name}}</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+    <ul>
+        {% if activityPlaces is defined %}
+            {% for activityPlace in association.activityPlaces %}
+                <li>{{ activityPlace.name }} - {{ activityPlace.adress }} - {{ activityPlace.postalCode }} - {{ activityPlace.city }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>Aucun Lieu d'Activités disponible</li>
+        {% endif %}
+    </ul>
+
+{% endblock %}

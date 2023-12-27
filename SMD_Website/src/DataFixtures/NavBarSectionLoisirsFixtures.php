@@ -54,7 +54,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
         $infos_pratiques_loisirs->setName("Loisirs - Infos Pratiques");
         $infos_pratiques_loisirs->setTitle("Infos Pratiques");
         $infos_pratiques_loisirs->setSlug($this->slugify->slugify($infos_pratiques_loisirs->getTitle()));
-        $infos_pratiques_loisirs->setRouteName('');
+        $infos_pratiques_loisirs->setRouteName('useful_informations_section');
         $infos_pratiques_loisirs->setRanking(3);
         $infos_pratiques_loisirs->setSection($this->getReference(AssoSectionsFixtures::LOISIRS));
         $infos_pratiques_loisirs->setCreatedAtValue();

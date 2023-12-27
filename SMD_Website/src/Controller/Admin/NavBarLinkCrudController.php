@@ -54,7 +54,7 @@ class NavBarLinkCrudController extends AbstractCrudController
             ->setUnlockConfirmationMessage(
                 "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser")->hideOnIndex(),
             FormField::addRow(),
-            TextField::new('url', "Adresse de l'url :")->setColumns(12)->hideOnIndex(),
+            TextField::new('routeName', "Nom de la Route :")->setColumns(12)->hideOnIndex(),
             
             CollectionField::new('navBarDdLinks', 'Sous-Menus :')->useEntryCrudForm(NavBarDdLinkCrudController::class)->setColumns(12)->hideOnIndex(),
 

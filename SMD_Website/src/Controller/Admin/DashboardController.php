@@ -7,6 +7,7 @@ use App\Entity\Section;
 use App\Entity\NavBarLink;
 use App\Entity\Association;
 use App\Entity\NavBarDdLink;
+use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,8 +60,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', Article::class);
         yield MenuItem::linkToCrud('Catégorie Actualités', 'fas fa-folder', ArticleCategory::class);
 
-        yield MenuItem::section("Gestion des Liens");
-        yield MenuItem::linkToCrud('Menus de la Barre de Navigation', 'fas fa-building', NavBarLink::class);
-        yield MenuItem::linkToCrud('Sous-Menus de la Barre de Navigation', 'fas fa-building', NavBarDdLink::class);
+        yield MenuItem::section("Paramétrage");
+        yield MenuItem::linkToCrud("Lieux d'Activités", 'fas fa-map-location-dot', ActivityPlace::class);
     }
 }

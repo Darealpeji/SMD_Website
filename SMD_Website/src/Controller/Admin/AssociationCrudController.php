@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AssociationCrudController extends AbstractCrudController
@@ -110,6 +111,9 @@ class AssociationCrudController extends AbstractCrudController
 
             FormField::addTab('Barre de Navigation'),
             CollectionField::new('navBarLinks', 'Barre de Navigation :')->useEntryCrudForm(NavBarLinkCrudController::class)->setColumns(8)->hideOnIndex(),
+
+            FormField::addTab('Infos Pratiques'),
+            AssociationField::new('activityPlaces', "Lieu(x) d'activités :")->setColumns(6)->hideOnIndex(),
 
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),

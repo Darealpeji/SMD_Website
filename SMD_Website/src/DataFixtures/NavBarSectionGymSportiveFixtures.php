@@ -66,7 +66,7 @@ class NavBarSectionGymSportiveFixtures extends Fixture implements DependentFixtu
         $infos_pratiques_gym_sportive->setName("Gym Sportive - Infos Pratiques");
         $infos_pratiques_gym_sportive->setTitle("Infos Pratiques");
         $infos_pratiques_gym_sportive->setSlug($this->slugify->slugify($infos_pratiques_gym_sportive->getTitle()));
-        $infos_pratiques_gym_sportive->setRouteName('');
+        $infos_pratiques_gym_sportive->setRouteName('useful_informations_section');
         $infos_pratiques_gym_sportive->setRanking(4);
         $infos_pratiques_gym_sportive->setSection($this->getReference(AssoSectionsFixtures::GYM_SPORTIVE));
         $infos_pratiques_gym_sportive->setCreatedAtValue();

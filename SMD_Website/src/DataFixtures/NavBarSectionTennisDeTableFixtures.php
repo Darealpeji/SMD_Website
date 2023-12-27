@@ -66,7 +66,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $infos_pratiques_tennis_de_table->setName("Tennis de Table - Infos Pratiques");
         $infos_pratiques_tennis_de_table->setTitle("Infos Pratiques");
         $infos_pratiques_tennis_de_table->setSlug($this->slugify->slugify($infos_pratiques_tennis_de_table->getTitle()));
-        $infos_pratiques_tennis_de_table->setRouteName('');
+        $infos_pratiques_tennis_de_table->setRouteName('useful_informations_section');
         $infos_pratiques_tennis_de_table->setRanking(4);
         $infos_pratiques_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $infos_pratiques_tennis_de_table->setCreatedAtValue();

@@ -46,7 +46,7 @@ class NavBarDdLinkCrudController extends AbstractCrudController
             SlugField::new('slug', "Nom dans l'url :")->setTargetFieldName('name')->setColumns(12)->hideOnIndex()
             ->setUnlockConfirmationMessage(
                 "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"),
-            TextField::new('url', "Adresse de l'url :")->setColumns(12)->hideOnIndex(),
+            TextField::new('routeName', "Nom de la Route :")->setColumns(12)->hideOnIndex(),
             
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),

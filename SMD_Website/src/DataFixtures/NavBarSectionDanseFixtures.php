@@ -78,7 +78,7 @@ class NavBarSectionDanseFixtures extends Fixture implements DependentFixtureInte
         $infos_pratiques_danse->setName("Danse - Infos Pratiques");
         $infos_pratiques_danse->setTitle("Infos Pratiques");
         $infos_pratiques_danse->setSlug($this->slugify->slugify($infos_pratiques_danse->getTitle()));
-        $infos_pratiques_danse->setRouteName('');
+        $infos_pratiques_danse->setRouteName('useful_informations_section');
         $infos_pratiques_danse->setRanking(5);
         $infos_pratiques_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
         $infos_pratiques_danse->setCreatedAtValue();

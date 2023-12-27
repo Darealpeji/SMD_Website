@@ -78,7 +78,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $infos_pratiques_basket->setName("Basket - Infos Pratiques");
         $infos_pratiques_basket->setTitle("Infos Pratiques");
         $infos_pratiques_basket->setSlug($this->slugify->slugify($infos_pratiques_basket->getTitle()));
-        $infos_pratiques_basket->setRouteName('');
+        $infos_pratiques_basket->setRouteName('useful_informations_section');
         $infos_pratiques_basket->setRanking(6);
         $infos_pratiques_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $infos_pratiques_basket->setCreatedAtValue();

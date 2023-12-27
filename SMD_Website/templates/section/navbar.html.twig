@@ -7,7 +7,7 @@
                 {% if navBarLink.routeName == 'home_association' %}
                     <li><a href="{{ path(navBarLink.routeName) }}">{{ navBarLink.name }}</a></li>
                 {% else %}
-                    <li><a href="{{ path(navBarLink.routeName, {'slug': navBarLink.slug}) }}">{{ navBarLink.name }}</a></li>
+                    <li><a href="{{ path(navBarLink.routeName, {'slugSection': section.slug}) }}">{{ navBarLink.name }}</a></li>
                 {% endif %}
             {% endif %}
 
@@ -18,7 +18,7 @@
                             {% if navBarDdLink.routeName is not defined or not navBarDdLink.routeName %}
                                 {{ navBarDdLink.name }}
                             {% else %}
-                                <a href="{{ path(navBarDdLink.routeName, {'slug': section.slug}) }}">{{ navBarDdLink.name }}</a>
+                                <a href="{{ path(navBarDdLink.routeName, {'slugSection': section.slug}) }}">{{ navBarDdLink.name }}</a>
                             {% endif %}
                         </li>
                     {% endfor %}
