@@ -30,7 +30,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $accueil_basket->setName("Basket - Accueil");
         $accueil_basket->setTitle("Accueil");
         $accueil_basket->setSlug("section-basket");
-        $accueil_basket->setPath("section-basket");
+        $accueil_basket->setRouteName('home_section');
         $accueil_basket->setRanking(1);
         $accueil_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $accueil_basket->setCreatedAtValue();
@@ -42,7 +42,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $le_club_basket->setName("Basket - Le Club");
         $le_club_basket->setTitle("Le Club");
         $le_club_basket->setSlug($this->slugify->slugify($le_club_basket->getTitle()));
-        $le_club_basket->setPath($this->getReference(AssoSectionsFixtures::BASKET)->getSlug() . "/" . $this->slugify->slugify($le_club_basket->getTitle()));
+        $le_club_basket->setRouteName('');
         $le_club_basket->setRanking(2);
         $le_club_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $le_club_basket->setCreatedAtValue();
@@ -54,7 +54,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $nos_equipes_basket->setName("Basket - Nos Equipes");
         $nos_equipes_basket->setTitle("Nos Equipes");
         $nos_equipes_basket->setSlug($this->slugify->slugify($nos_equipes_basket->getTitle()));
-        $nos_equipes_basket->setPath($this->getReference(AssoSectionsFixtures::BASKET)->getSlug() . "/" . $this->slugify->slugify($nos_equipes_basket->getTitle()));
+        $nos_equipes_basket->setRouteName('');
         $nos_equipes_basket->setRanking(3);
         $nos_equipes_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $nos_equipes_basket->setCreatedAtValue();
@@ -66,7 +66,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $boutique_basket->setName("Basket - Boutique");
         $boutique_basket->setTitle("Boutique");
         $boutique_basket->setSlug($this->slugify->slugify($boutique_basket->getTitle()));
-        $boutique_basket->setPath($this->getReference(AssoSectionsFixtures::BASKET)->getSlug() . "/" . $this->slugify->slugify($boutique_basket->getTitle()));
+        $boutique_basket->setRouteName('');
         $boutique_basket->setRanking(4);
         $boutique_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $boutique_basket->setCreatedAtValue();
@@ -78,7 +78,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $infos_pratiques_basket->setName("Basket - Infos Pratiques");
         $infos_pratiques_basket->setTitle("Infos Pratiques");
         $infos_pratiques_basket->setSlug($this->slugify->slugify($infos_pratiques_basket->getTitle()));
-        $infos_pratiques_basket->setPath($this->getReference(AssoSectionsFixtures::BASKET)->getSlug() . "/" . $this->slugify->slugify($infos_pratiques_basket->getTitle()));
+        $infos_pratiques_basket->setRouteName('');
         $infos_pratiques_basket->setRanking(6);
         $infos_pratiques_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $infos_pratiques_basket->setCreatedAtValue();
@@ -90,7 +90,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $acces_licencies_basket->setName("Basket - Accès Licenciés");
         $acces_licencies_basket->setTitle("Accès Licenciés");
         $acces_licencies_basket->setSlug($this->slugify->slugify($acces_licencies_basket->getTitle()));
-        $acces_licencies_basket->setPath($this->getReference(AssoSectionsFixtures::BASKET)->getSlug() . "/" . $this->slugify->slugify($acces_licencies_basket->getTitle()));
+        $acces_licencies_basket->setRouteName('');
         $acces_licencies_basket->setRanking(5);
         $acces_licencies_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $acces_licencies_basket->setCreatedAtValue();
@@ -102,7 +102,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $retour_basket->setName("Basket - Retour");
         $retour_basket->setTitle("Retour");
         $retour_basket->setSlug($this->slugify->slugify($retour_basket->getTitle()));
-        $retour_basket->setPath("/");
+        $retour_basket->setRouteName('home_association');
         $retour_basket->setRanking(7);
         $retour_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $retour_basket->setCreatedAtValue();
@@ -119,7 +119,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $actualites_accueil_basket->setName("Actualités");
         $actualites_accueil_basket->setSlug($this->slugify->slugify($actualites_accueil_basket->getName()));
-        $actualites_accueil_basket->setPath($accueil_basket->getPath() . "/" . $this->slugify->slugify($actualites_accueil_basket->getName()));
+        $actualites_accueil_basket->setRouteName('news_section');
         $actualites_accueil_basket->setRanking(1);
         $actualites_accueil_basket->setNavBarLink($accueil_basket);
         $actualites_accueil_basket->setCreatedAtValue();
@@ -130,7 +130,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $la_vie_du_club_accueil_basket->setName("La Vie du Club");
         $la_vie_du_club_accueil_basket->setSlug($this->slugify->slugify($la_vie_du_club_accueil_basket->getName()));
-        $la_vie_du_club_accueil_basket->setPath($accueil_basket->getPath() . "/" . $this->slugify->slugify($la_vie_du_club_accueil_basket->getName()));
+        $la_vie_du_club_accueil_basket->setRouteName('');
         $la_vie_du_club_accueil_basket->setRanking(2);
         $la_vie_du_club_accueil_basket->setNavBarLink($accueil_basket);
         $la_vie_du_club_accueil_basket->setCreatedAtValue();
@@ -141,7 +141,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $les_stages_accueil_basket->setName("Les Stages");
         $les_stages_accueil_basket->setSlug($this->slugify->slugify($les_stages_accueil_basket->getName()));
-        $les_stages_accueil_basket->setPath($accueil_basket->getPath() . "/" . $this->slugify->slugify($les_stages_accueil_basket->getName()));
+        $les_stages_accueil_basket->setRouteName('');
         $les_stages_accueil_basket->setRanking(3);
         $les_stages_accueil_basket->setNavBarLink($accueil_basket);
         $les_stages_accueil_basket->setCreatedAtValue();
@@ -154,7 +154,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $notre_histoire_le_club_basket->setName("Notre Histoire");
         $notre_histoire_le_club_basket->setSlug($this->slugify->slugify($notre_histoire_le_club_basket->getName()));
-        $notre_histoire_le_club_basket->setPath($le_club_basket->getPath() . "/" . $this->slugify->slugify($notre_histoire_le_club_basket->getName()));
+        $notre_histoire_le_club_basket->setRouteName('');
         $notre_histoire_le_club_basket->setRanking(1);
         $notre_histoire_le_club_basket->setNavBarLink($accueil_basket);
         $notre_histoire_le_club_basket->setCreatedAtValue();
@@ -165,7 +165,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $l_organigramme_le_club_basket->setName("L'Organigramme");
         $l_organigramme_le_club_basket->setSlug($this->slugify->slugify($l_organigramme_le_club_basket->getName()));
-        $l_organigramme_le_club_basket->setPath($le_club_basket->getPath() . "/" . $this->slugify->slugify($l_organigramme_le_club_basket->getName()));
+        $l_organigramme_le_club_basket->setRouteName('');
         $l_organigramme_le_club_basket->setRanking(2);
         $l_organigramme_le_club_basket->setNavBarLink($accueil_basket);
         $l_organigramme_le_club_basket->setCreatedAtValue();
@@ -176,7 +176,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $nos_partenaires_le_club_basket->setName("Nos Partenaires");
         $nos_partenaires_le_club_basket->setSlug($this->slugify->slugify($nos_partenaires_le_club_basket->getName()));
-        $nos_partenaires_le_club_basket->setPath($le_club_basket->getPath() . "/" . $this->slugify->slugify($nos_partenaires_le_club_basket->getName()));
+        $nos_partenaires_le_club_basket->setRouteName('');
         $nos_partenaires_le_club_basket->setRanking(3);
         $nos_partenaires_le_club_basket->setNavBarLink($le_club_basket);
         $nos_partenaires_le_club_basket->setCreatedAtValue();
@@ -189,7 +189,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $seniors_nos_equipes_basket->setName("Séniors");
         $seniors_nos_equipes_basket->setSlug($this->slugify->slugify($seniors_nos_equipes_basket->getName()));
-        $seniors_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($seniors_nos_equipes_basket->getName()));
+        $seniors_nos_equipes_basket->setRouteName('');
         $seniors_nos_equipes_basket->setRanking(1);
         $seniors_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $seniors_nos_equipes_basket->setCreatedAtValue();
@@ -200,7 +200,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u18_nos_equipes_basket->setName("U18");
         $u18_nos_equipes_basket->setSlug($this->slugify->slugify($u18_nos_equipes_basket->getName()));
-        $u18_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($u18_nos_equipes_basket->getName()));
+        $u18_nos_equipes_basket->setRouteName('');
         $u18_nos_equipes_basket->setRanking(2);
         $u18_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u18_nos_equipes_basket->setCreatedAtValue();
@@ -211,7 +211,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u15_nos_equipes_basket->setName("U15");
         $u15_nos_equipes_basket->setSlug($this->slugify->slugify($u15_nos_equipes_basket->getName()));
-        $u15_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($u15_nos_equipes_basket->getName()));
+        $u15_nos_equipes_basket->setRouteName('');
         $u15_nos_equipes_basket->setRanking(3);
         $u15_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u15_nos_equipes_basket->setCreatedAtValue();
@@ -222,7 +222,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u13_nos_equipes_basket->setName("U13");
         $u13_nos_equipes_basket->setSlug($this->slugify->slugify($u13_nos_equipes_basket->getName()));
-        $u13_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($u13_nos_equipes_basket->getName()));
+        $u13_nos_equipes_basket->setRouteName('');
         $u13_nos_equipes_basket->setRanking(4);
         $u13_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u13_nos_equipes_basket->setCreatedAtValue();
@@ -233,7 +233,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u11_nos_equipes_basket->setName("U11");
         $u11_nos_equipes_basket->setSlug($this->slugify->slugify($u11_nos_equipes_basket->getName()));
-        $u11_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($u11_nos_equipes_basket->getName()));
+        $u11_nos_equipes_basket->setRouteName('');
         $u11_nos_equipes_basket->setRanking(5);
         $u11_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u11_nos_equipes_basket->setCreatedAtValue();
@@ -244,7 +244,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u9_nos_equipes_basket->setName("U9");
         $u9_nos_equipes_basket->setSlug($this->slugify->slugify($u9_nos_equipes_basket->getName()));
-        $u9_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($u9_nos_equipes_basket->getName()));
+        $u9_nos_equipes_basket->setRouteName('');
         $u9_nos_equipes_basket->setRanking(6);
         $u9_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u9_nos_equipes_basket->setCreatedAtValue();
@@ -255,7 +255,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $loisirs_nos_equipes_basket->setName("Loisirs");
         $loisirs_nos_equipes_basket->setSlug($this->slugify->slugify($loisirs_nos_equipes_basket->getName()));
-        $loisirs_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($loisirs_nos_equipes_basket->getName()));
+        $loisirs_nos_equipes_basket->setRouteName('');
         $loisirs_nos_equipes_basket->setRanking(7);
         $loisirs_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $loisirs_nos_equipes_basket->setCreatedAtValue();
@@ -266,7 +266,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $ecole_arbitrage_nos_equipes_basket->setName("L'Ecole d'Arbitrage");
         $ecole_arbitrage_nos_equipes_basket->setSlug($this->slugify->slugify($ecole_arbitrage_nos_equipes_basket->getName()));
-        $ecole_arbitrage_nos_equipes_basket->setPath($nos_equipes_basket->getPath() . "/" . $this->slugify->slugify($ecole_arbitrage_nos_equipes_basket->getName()));
+        $ecole_arbitrage_nos_equipes_basket->setRouteName('');
         $ecole_arbitrage_nos_equipes_basket->setRanking(8);
         $ecole_arbitrage_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $ecole_arbitrage_nos_equipes_basket->setCreatedAtValue();
@@ -279,7 +279,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $inscriptions_infos_pratiques_basket->setName("Inscriptions");
         $inscriptions_infos_pratiques_basket->setSlug($this->slugify->slugify($inscriptions_infos_pratiques_basket->getName()));
-        $inscriptions_infos_pratiques_basket->setPath($infos_pratiques_basket->getPath() . "/" . $this->slugify->slugify($inscriptions_infos_pratiques_basket->getName()));
+        $inscriptions_infos_pratiques_basket->setRouteName('');
         $inscriptions_infos_pratiques_basket->setRanking(1);
         $inscriptions_infos_pratiques_basket->setNavBarLink($infos_pratiques_basket);
         $inscriptions_infos_pratiques_basket->setCreatedAtValue();
@@ -292,7 +292,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $compte_acces_licencies_basket->setName("Compte");
         $compte_acces_licencies_basket->setSlug($this->slugify->slugify($compte_acces_licencies_basket->getName()));
-        $compte_acces_licencies_basket->setPath($acces_licencies_basket->getPath() . "/" . $this->slugify->slugify($compte_acces_licencies_basket->getName()));
+        $compte_acces_licencies_basket->setRouteName('');
         $compte_acces_licencies_basket->setRanking(1);
         $compte_acces_licencies_basket->setNavBarLink($acces_licencies_basket);
         $compte_acces_licencies_basket->setCreatedAtValue();
@@ -303,7 +303,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $convocations_acces_licencies_basket->setName("Convocations");
         $convocations_acces_licencies_basket->setSlug($this->slugify->slugify($convocations_acces_licencies_basket->getName()));
-        $convocations_acces_licencies_basket->setPath($acces_licencies_basket->getPath() . "/" . $this->slugify->slugify($convocations_acces_licencies_basket->getName()));
+        $convocations_acces_licencies_basket->setRouteName('');
         $convocations_acces_licencies_basket->setRanking(2);
         $convocations_acces_licencies_basket->setNavBarLink($acces_licencies_basket);
         $convocations_acces_licencies_basket->setCreatedAtValue();
@@ -314,7 +314,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $se_deconnecter_acces_licencies_basket->setName("Se Déconnecter");
         $se_deconnecter_acces_licencies_basket->setSlug($this->slugify->slugify($se_deconnecter_acces_licencies_basket->getName()));
-        $se_deconnecter_acces_licencies_basket->setPath($acces_licencies_basket->getPath() . "/" . $this->slugify->slugify($se_deconnecter_acces_licencies_basket->getName()));
+        $se_deconnecter_acces_licencies_basket->setRouteName('');
         $se_deconnecter_acces_licencies_basket->setRanking(3);
         $se_deconnecter_acces_licencies_basket->setNavBarLink($acces_licencies_basket);
         $se_deconnecter_acces_licencies_basket->setCreatedAtValue();

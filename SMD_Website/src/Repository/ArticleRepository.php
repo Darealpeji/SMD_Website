@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Section;
+use App\Entity\Association;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Article>
@@ -21,28 +23,27 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getArticlesByAssociation(Association $association)
+    {
+        return $this->createQueryBuilder('art')
+            ->select('art', 'cat')
+            ->leftJoin('art.articleCategory', 'cat')
+            ->leftJoin('art.association', 'a')
+            ->where('art.association = :association')
+            ->setParameter('association', $association)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getArticlesBySection(Section $section)
+    {
+        return $this->createQueryBuilder('art')
+            ->select('art', 'cat')
+            ->leftJoin('art.articleCategory', 'cat')
+            ->leftJoin('art.section', 's')
+            ->where('art.section = :section')
+            ->setParameter('section', $section)
+            ->getQuery()
+            ->getResult();
+    }
 }

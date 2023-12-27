@@ -1,0 +1,31 @@
+<ul>
+    {% if navBarLinks is defined %}
+        {% for navBarLink in section.navBarLinks %}
+            {% if navBarLink.routeName is not defined or not navBarLink.routeName %}
+                <li>{{ navBarLink.name }}</li>
+            {% else %}
+                {% if navBarLink.routeName == 'home_association' %}
+                    <li><a href="{{ path(navBarLink.routeName) }}">{{ navBarLink.name }}</a></li>
+                {% else %}
+                    <li><a href="{{ path(navBarLink.routeName, {'slug': navBarLink.slug}) }}">{{ navBarLink.name }}</a></li>
+                {% endif %}
+            {% endif %}
+
+            {% if navBarLink.navBarDdLinks is defined %}
+                <ul>
+                    {% for navBarDdLink in navBarLink.navBarDdLinks %}
+                        <li>
+                            {% if navBarDdLink.routeName is not defined or not navBarDdLink.routeName %}
+                                {{ navBarDdLink.name }}
+                            {% else %}
+                                <a href="{{ path(navBarDdLink.routeName, {'slug': section.slug}) }}">{{ navBarDdLink.name }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <li>Aucune NavBarLink disponible</li>
+    {% endif %}
+</ul>

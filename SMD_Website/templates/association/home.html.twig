@@ -5,18 +5,7 @@
 {% block body %}
     <h1>{{association.name}}</h1>
 
-    <ul>
-        {% if navBarLinks is defined %}
-            {% for navBarLink in association.navBarLinks %}
-                <li><a href="{{ navBarLink.path }}">{{ navBarLink.name }}</a></li>
-                    {% for navBarDdLink in navBarLink.navBarDdLinks %}
-                    <li><a href="{{ navBarDdLink.path }}">{{ navBarDdLink.name }}</a></li>
-                    {% endfor %}
-            {% endfor %}
-        {% else %}
-            <li>Aucune NavBarLink disponible</li>
-        {% endif %}
-    </ul>
+    {% include('association/navbar.html.twig') %}
 
 {% endblock %}
 

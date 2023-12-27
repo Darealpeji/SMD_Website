@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association News{% endblock %}
+
+{% block body %}
+    <h1>Actualités {{association.name}}</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+    <ul>
+        {% if articles is defined %}
+            {% for article in association.articles %}
+                <li><a href="{{ path('detail_news_association', {'slug': article.slug, 'id': article.id}) }}">{{ article.title }} - {{ article.articleCategory }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>Aucun Article disponible</li>
+        {% endif %}
+    </ul>
+
+{% endblock %}

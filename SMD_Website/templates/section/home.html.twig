@@ -5,17 +5,6 @@
 {% block body %}
     <h1>{{section.name}}</h1>
 
-    <ul>
-        {% if navBarLinks is defined %}
-            {% for navBarLink in section.navBarLinks %}
-                <li><a href="{{ navBarLink.path }}">{{ navBarLink.title }}</a></li>
-                    {% for navBarDdLink in navBarLink.navBarDdLinks %}
-                    <li><a href="{{ navBarDdLink.path }}">{{ navBarDdLink.name }}</a></li>
-                    {% endfor %}
-            {% endfor %}
-        {% else %}
-            <li>Aucune NavBarLink disponible</li>
-        {% endif %}
-    </ul>
+    {% include('section/navbar.html.twig') %}
 
 {% endblock %}

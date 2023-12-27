@@ -29,8 +29,8 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $accueil_tennis_de_table->setName("Tennis de Table - Accueil");
         $accueil_tennis_de_table->setTitle("Accueil");
-        $accueil_tennis_de_table->setSlug("section-tennis_de_table");
-        $accueil_tennis_de_table->setPath("section-tennis_de_table");
+        $accueil_tennis_de_table->setSlug("section-tennis-de-table");
+        $accueil_tennis_de_table->setRouteName('home_section');
         $accueil_tennis_de_table->setRanking(1);
         $accueil_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $accueil_tennis_de_table->setCreatedAtValue();
@@ -42,7 +42,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $le_club_tennis_de_table->setName("Tennis de Table - Le Club");
         $le_club_tennis_de_table->setTitle("Le Club");
         $le_club_tennis_de_table->setSlug($this->slugify->slugify($le_club_tennis_de_table->getTitle()));
-        $le_club_tennis_de_table->setPath($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE)->getSlug() . "/" . $this->slugify->slugify($le_club_tennis_de_table->getTitle()));
+        $le_club_tennis_de_table->setRouteName('');
         $le_club_tennis_de_table->setRanking(2);
         $le_club_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $le_club_tennis_de_table->setCreatedAtValue();
@@ -54,7 +54,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $nos_equipes_tennis_de_table->setName("Tennis de Table - Nos Equipes");
         $nos_equipes_tennis_de_table->setTitle("Nos Equipes");
         $nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($nos_equipes_tennis_de_table->getTitle()));
-        $nos_equipes_tennis_de_table->setPath($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE)->getSlug() . "/" . $this->slugify->slugify($nos_equipes_tennis_de_table->getTitle()));
+        $nos_equipes_tennis_de_table->setRouteName('');
         $nos_equipes_tennis_de_table->setRanking(3);
         $nos_equipes_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -66,7 +66,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $infos_pratiques_tennis_de_table->setName("Tennis de Table - Infos Pratiques");
         $infos_pratiques_tennis_de_table->setTitle("Infos Pratiques");
         $infos_pratiques_tennis_de_table->setSlug($this->slugify->slugify($infos_pratiques_tennis_de_table->getTitle()));
-        $infos_pratiques_tennis_de_table->setPath($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE)->getSlug() . "/" . $this->slugify->slugify($infos_pratiques_tennis_de_table->getTitle()));
+        $infos_pratiques_tennis_de_table->setRouteName('');
         $infos_pratiques_tennis_de_table->setRanking(4);
         $infos_pratiques_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $infos_pratiques_tennis_de_table->setCreatedAtValue();
@@ -78,7 +78,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $acces_licencies_tennis_de_table->setName("Tennis de Table - Accès Licenciés");
         $acces_licencies_tennis_de_table->setTitle("Accès Licenciés");
         $acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($acces_licencies_tennis_de_table->getTitle()));
-        $acces_licencies_tennis_de_table->setPath($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE)->getSlug() . "/" . $this->slugify->slugify($acces_licencies_tennis_de_table->getTitle()));
+        $acces_licencies_tennis_de_table->setRouteName('');
         $acces_licencies_tennis_de_table->setRanking(5);
         $acces_licencies_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $acces_licencies_tennis_de_table->setCreatedAtValue();
@@ -90,7 +90,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $retour_tennis_de_table->setName("Tennis de Table - Retour");
         $retour_tennis_de_table->setTitle("Retour");
         $retour_tennis_de_table->setSlug($this->slugify->slugify($retour_tennis_de_table->getTitle()));
-        $retour_tennis_de_table->setPath("/");
+        $retour_tennis_de_table->setRouteName('home_association');
         $retour_tennis_de_table->setRanking(6);
         $retour_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $retour_tennis_de_table->setCreatedAtValue();
@@ -107,7 +107,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $actualites_accueil_tennis_de_table->setName("Actualités");
         $actualites_accueil_tennis_de_table->setSlug($this->slugify->slugify($actualites_accueil_tennis_de_table->getName()));
-        $actualites_accueil_tennis_de_table->setPath($accueil_tennis_de_table->getPath() . "/" . $this->slugify->slugify($actualites_accueil_tennis_de_table->getName()));
+        $actualites_accueil_tennis_de_table->setRouteName('news_section');
         $actualites_accueil_tennis_de_table->setRanking(1);
         $actualites_accueil_tennis_de_table->setNavBarLink($accueil_tennis_de_table);
         $actualites_accueil_tennis_de_table->setCreatedAtValue();
@@ -120,7 +120,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $notre_histoire_le_club_tennis_de_table->setName("Notre Histoire");
         $notre_histoire_le_club_tennis_de_table->setSlug($this->slugify->slugify($notre_histoire_le_club_tennis_de_table->getName()));
-        $notre_histoire_le_club_tennis_de_table->setPath($le_club_tennis_de_table->getPath() . "/" . $this->slugify->slugify($notre_histoire_le_club_tennis_de_table->getName()));
+        $notre_histoire_le_club_tennis_de_table->setRouteName('');
         $notre_histoire_le_club_tennis_de_table->setRanking(1);
         $notre_histoire_le_club_tennis_de_table->setNavBarLink($le_club_tennis_de_table);
         $notre_histoire_le_club_tennis_de_table->setCreatedAtValue();
@@ -131,7 +131,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $l_organigramme_le_club_tennis_de_table->setName("L'Organigramme");
         $l_organigramme_le_club_tennis_de_table->setSlug($this->slugify->slugify($l_organigramme_le_club_tennis_de_table->getName()));
-        $l_organigramme_le_club_tennis_de_table->setPath($le_club_tennis_de_table->getPath() . "/" . $this->slugify->slugify($l_organigramme_le_club_tennis_de_table->getName()));
+        $l_organigramme_le_club_tennis_de_table->setRouteName('');
         $l_organigramme_le_club_tennis_de_table->setRanking(2);
         $l_organigramme_le_club_tennis_de_table->setNavBarLink($le_club_tennis_de_table);
         $l_organigramme_le_club_tennis_de_table->setCreatedAtValue();
@@ -142,7 +142,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $nos_partenaires_le_club_tennis_de_table->setName("Nos Partenaires");
         $nos_partenaires_le_club_tennis_de_table->setSlug($this->slugify->slugify($nos_partenaires_le_club_tennis_de_table->getName()));
-        $nos_partenaires_le_club_tennis_de_table->setPath($le_club_tennis_de_table->getPath() . "/" . $this->slugify->slugify($nos_partenaires_le_club_tennis_de_table->getName()));
+        $nos_partenaires_le_club_tennis_de_table->setRouteName('');
         $nos_partenaires_le_club_tennis_de_table->setRanking(3);
         $nos_partenaires_le_club_tennis_de_table->setNavBarLink($le_club_tennis_de_table);
         $nos_partenaires_le_club_tennis_de_table->setCreatedAtValue();
@@ -155,7 +155,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $national_2_nos_equipes_tennis_de_table->setName("Nationale 2");
         $national_2_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($national_2_nos_equipes_tennis_de_table->getName()));
-        $national_2_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($national_2_nos_equipes_tennis_de_table->getName()));
+        $national_2_nos_equipes_tennis_de_table->setRouteName('');
         $national_2_nos_equipes_tennis_de_table->setRanking(1);
         $national_2_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $national_2_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -166,7 +166,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $national_3_nos_equipes_tennis_de_table->setName("Nationale 3");
         $national_3_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($national_3_nos_equipes_tennis_de_table->getName()));
-        $national_3_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($national_3_nos_equipes_tennis_de_table->getName()));
+        $national_3_nos_equipes_tennis_de_table->setRouteName('');
         $national_3_nos_equipes_tennis_de_table->setRanking(2);
         $national_3_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $national_3_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -177,7 +177,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $pre_national_nos_equipes_tennis_de_table->setName("Pré-Nationale");
         $pre_national_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($pre_national_nos_equipes_tennis_de_table->getName()));
-        $pre_national_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($pre_national_nos_equipes_tennis_de_table->getName()));
+        $pre_national_nos_equipes_tennis_de_table->setRouteName('');
         $pre_national_nos_equipes_tennis_de_table->setRanking(3);
         $pre_national_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $pre_national_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -188,7 +188,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $regional_3_nos_equipes_tennis_de_table->setName("Régionale 3");
         $regional_3_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($regional_3_nos_equipes_tennis_de_table->getName()));
-        $regional_3_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($regional_3_nos_equipes_tennis_de_table->getName()));
+        $regional_3_nos_equipes_tennis_de_table->setRouteName('');
         $regional_3_nos_equipes_tennis_de_table->setRanking(4);
         $regional_3_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $regional_3_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -199,7 +199,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $departementale_1_nos_equipes_tennis_de_table->setName("Départementale 1");
         $departementale_1_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_1_nos_equipes_tennis_de_table->getName()));
-        $departementale_1_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($departementale_1_nos_equipes_tennis_de_table->getName()));
+        $departementale_1_nos_equipes_tennis_de_table->setRouteName('');
         $departementale_1_nos_equipes_tennis_de_table->setRanking(5);
         $departementale_1_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $departementale_1_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -210,7 +210,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $departementale_2_nos_equipes_tennis_de_table->setName("Départementale 2");
         $departementale_2_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_2_nos_equipes_tennis_de_table->getName()));
-        $departementale_2_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($departementale_2_nos_equipes_tennis_de_table->getName()));
+        $departementale_2_nos_equipes_tennis_de_table->setRouteName('');
         $departementale_2_nos_equipes_tennis_de_table->setRanking(6);
         $departementale_2_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $departementale_2_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -221,7 +221,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $departementale_3_nos_equipes_tennis_de_table->setName("Départementale 3");
         $departementale_3_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_3_nos_equipes_tennis_de_table->getName()));
-        $departementale_3_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($departementale_3_nos_equipes_tennis_de_table->getName()));
+        $departementale_3_nos_equipes_tennis_de_table->setRouteName('');
         $departementale_3_nos_equipes_tennis_de_table->setRanking(7);
         $departementale_3_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $departementale_3_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -232,7 +232,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $departementale_4_nos_equipes_tennis_de_table->setName("Départementale 4");
         $departementale_4_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_4_nos_equipes_tennis_de_table->getName()));
-        $departementale_4_nos_equipes_tennis_de_table->setPath($nos_equipes_tennis_de_table->getPath() . "/" . $this->slugify->slugify($departementale_4_nos_equipes_tennis_de_table->getName()));
+        $departementale_4_nos_equipes_tennis_de_table->setRouteName('');
         $departementale_4_nos_equipes_tennis_de_table->setRanking(8);
         $departementale_4_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
         $departementale_4_nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -245,7 +245,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $inscriptions_infos_pratiques_tennis_de_table->setName("Inscriptions");
         $inscriptions_infos_pratiques_tennis_de_table->setSlug($this->slugify->slugify($inscriptions_infos_pratiques_tennis_de_table->getName()));
-        $inscriptions_infos_pratiques_tennis_de_table->setPath($infos_pratiques_tennis_de_table->getPath() . "/" . $this->slugify->slugify($inscriptions_infos_pratiques_tennis_de_table->getName()));
+        $inscriptions_infos_pratiques_tennis_de_table->setRouteName('');
         $inscriptions_infos_pratiques_tennis_de_table->setRanking(1);
         $inscriptions_infos_pratiques_tennis_de_table->setNavBarLink($infos_pratiques_tennis_de_table);
         $inscriptions_infos_pratiques_tennis_de_table->setCreatedAtValue();
@@ -258,7 +258,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $compte_acces_licencies_tennis_de_table->setName("Compte");
         $compte_acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($compte_acces_licencies_tennis_de_table->getName()));
-        $compte_acces_licencies_tennis_de_table->setPath($acces_licencies_tennis_de_table->getPath() . "/" . $this->slugify->slugify($compte_acces_licencies_tennis_de_table->getName()));
+        $compte_acces_licencies_tennis_de_table->setRouteName('');
         $compte_acces_licencies_tennis_de_table->setRanking(1);
         $compte_acces_licencies_tennis_de_table->setNavBarLink($acces_licencies_tennis_de_table);
         $compte_acces_licencies_tennis_de_table->setCreatedAtValue();
@@ -269,7 +269,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $convocations_acces_licencies_tennis_de_table->setName("Convocations");
         $convocations_acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($convocations_acces_licencies_tennis_de_table->getName()));
-        $convocations_acces_licencies_tennis_de_table->setPath($acces_licencies_tennis_de_table->getPath() . "/" . $this->slugify->slugify($convocations_acces_licencies_tennis_de_table->getName()));
+        $convocations_acces_licencies_tennis_de_table->setRouteName('');
         $convocations_acces_licencies_tennis_de_table->setRanking(2);
         $convocations_acces_licencies_tennis_de_table->setNavBarLink($acces_licencies_tennis_de_table);
         $convocations_acces_licencies_tennis_de_table->setCreatedAtValue();
@@ -280,7 +280,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         $se_deconnecter_acces_licencies_tennis_de_table->setName("Se Déconnecter");
         $se_deconnecter_acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($se_deconnecter_acces_licencies_tennis_de_table->getName()));
-        $se_deconnecter_acces_licencies_tennis_de_table->setPath($acces_licencies_tennis_de_table->getPath() . "/" . $this->slugify->slugify($se_deconnecter_acces_licencies_tennis_de_table->getName()));
+        $se_deconnecter_acces_licencies_tennis_de_table->setRouteName('');
         $se_deconnecter_acces_licencies_tennis_de_table->setRanking(3);
         $se_deconnecter_acces_licencies_tennis_de_table->setNavBarLink($acces_licencies_tennis_de_table);
         $se_deconnecter_acces_licencies_tennis_de_table->setCreatedAtValue();

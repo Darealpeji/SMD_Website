@@ -30,7 +30,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
         $accueil_loisirs->setName("Loisirs - Accueil");
         $accueil_loisirs->setTitle("Accueil");
         $accueil_loisirs->setSlug("section-loisirs");
-        $accueil_loisirs->setPath("section-loisirs");
+        $accueil_loisirs->setRouteName('home_section');
         $accueil_loisirs->setRanking(1);
         $accueil_loisirs->setSection($this->getReference(AssoSectionsFixtures::LOISIRS));
         $accueil_loisirs->setCreatedAtValue();
@@ -42,7 +42,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
         $presentation_loisirs->setName("Loisirs - Présentation");
         $presentation_loisirs->setTitle("Présentation");
         $presentation_loisirs->setSlug($this->slugify->slugify($presentation_loisirs->getTitle()));
-        $presentation_loisirs->setPath($this->getReference(AssoSectionsFixtures::LOISIRS)->getSlug() . "/" . $this->slugify->slugify($presentation_loisirs->getTitle()));
+        $presentation_loisirs->setRouteName('');
         $presentation_loisirs->setRanking(2);
         $presentation_loisirs->setSection($this->getReference(AssoSectionsFixtures::LOISIRS));
         $presentation_loisirs->setCreatedAtValue();
@@ -54,7 +54,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
         $infos_pratiques_loisirs->setName("Loisirs - Infos Pratiques");
         $infos_pratiques_loisirs->setTitle("Infos Pratiques");
         $infos_pratiques_loisirs->setSlug($this->slugify->slugify($infos_pratiques_loisirs->getTitle()));
-        $infos_pratiques_loisirs->setPath($this->getReference(AssoSectionsFixtures::LOISIRS)->getSlug() . "/" . $this->slugify->slugify($infos_pratiques_loisirs->getTitle()));
+        $infos_pratiques_loisirs->setRouteName('');
         $infos_pratiques_loisirs->setRanking(3);
         $infos_pratiques_loisirs->setSection($this->getReference(AssoSectionsFixtures::LOISIRS));
         $infos_pratiques_loisirs->setCreatedAtValue();
@@ -66,7 +66,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
         $acces_membres_loisirs->setName("Loisirs - Accès Membres");
         $acces_membres_loisirs->setTitle("Accès Membres");
         $acces_membres_loisirs->setSlug($this->slugify->slugify($acces_membres_loisirs->getTitle()));
-        $acces_membres_loisirs->setPath($this->getReference(AssoSectionsFixtures::LOISIRS)->getSlug() . "/" . $this->slugify->slugify($acces_membres_loisirs->getTitle()));
+        $acces_membres_loisirs->setRouteName('');
         $acces_membres_loisirs->setRanking(4);
         $acces_membres_loisirs->setSection($this->getReference(AssoSectionsFixtures::LOISIRS));
         $acces_membres_loisirs->setCreatedAtValue();
@@ -78,7 +78,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
         $retour_loisirs->setName("Loisirs - Retour");
         $retour_loisirs->setTitle("Retour");
         $retour_loisirs->setSlug($this->slugify->slugify($retour_loisirs->getTitle()));
-        $retour_loisirs->setPath("/");
+        $retour_loisirs->setRouteName('home_association');
         $retour_loisirs->setRanking(5);
         $retour_loisirs->setSection($this->getReference(AssoSectionsFixtures::LOISIRS));
         $retour_loisirs->setCreatedAtValue();
@@ -95,7 +95,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
 
         $actualites_accueil_loisirs->setName("Actualités / Evènements");
         $actualites_accueil_loisirs->setSlug($this->slugify->slugify($actualites_accueil_loisirs->getName()));
-        $actualites_accueil_loisirs->setPath($accueil_loisirs->getPath() . "/" . $this->slugify->slugify($actualites_accueil_loisirs->getName()));
+        $actualites_accueil_loisirs->setRouteName('news_section');
         $actualites_accueil_loisirs->setRanking(1);
         $actualites_accueil_loisirs->setNavBarLink($accueil_loisirs);
         $actualites_accueil_loisirs->setCreatedAtValue();
@@ -108,7 +108,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
 
         $compte_acces_membres_loisirs->setName("Compte");
         $compte_acces_membres_loisirs->setSlug($this->slugify->slugify($compte_acces_membres_loisirs->getName()));
-        $compte_acces_membres_loisirs->setPath($acces_membres_loisirs->getPath() . "/" . $this->slugify->slugify($compte_acces_membres_loisirs->getName()));
+        $compte_acces_membres_loisirs->setRouteName('');
         $compte_acces_membres_loisirs->setRanking(1);
         $compte_acces_membres_loisirs->setNavBarLink($acces_membres_loisirs);
         $compte_acces_membres_loisirs->setCreatedAtValue();
@@ -119,7 +119,7 @@ class NavBarSectionLoisirsFixtures extends Fixture implements DependentFixtureIn
 
         $se_deconnecter_acces_membres_loisirs->setName("Se Déconnecter");
         $se_deconnecter_acces_membres_loisirs->setSlug($this->slugify->slugify($se_deconnecter_acces_membres_loisirs->getName()));
-        $se_deconnecter_acces_membres_loisirs->setPath($acces_membres_loisirs->getPath() . "/" . $this->slugify->slugify($se_deconnecter_acces_membres_loisirs->getName()));
+        $se_deconnecter_acces_membres_loisirs->setRouteName('');
         $se_deconnecter_acces_membres_loisirs->setRanking(3);
         $se_deconnecter_acces_membres_loisirs->setNavBarLink($acces_membres_loisirs);
         $se_deconnecter_acces_membres_loisirs->setCreatedAtValue();

@@ -26,7 +26,7 @@ class NavBarLink
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $path = null;
+    private ?string $routeName = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $ranking = null;
@@ -92,14 +92,14 @@ class NavBarLink
         return $this;
     }
 
-    public function getPath(): ?string
+    public function getRouteName(): ?string
     {
-        return $this->path;
+        return $this->routeName;
     }
 
-    public function setPath(string $path): static
+    public function setRouteName(string $routeName): static
     {
-        $this->path = $path;
+        $this->routeName = $routeName;
 
         return $this;
     }

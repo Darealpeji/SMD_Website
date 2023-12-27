@@ -29,8 +29,8 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
 
         $accueil_gym_tonique->setName("Gym Tonique - Accueil");
         $accueil_gym_tonique->setTitle("Accueil");
-        $accueil_gym_tonique->setSlug("section-gym_tonique");
-        $accueil_gym_tonique->setPath("section-gym_tonique");
+        $accueil_gym_tonique->setSlug("section-gym-tonique");
+        $accueil_gym_tonique->setRouteName('home_section');
         $accueil_gym_tonique->setRanking(1);
         $accueil_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $accueil_gym_tonique->setCreatedAtValue();
@@ -42,7 +42,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
         $presentation_gym_tonique->setName("Gym Tonique - Présentation");
         $presentation_gym_tonique->setTitle("Présentation");
         $presentation_gym_tonique->setSlug($this->slugify->slugify($presentation_gym_tonique->getTitle()));
-        $presentation_gym_tonique->setPath($this->getReference(AssoSectionsFixtures::GYM_TONIQUE)->getSlug() . "/" . $this->slugify->slugify($presentation_gym_tonique->getTitle()));
+        $presentation_gym_tonique->setRouteName('');
         $presentation_gym_tonique->setRanking(2);
         $presentation_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $presentation_gym_tonique->setCreatedAtValue();
@@ -54,7 +54,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
         $nos_disciplines_gym_tonique->setName("Gym Tonique - Nos Disciplines");
         $nos_disciplines_gym_tonique->setTitle("Nos Disciplines");
         $nos_disciplines_gym_tonique->setSlug($this->slugify->slugify($nos_disciplines_gym_tonique->getTitle()));
-        $nos_disciplines_gym_tonique->setPath($this->getReference(AssoSectionsFixtures::GYM_TONIQUE)->getSlug() . "/" . $this->slugify->slugify($nos_disciplines_gym_tonique->getTitle()));
+        $nos_disciplines_gym_tonique->setRouteName('');
         $nos_disciplines_gym_tonique->setRanking(3);
         $nos_disciplines_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $nos_disciplines_gym_tonique->setCreatedAtValue();
@@ -66,7 +66,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
         $infos_pratiques_gym_tonique->setName("Gym Tonique - Infos Pratiques");
         $infos_pratiques_gym_tonique->setTitle("Infos Pratiques");
         $infos_pratiques_gym_tonique->setSlug($this->slugify->slugify($infos_pratiques_gym_tonique->getTitle()));
-        $infos_pratiques_gym_tonique->setPath($this->getReference(AssoSectionsFixtures::GYM_TONIQUE)->getSlug() . "/" . $this->slugify->slugify($infos_pratiques_gym_tonique->getTitle()));
+        $infos_pratiques_gym_tonique->setRouteName('');
         $infos_pratiques_gym_tonique->setRanking(4);
         $infos_pratiques_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $infos_pratiques_gym_tonique->setCreatedAtValue();
@@ -78,7 +78,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
         $acces_membres_gym_tonique->setName("Gym Tonique - Accès Membres");
         $acces_membres_gym_tonique->setTitle("Accès Membres");
         $acces_membres_gym_tonique->setSlug($this->slugify->slugify($acces_membres_gym_tonique->getTitle()));
-        $acces_membres_gym_tonique->setPath($this->getReference(AssoSectionsFixtures::GYM_TONIQUE)->getSlug() . "/" . $this->slugify->slugify($acces_membres_gym_tonique->getTitle()));
+        $acces_membres_gym_tonique->setRouteName('');
         $acces_membres_gym_tonique->setRanking(5);
         $acces_membres_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $acces_membres_gym_tonique->setCreatedAtValue();
@@ -90,7 +90,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
         $retour_gym_tonique->setName("Gym Tonique - Retour");
         $retour_gym_tonique->setTitle("Retour");
         $retour_gym_tonique->setSlug($this->slugify->slugify($retour_gym_tonique->getTitle()));
-        $retour_gym_tonique->setPath("/");
+        $retour_gym_tonique->setRouteName('home_association');
         $retour_gym_tonique->setRanking(6);
         $retour_gym_tonique->setSection($this->getReference(AssoSectionsFixtures::GYM_TONIQUE));
         $retour_gym_tonique->setCreatedAtValue();
@@ -107,7 +107,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
 
         $actualites_accueil_gym_tonique->setName("Actualités");
         $actualites_accueil_gym_tonique->setSlug($this->slugify->slugify($actualites_accueil_gym_tonique->getName()));
-        $actualites_accueil_gym_tonique->setPath($accueil_gym_tonique->getPath() . "/" . $this->slugify->slugify($actualites_accueil_gym_tonique->getName()));
+        $actualites_accueil_gym_tonique->setRouteName('news_section');
         $actualites_accueil_gym_tonique->setRanking(1);
         $actualites_accueil_gym_tonique->setNavBarLink($accueil_gym_tonique);
         $actualites_accueil_gym_tonique->setCreatedAtValue();
@@ -120,7 +120,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
 
         $inscriptions_infos_pratiques_gym_tonique->setName("Inscriptions");
         $inscriptions_infos_pratiques_gym_tonique->setSlug($this->slugify->slugify($inscriptions_infos_pratiques_gym_tonique->getName()));
-        $inscriptions_infos_pratiques_gym_tonique->setPath($infos_pratiques_gym_tonique->getPath() . "/" . $this->slugify->slugify($inscriptions_infos_pratiques_gym_tonique->getName()));
+        $inscriptions_infos_pratiques_gym_tonique->setRouteName('');
         $inscriptions_infos_pratiques_gym_tonique->setRanking(1);
         $inscriptions_infos_pratiques_gym_tonique->setNavBarLink($infos_pratiques_gym_tonique);
         $inscriptions_infos_pratiques_gym_tonique->setCreatedAtValue();
@@ -133,7 +133,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
 
         $compte_acces_membres_gym_tonique->setName("Compte");
         $compte_acces_membres_gym_tonique->setSlug($this->slugify->slugify($compte_acces_membres_gym_tonique->getName()));
-        $compte_acces_membres_gym_tonique->setPath($acces_membres_gym_tonique->getPath() . "/" . $this->slugify->slugify($compte_acces_membres_gym_tonique->getName()));
+        $compte_acces_membres_gym_tonique->setRouteName('');
         $compte_acces_membres_gym_tonique->setRanking(1);
         $compte_acces_membres_gym_tonique->setNavBarLink($acces_membres_gym_tonique);
         $compte_acces_membres_gym_tonique->setCreatedAtValue();
@@ -144,7 +144,7 @@ class NavBarSectionGymToniqueFixtures extends Fixture implements DependentFixtur
 
         $se_deconnecter_acces_membres_gym_tonique->setName("Se Déconnecter");
         $se_deconnecter_acces_membres_gym_tonique->setSlug($this->slugify->slugify($se_deconnecter_acces_membres_gym_tonique->getName()));
-        $se_deconnecter_acces_membres_gym_tonique->setPath($acces_membres_gym_tonique->getPath() . "/" . $this->slugify->slugify($se_deconnecter_acces_membres_gym_tonique->getName()));
+        $se_deconnecter_acces_membres_gym_tonique->setRouteName('');
         $se_deconnecter_acces_membres_gym_tonique->setRanking(3);
         $se_deconnecter_acces_membres_gym_tonique->setNavBarLink($acces_membres_gym_tonique);
         $se_deconnecter_acces_membres_gym_tonique->setCreatedAtValue();

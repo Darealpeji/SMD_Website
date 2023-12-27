@@ -30,7 +30,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
         $accueil_petanque->setName("Pétanque - Accueil");
         $accueil_petanque->setTitle("Accueil");
         $accueil_petanque->setSlug("section-petanque");
-        $accueil_petanque->setPath("section-petanque");
+        $accueil_petanque->setRouteName('home_section');
         $accueil_petanque->setRanking(1);
         $accueil_petanque->setSection($this->getReference(AssoSectionsFixtures::PETANQUE));
         $accueil_petanque->setCreatedAtValue();
@@ -42,7 +42,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
         $presentation_petanque->setName("Pétanque - Présentation");
         $presentation_petanque->setTitle("Présentation");
         $presentation_petanque->setSlug($this->slugify->slugify($presentation_petanque->getTitle()));
-        $presentation_petanque->setPath($this->getReference(AssoSectionsFixtures::PETANQUE)->getSlug() . "/" . $this->slugify->slugify($presentation_petanque->getTitle()));
+        $presentation_petanque->setRouteName('');
         $presentation_petanque->setRanking(2);
         $presentation_petanque->setSection($this->getReference(AssoSectionsFixtures::PETANQUE));
         $presentation_petanque->setCreatedAtValue();
@@ -54,7 +54,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
         $infos_pratiques_petanque->setName("Pétanque - Infos Pratiques");
         $infos_pratiques_petanque->setTitle("Infos Pratiques");
         $infos_pratiques_petanque->setSlug($this->slugify->slugify($infos_pratiques_petanque->getTitle()));
-        $infos_pratiques_petanque->setPath($this->getReference(AssoSectionsFixtures::PETANQUE)->getSlug() . "/" . $this->slugify->slugify($infos_pratiques_petanque->getTitle()));
+        $infos_pratiques_petanque->setRouteName('');
         $infos_pratiques_petanque->setRanking(3);
         $infos_pratiques_petanque->setSection($this->getReference(AssoSectionsFixtures::PETANQUE));
         $infos_pratiques_petanque->setCreatedAtValue();
@@ -66,7 +66,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
         $acces_membres_petanque->setName("Pétanque - Accès Membres");
         $acces_membres_petanque->setTitle("Accès Membres");
         $acces_membres_petanque->setSlug($this->slugify->slugify($acces_membres_petanque->getTitle()));
-        $acces_membres_petanque->setPath($this->getReference(AssoSectionsFixtures::PETANQUE)->getSlug() . "/" . $this->slugify->slugify($acces_membres_petanque->getTitle()));
+        $acces_membres_petanque->setRouteName('');
         $acces_membres_petanque->setRanking(4);
         $acces_membres_petanque->setSection($this->getReference(AssoSectionsFixtures::PETANQUE));
         $acces_membres_petanque->setCreatedAtValue();
@@ -78,7 +78,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
         $retour_petanque->setName("Pétanque - Retour");
         $retour_petanque->setTitle("Retour");
         $retour_petanque->setSlug($this->slugify->slugify($retour_petanque->getTitle()));
-        $retour_petanque->setPath("/");
+        $retour_petanque->setRouteName('home_association');
         $retour_petanque->setRanking(5);
         $retour_petanque->setSection($this->getReference(AssoSectionsFixtures::PETANQUE));
         $retour_petanque->setCreatedAtValue();
@@ -93,9 +93,9 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
 
         $actualites_accueil_petanque = new NavBarDdLink();
 
-        $actualites_accueil_petanque->setName("Actualités / Evènements");
+        $actualites_accueil_petanque->setName("Actualités");
         $actualites_accueil_petanque->setSlug($this->slugify->slugify($actualites_accueil_petanque->getName()));
-        $actualites_accueil_petanque->setPath($accueil_petanque->getPath() . "/" . $this->slugify->slugify($actualites_accueil_petanque->getName()));
+        $actualites_accueil_petanque->setRouteName('news_section');
         $actualites_accueil_petanque->setRanking(1);
         $actualites_accueil_petanque->setNavBarLink($accueil_petanque);
         $actualites_accueil_petanque->setCreatedAtValue();
@@ -108,7 +108,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
 
         $compte_acces_membres_petanque->setName("Compte");
         $compte_acces_membres_petanque->setSlug($this->slugify->slugify($compte_acces_membres_petanque->getName()));
-        $compte_acces_membres_petanque->setPath($acces_membres_petanque->getPath() . "/" . $this->slugify->slugify($compte_acces_membres_petanque->getName()));
+        $compte_acces_membres_petanque->setRouteName('');
         $compte_acces_membres_petanque->setRanking(1);
         $compte_acces_membres_petanque->setNavBarLink($acces_membres_petanque);
         $compte_acces_membres_petanque->setCreatedAtValue();
@@ -119,7 +119,7 @@ class NavBarSectionPetanqueFixtures extends Fixture implements DependentFixtureI
 
         $se_deconnecter_acces_membres_petanque->setName("Se Déconnecter");
         $se_deconnecter_acces_membres_petanque->setSlug($this->slugify->slugify($se_deconnecter_acces_membres_petanque->getName()));
-        $se_deconnecter_acces_membres_petanque->setPath($acces_membres_petanque->getPath() . "/" . $this->slugify->slugify($se_deconnecter_acces_membres_petanque->getName()));
+        $se_deconnecter_acces_membres_petanque->setRouteName('');
         $se_deconnecter_acces_membres_petanque->setRanking(3);
         $se_deconnecter_acces_membres_petanque->setNavBarLink($acces_membres_petanque);
         $se_deconnecter_acces_membres_petanque->setCreatedAtValue();

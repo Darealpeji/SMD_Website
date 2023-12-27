@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association News{% endblock %}
+
+{% block body %}
+    <h1>{{association.name}} - Détail Actualité : {{article.title}}</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+   <p>{{article.articleCategory}}</p>
+   <p>{{article.content}}</p>
+
+{% endblock %}
