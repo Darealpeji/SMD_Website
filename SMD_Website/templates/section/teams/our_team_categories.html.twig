@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Section Nos Equipes{% endblock %}
+
+{% block body %}
+    <h1>Nos Equipes {{section.name}}</h1>
+
+    {% include('section/navbar.html.twig') %}
+
+    <ul>
+        {% if teamCategories is defined %}
+            {% for teamCategory in section.teamCategories %}
+                <li><a href="{{ path('our_teams_section', {'slugSection': section.slug, 'slugNavBarDdLink': teamCategory.slug}) }}">{{ teamCategory.title }}</a></li>
+
+            {% endfor %}
+        {% else %}
+            <li>Aucune Catégorie disponible</li>
+        {% endif %}
+    </ul>
+
+{% endblock %}

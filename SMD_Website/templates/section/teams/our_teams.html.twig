@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Section Détail Equipe{% endblock %}
+
+{% block body %}
+    <h1>{{section.name}} - Détail {{teamCategory.title}}</h1>
+
+    {% include('section/navbar.html.twig') %}
+
+   <ul>
+    {% if teamCategory is defined and teamCategory is not empty %}
+        {% for team in teamCategory.teams %}
+            <li>{{ team.name }}</li>
+        {% endfor %}
+    {% else %}
+        <li>Aucune équipe disponible pour cette catégorie</li>
+    {% endif %}
+</ul>
+
+{% endblock %}

@@ -18,7 +18,7 @@
                             {% if navBarDdLink.routeName is not defined or not navBarDdLink.routeName %}
                                 {{ navBarDdLink.name }}
                             {% else %}
-                                <a href="{{ path(navBarDdLink.routeName, {'slugSection': section.slug}) }}">{{ navBarDdLink.name }}</a>
+                                <a href="{{ path(navBarDdLink.routeName, {'slugSection': section.slug, 'slugNavBarDdLink': navBarDdLink.slug }) }}">{{ navBarDdLink.name }}</a>
                             {% endif %}
                         </li>
                     {% endfor %}

@@ -55,7 +55,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
         $nos_equipes_football->setName("Football - Nos Equipes");
         $nos_equipes_football->setTitle("Nos Equipes");
         $nos_equipes_football->setSlug($this->slugify->slugify($nos_equipes_football->getTitle()));
-        $nos_equipes_football->setRouteName('');
+        $nos_equipes_football->setRouteName('our_team_categories_section');
         $nos_equipes_football->setRanking(3);
         $nos_equipes_football->setSection($this->getReference(AssoSectionsFixtures::FOOTBALL));
         $nos_equipes_football->setCreatedAtValue();
@@ -194,7 +194,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
         $reglement_charte_le_club_football->setCreatedAtValue();
 
         $manager->persist($reglement_charte_le_club_football);
-        
+
         $nos_partenaires_le_club_football = new NavBarDdLink();
 
         $nos_partenaires_le_club_football->setName("Nos Partenaires");
@@ -212,7 +212,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $seniors_nos_equipes_football->setName("Séniors");
         $seniors_nos_equipes_football->setSlug($this->slugify->slugify($seniors_nos_equipes_football->getName()));
-        $seniors_nos_equipes_football->setRouteName('');
+        $seniors_nos_equipes_football->setRouteName('our_teams_section');
         $seniors_nos_equipes_football->setRanking(1);
         $seniors_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $seniors_nos_equipes_football->setCreatedAtValue();
@@ -223,7 +223,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u19_nos_equipes_football->setName("U19");
         $u19_nos_equipes_football->setSlug($this->slugify->slugify($u19_nos_equipes_football->getName()));
-        $u19_nos_equipes_football->setRouteName('');
+        $u19_nos_equipes_football->setRouteName('our_teams_section');
         $u19_nos_equipes_football->setRanking(2);
         $u19_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u19_nos_equipes_football->setCreatedAtValue();
@@ -234,7 +234,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u17_nos_equipes_football->setName("U17");
         $u17_nos_equipes_football->setSlug($this->slugify->slugify($u17_nos_equipes_football->getName()));
-        $u17_nos_equipes_football->setRouteName('');
+        $u17_nos_equipes_football->setRouteName('our_teams_section');
         $u17_nos_equipes_football->setRanking(3);
         $u17_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u17_nos_equipes_football->setCreatedAtValue();
@@ -245,7 +245,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u15_nos_equipes_football->setName("U15");
         $u15_nos_equipes_football->setSlug($this->slugify->slugify($u15_nos_equipes_football->getName()));
-        $u15_nos_equipes_football->setRouteName('');
+        $u15_nos_equipes_football->setRouteName('our_teams_section');
         $u15_nos_equipes_football->setRanking(4);
         $u15_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u15_nos_equipes_football->setCreatedAtValue();
@@ -256,7 +256,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u13_nos_equipes_football->setName("U13");
         $u13_nos_equipes_football->setSlug($this->slugify->slugify($u13_nos_equipes_football->getName()));
-        $u13_nos_equipes_football->setRouteName('');
+        $u13_nos_equipes_football->setRouteName('our_teams_section');
         $u13_nos_equipes_football->setRanking(5);
         $u13_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u13_nos_equipes_football->setCreatedAtValue();
@@ -267,7 +267,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u11_nos_equipes_football->setName("U11");
         $u11_nos_equipes_football->setSlug($this->slugify->slugify($u11_nos_equipes_football->getName()));
-        $u11_nos_equipes_football->setRouteName('');
+        $u11_nos_equipes_football->setRouteName('our_teams_section');
         $u11_nos_equipes_football->setRanking(6);
         $u11_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u11_nos_equipes_football->setCreatedAtValue();
@@ -278,7 +278,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u9_nos_equipes_football->setName("U9");
         $u9_nos_equipes_football->setSlug($this->slugify->slugify($u9_nos_equipes_football->getName()));
-        $u9_nos_equipes_football->setRouteName('');
+        $u9_nos_equipes_football->setRouteName('our_teams_section');
         $u9_nos_equipes_football->setRanking(7);
         $u9_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u9_nos_equipes_football->setCreatedAtValue();
@@ -289,7 +289,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $u7_nos_equipes_football->setName("U7");
         $u7_nos_equipes_football->setSlug($this->slugify->slugify($u7_nos_equipes_football->getName()));
-        $u7_nos_equipes_football->setRouteName('');
+        $u7_nos_equipes_football->setRouteName('our_teams_section');
         $u7_nos_equipes_football->setRanking(8);
         $u7_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $u7_nos_equipes_football->setCreatedAtValue();
@@ -311,7 +311,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $veterans_nos_equipes_football->setName("Vétérans");
         $veterans_nos_equipes_football->setSlug($this->slugify->slugify($veterans_nos_equipes_football->getName()));
-        $veterans_nos_equipes_football->setRouteName('');
+        $veterans_nos_equipes_football->setRouteName('our_teams_section');
         $veterans_nos_equipes_football->setRanking(10);
         $veterans_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $veterans_nos_equipes_football->setCreatedAtValue();
@@ -322,7 +322,7 @@ class NavBarSectionFootballFixtures extends Fixture implements DependentFixtureI
 
         $loisirs_nos_equipes_football->setName("Loisirs");
         $loisirs_nos_equipes_football->setSlug($this->slugify->slugify($loisirs_nos_equipes_football->getName()));
-        $loisirs_nos_equipes_football->setRouteName('');
+        $loisirs_nos_equipes_football->setRouteName('our_teams_section');
         $loisirs_nos_equipes_football->setRanking(11);
         $loisirs_nos_equipes_football->setNavBarLink($nos_equipes_football);
         $loisirs_nos_equipes_football->setCreatedAtValue();

@@ -79,11 +79,15 @@ class Section
     #[ORM\ManyToMany(targetEntity: ActivityPlace::class, mappedBy: 'sections')]
     private Collection $activityPlaces;
 
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: TeamCategory::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $teamCategories;
+
     public function __construct()
     {
         $this->navBarLinks = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->activityPlaces = new ArrayCollection();
+        $this->teamCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,11 +208,10 @@ class Section
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
@@ -216,11 +219,16 @@ class Section
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
-        return $this;
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getAssociation(): ?Association
@@ -233,23 +241,6 @@ class Section
         $this->association = $association;
 
         return $this;
-    }
-
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
-
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new \DateTimeImmutable();
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 
     /**
@@ -334,6 +325,36 @@ class Section
     {
         if ($this->activityPlaces->removeElement($activityPlace)) {
             $activityPlace->removeSection($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TeamCategory>
+     */
+    public function getTeamCategories(): Collection
+    {
+        return $this->teamCategories;
+    }
+
+    public function addTeamCategory(TeamCategory $teamCategory): static
+    {
+        if (!$this->teamCategories->contains($teamCategory)) {
+            $this->teamCategories->add($teamCategory);
+            $teamCategory->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeamCategory(TeamCategory $teamCategory): static
+    {
+        if ($this->teamCategories->removeElement($teamCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($teamCategory->getSection() === $this) {
+                $teamCategory->setSection(null);
+            }
         }
 
         return $this;

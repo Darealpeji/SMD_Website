@@ -9,6 +9,7 @@ use App\Entity\Association;
 use App\Entity\NavBarDdLink;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
+use App\Entity\TeamCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -55,6 +56,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section("Gestion des Sections");
         yield MenuItem::linkToCrud('Sections', 'fas fa-building', Section::class);
+
+        yield MenuItem::section('Gestion des Equipes');
+        yield MenuItem::linkToCrud('Catégories & Equipes', 'fas fa-shirt', TeamCategory::class);
 
         yield MenuItem::section("Gestion des Articles");
         yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', Article::class);

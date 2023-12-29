@@ -54,7 +54,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
         $nos_equipes_basket->setName("Basket - Nos Equipes");
         $nos_equipes_basket->setTitle("Nos Equipes");
         $nos_equipes_basket->setSlug($this->slugify->slugify($nos_equipes_basket->getTitle()));
-        $nos_equipes_basket->setRouteName('');
+        $nos_equipes_basket->setRouteName('our_team_categories_section');
         $nos_equipes_basket->setRanking(3);
         $nos_equipes_basket->setSection($this->getReference(AssoSectionsFixtures::BASKET));
         $nos_equipes_basket->setCreatedAtValue();
@@ -189,7 +189,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $seniors_nos_equipes_basket->setName("Séniors");
         $seniors_nos_equipes_basket->setSlug($this->slugify->slugify($seniors_nos_equipes_basket->getName()));
-        $seniors_nos_equipes_basket->setRouteName('');
+        $seniors_nos_equipes_basket->setRouteName('our_teams_section');
         $seniors_nos_equipes_basket->setRanking(1);
         $seniors_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $seniors_nos_equipes_basket->setCreatedAtValue();
@@ -200,7 +200,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u18_nos_equipes_basket->setName("U18");
         $u18_nos_equipes_basket->setSlug($this->slugify->slugify($u18_nos_equipes_basket->getName()));
-        $u18_nos_equipes_basket->setRouteName('');
+        $u18_nos_equipes_basket->setRouteName('our_teams_section');
         $u18_nos_equipes_basket->setRanking(2);
         $u18_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u18_nos_equipes_basket->setCreatedAtValue();
@@ -211,7 +211,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u15_nos_equipes_basket->setName("U15");
         $u15_nos_equipes_basket->setSlug($this->slugify->slugify($u15_nos_equipes_basket->getName()));
-        $u15_nos_equipes_basket->setRouteName('');
+        $u15_nos_equipes_basket->setRouteName('our_teams_section');
         $u15_nos_equipes_basket->setRanking(3);
         $u15_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u15_nos_equipes_basket->setCreatedAtValue();
@@ -222,7 +222,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u13_nos_equipes_basket->setName("U13");
         $u13_nos_equipes_basket->setSlug($this->slugify->slugify($u13_nos_equipes_basket->getName()));
-        $u13_nos_equipes_basket->setRouteName('');
+        $u13_nos_equipes_basket->setRouteName('our_teams_section');
         $u13_nos_equipes_basket->setRanking(4);
         $u13_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u13_nos_equipes_basket->setCreatedAtValue();
@@ -233,7 +233,7 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u11_nos_equipes_basket->setName("U11");
         $u11_nos_equipes_basket->setSlug($this->slugify->slugify($u11_nos_equipes_basket->getName()));
-        $u11_nos_equipes_basket->setRouteName('');
+        $u11_nos_equipes_basket->setRouteName('our_teams_section');
         $u11_nos_equipes_basket->setRanking(5);
         $u11_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u11_nos_equipes_basket->setCreatedAtValue();
@@ -244,23 +244,12 @@ class NavBarSectionBasketFixtures extends Fixture implements DependentFixtureInt
 
         $u9_nos_equipes_basket->setName("U9");
         $u9_nos_equipes_basket->setSlug($this->slugify->slugify($u9_nos_equipes_basket->getName()));
-        $u9_nos_equipes_basket->setRouteName('');
+        $u9_nos_equipes_basket->setRouteName('our_teams_section');
         $u9_nos_equipes_basket->setRanking(6);
         $u9_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
         $u9_nos_equipes_basket->setCreatedAtValue();
 
         $manager->persist($u9_nos_equipes_basket);
-
-        $loisirs_nos_equipes_basket = new NavBarDdLink();
-
-        $loisirs_nos_equipes_basket->setName("Loisirs");
-        $loisirs_nos_equipes_basket->setSlug($this->slugify->slugify($loisirs_nos_equipes_basket->getName()));
-        $loisirs_nos_equipes_basket->setRouteName('');
-        $loisirs_nos_equipes_basket->setRanking(7);
-        $loisirs_nos_equipes_basket->setNavBarLink($nos_equipes_basket);
-        $loisirs_nos_equipes_basket->setCreatedAtValue();
-
-        $manager->persist($loisirs_nos_equipes_basket);
 
         $ecole_arbitrage_nos_equipes_basket = new NavBarDdLink();
 

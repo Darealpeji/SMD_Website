@@ -54,7 +54,7 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
         $nos_equipes_tennis_de_table->setName("Tennis de Table - Nos Equipes");
         $nos_equipes_tennis_de_table->setTitle("Nos Equipes");
         $nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($nos_equipes_tennis_de_table->getTitle()));
-        $nos_equipes_tennis_de_table->setRouteName('');
+        $nos_equipes_tennis_de_table->setRouteName('our_team_categories_section');
         $nos_equipes_tennis_de_table->setRanking(3);
         $nos_equipes_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
         $nos_equipes_tennis_de_table->setCreatedAtValue();
@@ -151,93 +151,49 @@ class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFix
 
         // NavBarDdLink "Nos_Equipes_Tennis de Table"
 
-        $national_2_nos_equipes_tennis_de_table = new NavBarDdLink();
+        $nationale_nos_equipes_tennis_de_table = new NavBarDdLink();
 
-        $national_2_nos_equipes_tennis_de_table->setName("Nationale 2");
-        $national_2_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($national_2_nos_equipes_tennis_de_table->getName()));
-        $national_2_nos_equipes_tennis_de_table->setRouteName('');
-        $national_2_nos_equipes_tennis_de_table->setRanking(1);
-        $national_2_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $national_2_nos_equipes_tennis_de_table->setCreatedAtValue();
+        $nationale_nos_equipes_tennis_de_table->setName("Nationale");
+        $nationale_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($nationale_nos_equipes_tennis_de_table->getName()));
+        $nationale_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
+        $nationale_nos_equipes_tennis_de_table->setRanking(1);
+        $nationale_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
+        $nationale_nos_equipes_tennis_de_table->setCreatedAtValue();
 
-        $manager->persist($national_2_nos_equipes_tennis_de_table);
+        $manager->persist($nationale_nos_equipes_tennis_de_table);
 
-        $national_3_nos_equipes_tennis_de_table = new NavBarDdLink();
+        $regionale_nos_equipes_tennis_de_table = new NavBarDdLink();
 
-        $national_3_nos_equipes_tennis_de_table->setName("Nationale 3");
-        $national_3_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($national_3_nos_equipes_tennis_de_table->getName()));
-        $national_3_nos_equipes_tennis_de_table->setRouteName('');
-        $national_3_nos_equipes_tennis_de_table->setRanking(2);
-        $national_3_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $national_3_nos_equipes_tennis_de_table->setCreatedAtValue();
+        $regionale_nos_equipes_tennis_de_table->setName("Régionale");
+        $regionale_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($regionale_nos_equipes_tennis_de_table->getName()));
+        $regionale_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
+        $regionale_nos_equipes_tennis_de_table->setRanking(2);
+        $regionale_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
+        $regionale_nos_equipes_tennis_de_table->setCreatedAtValue();
 
-        $manager->persist($national_3_nos_equipes_tennis_de_table);
+        $manager->persist($regionale_nos_equipes_tennis_de_table);
 
-        $pre_national_nos_equipes_tennis_de_table = new NavBarDdLink();
+        $departementale_nos_equipes_tennis_de_table = new NavBarDdLink();
 
-        $pre_national_nos_equipes_tennis_de_table->setName("Pré-Nationale");
-        $pre_national_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($pre_national_nos_equipes_tennis_de_table->getName()));
-        $pre_national_nos_equipes_tennis_de_table->setRouteName('');
-        $pre_national_nos_equipes_tennis_de_table->setRanking(3);
-        $pre_national_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $pre_national_nos_equipes_tennis_de_table->setCreatedAtValue();
+        $departementale_nos_equipes_tennis_de_table->setName("Départementale");
+        $departementale_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_nos_equipes_tennis_de_table->getName()));
+        $departementale_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
+        $departementale_nos_equipes_tennis_de_table->setRanking(3);
+        $departementale_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
+        $departementale_nos_equipes_tennis_de_table->setCreatedAtValue();
 
-        $manager->persist($pre_national_nos_equipes_tennis_de_table);
+        $manager->persist($departementale_nos_equipes_tennis_de_table);
 
-        $regional_3_nos_equipes_tennis_de_table = new NavBarDdLink();
+        $jeunes_nos_equipes_tennis_de_table = new NavBarDdLink();
 
-        $regional_3_nos_equipes_tennis_de_table->setName("Régionale 3");
-        $regional_3_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($regional_3_nos_equipes_tennis_de_table->getName()));
-        $regional_3_nos_equipes_tennis_de_table->setRouteName('');
-        $regional_3_nos_equipes_tennis_de_table->setRanking(4);
-        $regional_3_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $regional_3_nos_equipes_tennis_de_table->setCreatedAtValue();
+        $jeunes_nos_equipes_tennis_de_table->setName("Jeunes");
+        $jeunes_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($jeunes_nos_equipes_tennis_de_table->getName()));
+        $jeunes_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
+        $jeunes_nos_equipes_tennis_de_table->setRanking(4);
+        $jeunes_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
+        $jeunes_nos_equipes_tennis_de_table->setCreatedAtValue();
 
-        $manager->persist($regional_3_nos_equipes_tennis_de_table);
-
-        $departementale_1_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $departementale_1_nos_equipes_tennis_de_table->setName("Départementale 1");
-        $departementale_1_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_1_nos_equipes_tennis_de_table->getName()));
-        $departementale_1_nos_equipes_tennis_de_table->setRouteName('');
-        $departementale_1_nos_equipes_tennis_de_table->setRanking(5);
-        $departementale_1_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $departementale_1_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($departementale_1_nos_equipes_tennis_de_table);
-
-        $departementale_2_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $departementale_2_nos_equipes_tennis_de_table->setName("Départementale 2");
-        $departementale_2_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_2_nos_equipes_tennis_de_table->getName()));
-        $departementale_2_nos_equipes_tennis_de_table->setRouteName('');
-        $departementale_2_nos_equipes_tennis_de_table->setRanking(6);
-        $departementale_2_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $departementale_2_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($departementale_2_nos_equipes_tennis_de_table);
-
-        $departementale_3_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $departementale_3_nos_equipes_tennis_de_table->setName("Départementale 3");
-        $departementale_3_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_3_nos_equipes_tennis_de_table->getName()));
-        $departementale_3_nos_equipes_tennis_de_table->setRouteName('');
-        $departementale_3_nos_equipes_tennis_de_table->setRanking(7);
-        $departementale_3_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $departementale_3_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($departementale_3_nos_equipes_tennis_de_table);
-
-        $departementale_4_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $departementale_4_nos_equipes_tennis_de_table->setName("Départementale 4");
-        $departementale_4_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_4_nos_equipes_tennis_de_table->getName()));
-        $departementale_4_nos_equipes_tennis_de_table->setRouteName('');
-        $departementale_4_nos_equipes_tennis_de_table->setRanking(8);
-        $departementale_4_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $departementale_4_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($departementale_4_nos_equipes_tennis_de_table);
+        $manager->persist($jeunes_nos_equipes_tennis_de_table);
 
         // NavBarDdLink "Infos_Pratiques_Tennis de Table"
 

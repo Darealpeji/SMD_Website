@@ -2,9 +2,12 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Team;
 use App\Entity\Article;
 use App\Entity\Section;
 use App\Entity\Association;
+use App\Entity\TeamCategory;
+use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,7 +22,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $this->entityManager = $entityManager;
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [
@@ -41,11 +44,11 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         if (method_exists($entityInstance, 'getNavBarLinks')) {
 
             $navBarLinks = $entityInstance->getNavBarLinks();
-            
+
             foreach ($navBarLinks as $navBarLink) {
 
                 $navBarDdLinks = $navBarLink->getNavBarDdLinks();
-                
+
                 if ($navBarLink->getCreatedAt() === null) {
                     $navBarLink->setCreatedAtValue();
                 }
@@ -55,6 +58,18 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                     if ($navBarDdLink->getCreatedAt() === null) {
                         $navBarDdLink->setCreatedAtValue();
                     }
+                }
+            }
+        }
+
+        if (method_exists($entityInstance, 'getTeams')) {
+
+            $teams = $entityInstance->getTeams();
+
+            foreach ($teams as $team) {
+
+                if ($team->getCreatedAt() === null) {
+                    $team->setCreatedAtValue();
                 }
             }
         }
@@ -72,13 +87,12 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         if ($this->hasChanges($entityInstance, $originalEntity)) {
             $entityInstance->setUpdatedAtValue();
-
         }
 
         if (method_exists($entityInstance, 'getNavBarLinks')) {
 
             $navBarLinks = $entityInstance->getNavBarLinks();
-            
+
             foreach ($navBarLinks as $navBarLink) {
 
                 $section = $navBarLink->getSection();
@@ -115,11 +129,11 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
                     if ($navBarDdLink->getCreatedAt() === null) {
                         $navBarDdLink->setCreatedAtValue();
-        
+
                         if ($section !== null) {
                             $section->setUpdatedAtValue();
                         }
-        
+
                         if ($association !== null) {
                             $association->setUpdatedAtValue();
                         }
@@ -145,15 +159,45 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 }
             }
         }
+
+        if (method_exists($entityInstance, 'getTeams')) {
+
+            $teams = $entityInstance->getTeams();
+
+            foreach ($teams as $team) {
+
+                $teamCategory = $team->getTeamCategory();
+
+                if ($team->getCreatedAt() === null) {
+                    $team->setCreatedAtValue();
+
+                    if ($teamCategory !== null) {
+                        $teamCategory->setUpdatedAtValue();
+                    }
+                }
+
+                $originalTeam = $this->entityManager->getUnitOfWork()->getOriginalEntityData($team);
+
+                if ($this->hasChanges($team, $originalTeam)) {
+                    $team->setUpdatedAtValue();
+
+                    if ($teamCategory !== null) {
+                        $teamCategory->setUpdatedAtValue();
+                    }
+                }
+            }
+        }
     }
 
     private function supportsEntity($entity): bool
     {
-        return $entity instanceof Association 
+        return $entity instanceof Association
             || $entity instanceof Section
             || $entity instanceof Article
             || $entity instanceof ArticleCategory
-            || $entity instanceof ActivityPlace;
+            || $entity instanceof ActivityPlace
+            || $entity instanceof TeamCategory
+            || $entity instanceof Team;
     }
 
     private function hasChanges($entity, $originalData): bool
@@ -175,5 +219,4 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         return false;
     }
-
 }
