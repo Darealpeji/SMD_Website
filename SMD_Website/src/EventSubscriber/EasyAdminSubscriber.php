@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Team;
+use App\Entity\Member;
 use App\Entity\Article;
 use App\Entity\Section;
 use App\Entity\Association;
@@ -197,7 +198,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             || $entity instanceof ArticleCategory
             || $entity instanceof ActivityPlace
             || $entity instanceof TeamCategory
-            || $entity instanceof Team;
+            || $entity instanceof Team
+            || $entity instanceof Member;
     }
 
     private function hasChanges($entity, $originalData): bool

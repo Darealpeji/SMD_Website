@@ -95,14 +95,14 @@ class ActivityPlaceCrudController extends AbstractCrudController
         return [
             IntegerField::new('id', 'ID :')->onlyOnIndex(),
             FormField::addFieldset('Informations Générales'),
-            IntegerField::new('name', 'Nom du Lieu :')->setColumns(6),
+            TextField::new('name', 'Nom du Lieu :')->setColumns(6),
             FormField::addRow(),
             TextField::new('adress', 'Adresse :')->setColumns(6)->hideOnIndex(),
             TextField::new('postalCode', 'Code Postal :')->setColumns(2)->hideOnIndex(),
             TextField::new('city', 'Ville :')->setColumns(4)->hideOnIndex(),
             TextField::new('googleMapLink', 'Lien Google Map :')->setColumns(6)->hideOnIndex(),
             TextEditorField::new('recommendedRoute', "Itinéraire(s) Conseillé(s) :")->setColumns(12)->hideOnIndex(),
-            
+
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),
         ];

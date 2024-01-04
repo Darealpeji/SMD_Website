@@ -72,12 +72,16 @@ class Association
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: ActivityPlace::class)]
     private Collection $activityPlaces;
 
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: Member::class)]
+    private Collection $members;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
         $this->navBarLinks = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->activityPlaces = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -311,6 +315,36 @@ class Association
             // set the owning side to null (unless already changed)
             if ($activityPlace->getAssociation() === $this) {
                 $activityPlace->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): static
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): static
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getAssociation() === $this) {
+                $member->setAssociation(null);
             }
         }
 

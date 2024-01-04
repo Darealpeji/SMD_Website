@@ -3,189 +3,142 @@
 namespace App\DataFixtures;
 
 use App\Entity\NavBarLink;
-use Cocur\Slugify\Slugify;
 use App\Entity\NavBarDdLink;
 use Doctrine\Persistence\ObjectManager;
+use App\Repository\NavBarLinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\DataFixtures\AssoSectionsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class NavBarSectionDanseFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $slugify;
+    private $navBarLinkRepository;
+    private $entityManager;
+    private const SECTION = AssoSectionsFixtures::DANSE;
 
-    public function __construct(Slugify $slugify)
+    public function __construct(EntityManagerInterface $entityManager, NavBarLinkRepository $navBarLinkRepository)
     {
-        $this->slugify = $slugify;
+        $this->entityManager = $entityManager;
+        $this->navBarLinkRepository = $navBarLinkRepository;
     }
 
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $manager)
     {
-        ##### Entités "NavBarLink" #####
+        $section = $this->getReference(self::SECTION);
 
-        // NavBarLink "Section Danse"
-
-        $accueil_danse = new NavBarLink();
-
-        $accueil_danse->setName("Danse - Accueil");
-        $accueil_danse->setTitle("Accueil");
-        $accueil_danse->setSlug("section-danse");
-        $accueil_danse->setRouteName('home_section');
-        $accueil_danse->setRanking(1);
-        $accueil_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $accueil_danse->setCreatedAtValue();
-
-        $manager->persist($accueil_danse);
-
-        $presentation_danse = new NavBarLink();
-
-        $presentation_danse->setName("Danse - Présentation");
-        $presentation_danse->setTitle("Présentation");
-        $presentation_danse->setSlug($this->slugify->slugify($presentation_danse->getTitle()));
-        $presentation_danse->setRouteName('');
-        $presentation_danse->setRanking(2);
-        $presentation_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $presentation_danse->setCreatedAtValue();
-
-        $manager->persist($presentation_danse);
-
-        $nos_danses_danse = new NavBarLink();
-
-        $nos_danses_danse->setName("Danse - Nos Danses");
-        $nos_danses_danse->setTitle("Nos Danses");
-        $nos_danses_danse->setSlug($this->slugify->slugify($nos_danses_danse->getTitle()));
-        $nos_danses_danse->setRouteName('');
-        $nos_danses_danse->setRanking(3);
-        $nos_danses_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $nos_danses_danse->setCreatedAtValue();
-
-        $manager->persist($nos_danses_danse);
-
-        $boutique_danse = new NavBarLink();
-
-        $boutique_danse->setName("Danse - Boutique");
-        $boutique_danse->setTitle("Boutique");
-        $boutique_danse->setSlug($this->slugify->slugify($boutique_danse->getTitle()));
-        $boutique_danse->setRouteName('');
-        $boutique_danse->setRanking(4);
-        $boutique_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $boutique_danse->setCreatedAtValue();
-
-        $manager->persist($boutique_danse);
-
-        $infos_pratiques_danse = new NavBarLink();
-
-        $infos_pratiques_danse->setName("Danse - Infos Pratiques");
-        $infos_pratiques_danse->setTitle("Infos Pratiques");
-        $infos_pratiques_danse->setSlug($this->slugify->slugify($infos_pratiques_danse->getTitle()));
-        $infos_pratiques_danse->setRouteName('useful_informations_section');
-        $infos_pratiques_danse->setRanking(5);
-        $infos_pratiques_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $infos_pratiques_danse->setCreatedAtValue();
-
-        $manager->persist($infos_pratiques_danse);
-
-        $acces_membres_danse = new NavBarLink();
-
-        $acces_membres_danse->setName("Danse - Accès Membres");
-        $acces_membres_danse->setTitle("Accès Membres");
-        $acces_membres_danse->setSlug($this->slugify->slugify($acces_membres_danse->getTitle()));
-        $acces_membres_danse->setRouteName('');
-        $acces_membres_danse->setRanking(6);
-        $acces_membres_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $acces_membres_danse->setCreatedAtValue();
-
-        $manager->persist($acces_membres_danse);
-
-        $retour_danse = new NavBarLink();
-
-        $retour_danse->setName("Danse - Retour");
-        $retour_danse->setTitle("Retour");
-        $retour_danse->setSlug($this->slugify->slugify($retour_danse->getTitle()));
-        $retour_danse->setRouteName('home_association');
-        $retour_danse->setRanking(6);
-        $retour_danse->setSection($this->getReference(AssoSectionsFixtures::DANSE));
-        $retour_danse->setCreatedAtValue();
-
-        $manager->persist($retour_danse);
-
+        $this->loadNavBarLinks($manager);
         $manager->flush();
+        $this->dumpCreatedEntitiesCount(NavBarLink::class, $section);
 
-        ##### Entités "NavBarDdLink" #####
-
-        // NavBarDdLink "Accueil_Danse"
-
-        $actualites_accueil_danse = new NavBarDdLink();
-
-        $actualites_accueil_danse->setName("Actualités");
-        $actualites_accueil_danse->setSlug($this->slugify->slugify($actualites_accueil_danse->getName()));
-        $actualites_accueil_danse->setRouteName('news_section');
-        $actualites_accueil_danse->setRanking(1);
-        $actualites_accueil_danse->setNavBarLink($accueil_danse);
-        $actualites_accueil_danse->setCreatedAtValue();
-
-        $manager->persist($actualites_accueil_danse);
-
-        // NavBarDdLink "Nos_Danses_Danse"
-
-        $danse_moderne_jazz_nos_danses_danse = new NavBarDdLink();
-
-        $danse_moderne_jazz_nos_danses_danse->setName("Parents-Bébé");
-        $danse_moderne_jazz_nos_danses_danse->setSlug($this->slugify->slugify($danse_moderne_jazz_nos_danses_danse->getName()));
-        $danse_moderne_jazz_nos_danses_danse->setRouteName('');
-        $danse_moderne_jazz_nos_danses_danse->setRanking(1);
-        $danse_moderne_jazz_nos_danses_danse->setNavBarLink($nos_danses_danse);
-        $danse_moderne_jazz_nos_danses_danse->setCreatedAtValue();
-
-        $manager->persist($danse_moderne_jazz_nos_danses_danse);
-
-        $danse_de_salon_nos_danses_danse = new NavBarDdLink();
-
-        $danse_de_salon_nos_danses_danse->setName("Eveil Gymnique");
-        $danse_de_salon_nos_danses_danse->setSlug($this->slugify->slugify($danse_de_salon_nos_danses_danse->getName()));
-        $danse_de_salon_nos_danses_danse->setRouteName('');
-        $danse_de_salon_nos_danses_danse->setRanking(2);
-        $danse_de_salon_nos_danses_danse->setNavBarLink($nos_danses_danse);
-        $danse_de_salon_nos_danses_danse->setCreatedAtValue();
-
-        $manager->persist($danse_de_salon_nos_danses_danse);
-
-        $danse_bretonne_nos_danses_danse = new NavBarDdLink();
-
-        $danse_bretonne_nos_danses_danse->setName("Loisirs");
-        $danse_bretonne_nos_danses_danse->setSlug($this->slugify->slugify($danse_bretonne_nos_danses_danse->getName()));
-        $danse_bretonne_nos_danses_danse->setRouteName('');
-        $danse_bretonne_nos_danses_danse->setRanking(3);
-        $danse_bretonne_nos_danses_danse->setNavBarLink($nos_danses_danse);
-        $danse_bretonne_nos_danses_danse->setCreatedAtValue();
-
-        $manager->persist($danse_bretonne_nos_danses_danse);
-
-        // NavBarDdLink "Accès_Membres_Danse"
-
-        $compte_acces_membres_danse = new NavBarDdLink();
-
-        $compte_acces_membres_danse->setName("Compte");
-        $compte_acces_membres_danse->setSlug($this->slugify->slugify($compte_acces_membres_danse->getName()));
-        $compte_acces_membres_danse->setRouteName('');
-        $compte_acces_membres_danse->setRanking(1);
-        $compte_acces_membres_danse->setNavBarLink($acces_membres_danse);
-        $compte_acces_membres_danse->setCreatedAtValue();
-
-        $manager->persist($compte_acces_membres_danse);
-
-        $se_deconnecter_acces_membres_danse = new NavBarDdLink();
-
-        $se_deconnecter_acces_membres_danse->setName("Se Déconnecter");
-        $se_deconnecter_acces_membres_danse->setSlug($this->slugify->slugify($se_deconnecter_acces_membres_danse->getName()));
-        $se_deconnecter_acces_membres_danse->setRouteName('');
-        $se_deconnecter_acces_membres_danse->setRanking(2);
-        $se_deconnecter_acces_membres_danse->setNavBarLink($acces_membres_danse);
-        $se_deconnecter_acces_membres_danse->setCreatedAtValue();
-
-        $manager->persist($se_deconnecter_acces_membres_danse);
-
+        $this->loadNavBarDdLinks($manager);
         $manager->flush();
+        $this->dumpCreatedEntitiesCount(NavBarDdLink::class, $section);
+    }
+
+    public function loadNavBarLinks(ObjectManager $manager): void
+    {
+        $section = $this->getReference(self::SECTION);
+
+        $navBarLinksData = [
+            ['Accueil', 'section-danse', 'home_section', 1],
+            ['Présentation', 'presentation', '', 2],
+            ['Nos Danses', 'nos-danses', '', 3],
+            ['Boutique', 'boutique', '', 4],
+            ['Infos Pratiques', 'infos-pratiques', 'useful_informations_section', 5],
+            ['Accès Membres', 'acces-membres', '', 6],
+            ['Retour', '', 'home_association', 7],
+        ];
+
+        foreach ($navBarLinksData as $linkData) {
+            $navBarLink = $this->createNavBarLink($linkData, $section);
+            $manager->persist($navBarLink);
+        }
+    }
+
+    public function loadNavBarDdLinks(ObjectManager $manager): void
+    {
+        $accueil = $this->navBarLinkRepository->findOneBy(['name' => 'Danse - Accueil']);
+        $nos_danses = $this->navBarLinkRepository->findOneBy(['name' => 'Danse - Nos Danses']);
+        $infos_pratiques = $this->navBarLinkRepository->findOneBy(['name' => 'Danse - Infos Pratiques']);
+        $acces_membres = $this->navBarLinkRepository->findOneBy(['name' => 'Danse - Accès Membres']);
+
+        $navBarDdLinksData = [
+            ['Actualités', 'actualites', 'news_section', 1, $accueil],
+            ['Danse Bretonne', 'danse_bretonne', '', 1, $nos_danses],
+            ['Modern Jazz', 'modern_jazz', '', 2, $nos_danses],
+            ['Danse de Salon', 'danse_de_salon', '', 3, $nos_danses],
+            ['Inscriptions', 'inscriptions', '', 1, $infos_pratiques],
+            ['Compte', 'compte', '', 1, $acces_membres],
+            ['Se Déconnecter', 'se-deconnecter', '', 2, $acces_membres],
+        ];
+
+        foreach ($navBarDdLinksData as $ddLinkData) {
+            $navBarDdLink = $this->createNavBarDdLink($ddLinkData);
+            $manager->persist($navBarDdLink);
+        }
+    }
+
+    private function createNavBarLink(array $navBarLinksData, $section): NavBarLink
+    {
+        [$title, $slug, $routeName, $ranking] = $navBarLinksData;
+
+        $navBarLink = new NavBarLink();
+        $navBarLink
+            ->setName("Danse - " . $title)
+            ->setTitle($title)
+            ->setSlug($slug)
+            ->setRouteName($routeName)
+            ->setRanking($ranking)
+            ->setSection($section)
+            ->setCreatedAtValue();
+        return $navBarLink;
+    }
+
+    private function createNavBarDdLink(array $navBarDdLinksData): NavBarDdLink
+    {
+        [$name, $slug, $routeName, $ranking, $navBarLink] = $navBarDdLinksData;
+
+        $navBarDdLink = new NavBarDdLink();
+        $navBarDdLink
+            ->setName($name)
+            ->setSlug($slug)
+            ->setRouteName($routeName)
+            ->setRanking($ranking)
+            ->setNavBarLink($navBarLink)
+            ->setCreatedAtValue();
+        return $navBarDdLink;
+    }
+
+    private function dumpCreatedEntitiesCount(string $entityClass, $section): void
+    {
+        $repository = $this->entityManager->getRepository($entityClass);
+
+        if ($entityClass === NavBarLink::class) {
+            $navBarLinks = $repository->findBy(['section' => $section]);
+            $count = count($navBarLinks);
+
+            echo sprintf("Nombre de NavBarLink(s) créé(s) pour la %s : %d\n", $section->getName(), $count);
+
+            foreach ($navBarLinks as $navBarLink) {
+                echo sprintf("- %s\n", $navBarLink->getName());
+            }
+        } elseif ($entityClass === NavBarDdLink::class) {
+            $navBarDdLinks = $repository->createQueryBuilder('ddLink')
+                ->join('ddLink.navBarLink', 'navBarLink')
+                ->where('navBarLink.section = :section')
+                ->setParameter('section', $section)
+                ->getQuery()
+                ->getResult();
+
+            $count = count($navBarDdLinks);
+
+            echo sprintf("Nombre de NavBarDdLink(s) créé(s) pour la %s : %d\n", $section->getName(), $count);
+
+            foreach ($navBarDdLinks as $navBarDdLink) {
+                echo sprintf("- %s\n", $navBarDdLink->getName());
+            }
+        }
     }
 
     public function getDependencies()

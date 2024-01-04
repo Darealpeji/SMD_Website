@@ -3,247 +3,147 @@
 namespace App\DataFixtures;
 
 use App\Entity\NavBarLink;
-use Cocur\Slugify\Slugify;
 use App\Entity\NavBarDdLink;
 use Doctrine\Persistence\ObjectManager;
+use App\Repository\NavBarLinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\DataFixtures\AssoSectionsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class NavBarSectionTennisDeTableFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $slugify;
+    private $navBarLinkRepository;
+    private $entityManager;
+    private const SECTION = AssoSectionsFixtures::TENNIS_DE_TABLE;
 
-    public function __construct(Slugify $slugify)
+    public function __construct(EntityManagerInterface $entityManager, NavBarLinkRepository $navBarLinkRepository)
     {
-        $this->slugify = $slugify;
+        $this->entityManager = $entityManager;
+        $this->navBarLinkRepository = $navBarLinkRepository;
     }
 
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $manager)
     {
-        ##### Entités "NavBarLink" #####
+        $section = $this->getReference(self::SECTION);
 
-        // NavBarLink "Section Tennis de Table"
-
-        $accueil_tennis_de_table = new NavBarLink();
-
-        $accueil_tennis_de_table->setName("Tennis de Table - Accueil");
-        $accueil_tennis_de_table->setTitle("Accueil");
-        $accueil_tennis_de_table->setSlug("section-tennis-de-table");
-        $accueil_tennis_de_table->setRouteName('home_section');
-        $accueil_tennis_de_table->setRanking(1);
-        $accueil_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
-        $accueil_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($accueil_tennis_de_table);
-
-        $le_club_tennis_de_table = new NavBarLink();
-
-        $le_club_tennis_de_table->setName("Tennis de Table - Le Club");
-        $le_club_tennis_de_table->setTitle("Le Club");
-        $le_club_tennis_de_table->setSlug($this->slugify->slugify($le_club_tennis_de_table->getTitle()));
-        $le_club_tennis_de_table->setRouteName('');
-        $le_club_tennis_de_table->setRanking(2);
-        $le_club_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
-        $le_club_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($le_club_tennis_de_table);
-
-        $nos_equipes_tennis_de_table = new NavBarLink();
-
-        $nos_equipes_tennis_de_table->setName("Tennis de Table - Nos Equipes");
-        $nos_equipes_tennis_de_table->setTitle("Nos Equipes");
-        $nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($nos_equipes_tennis_de_table->getTitle()));
-        $nos_equipes_tennis_de_table->setRouteName('our_team_categories_section');
-        $nos_equipes_tennis_de_table->setRanking(3);
-        $nos_equipes_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
-        $nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($nos_equipes_tennis_de_table);
-
-        $infos_pratiques_tennis_de_table = new NavBarLink();
-
-        $infos_pratiques_tennis_de_table->setName("Tennis de Table - Infos Pratiques");
-        $infos_pratiques_tennis_de_table->setTitle("Infos Pratiques");
-        $infos_pratiques_tennis_de_table->setSlug($this->slugify->slugify($infos_pratiques_tennis_de_table->getTitle()));
-        $infos_pratiques_tennis_de_table->setRouteName('useful_informations_section');
-        $infos_pratiques_tennis_de_table->setRanking(4);
-        $infos_pratiques_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
-        $infos_pratiques_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($infos_pratiques_tennis_de_table);
-
-        $acces_licencies_tennis_de_table = new NavBarLink();
-
-        $acces_licencies_tennis_de_table->setName("Tennis de Table - Accès Licenciés");
-        $acces_licencies_tennis_de_table->setTitle("Accès Licenciés");
-        $acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($acces_licencies_tennis_de_table->getTitle()));
-        $acces_licencies_tennis_de_table->setRouteName('');
-        $acces_licencies_tennis_de_table->setRanking(5);
-        $acces_licencies_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
-        $acces_licencies_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($acces_licencies_tennis_de_table);
-
-        $retour_tennis_de_table = new NavBarLink();
-
-        $retour_tennis_de_table->setName("Tennis de Table - Retour");
-        $retour_tennis_de_table->setTitle("Retour");
-        $retour_tennis_de_table->setSlug($this->slugify->slugify($retour_tennis_de_table->getTitle()));
-        $retour_tennis_de_table->setRouteName('home_association');
-        $retour_tennis_de_table->setRanking(6);
-        $retour_tennis_de_table->setSection($this->getReference(AssoSectionsFixtures::TENNIS_DE_TABLE));
-        $retour_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($retour_tennis_de_table);
-
+        $this->loadNavBarLinks($manager);
         $manager->flush();
+        $this->dumpCreatedEntitiesCount(NavBarLink::class, $section);
 
-        ##### Entités "NavBarDdLink" #####
-
-        // NavBarDdLink "Accueil_Tennis de Table"
-
-        $actualites_accueil_tennis_de_table = new NavBarDdLink();
-
-        $actualites_accueil_tennis_de_table->setName("Actualités");
-        $actualites_accueil_tennis_de_table->setSlug($this->slugify->slugify($actualites_accueil_tennis_de_table->getName()));
-        $actualites_accueil_tennis_de_table->setRouteName('news_section');
-        $actualites_accueil_tennis_de_table->setRanking(1);
-        $actualites_accueil_tennis_de_table->setNavBarLink($accueil_tennis_de_table);
-        $actualites_accueil_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($actualites_accueil_tennis_de_table);
-
-        // NavBarDdLink "Le_Club_Tennis de Table"
-
-        $notre_histoire_le_club_tennis_de_table = new NavBarDdLink();
-
-        $notre_histoire_le_club_tennis_de_table->setName("Notre Histoire");
-        $notre_histoire_le_club_tennis_de_table->setSlug($this->slugify->slugify($notre_histoire_le_club_tennis_de_table->getName()));
-        $notre_histoire_le_club_tennis_de_table->setRouteName('');
-        $notre_histoire_le_club_tennis_de_table->setRanking(1);
-        $notre_histoire_le_club_tennis_de_table->setNavBarLink($le_club_tennis_de_table);
-        $notre_histoire_le_club_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($notre_histoire_le_club_tennis_de_table);
-
-        $l_organigramme_le_club_tennis_de_table = new NavBarDdLink();
-
-        $l_organigramme_le_club_tennis_de_table->setName("L'Organigramme");
-        $l_organigramme_le_club_tennis_de_table->setSlug($this->slugify->slugify($l_organigramme_le_club_tennis_de_table->getName()));
-        $l_organigramme_le_club_tennis_de_table->setRouteName('');
-        $l_organigramme_le_club_tennis_de_table->setRanking(2);
-        $l_organigramme_le_club_tennis_de_table->setNavBarLink($le_club_tennis_de_table);
-        $l_organigramme_le_club_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($l_organigramme_le_club_tennis_de_table);
-
-        $nos_partenaires_le_club_tennis_de_table = new NavBarDdLink();
-
-        $nos_partenaires_le_club_tennis_de_table->setName("Nos Partenaires");
-        $nos_partenaires_le_club_tennis_de_table->setSlug($this->slugify->slugify($nos_partenaires_le_club_tennis_de_table->getName()));
-        $nos_partenaires_le_club_tennis_de_table->setRouteName('');
-        $nos_partenaires_le_club_tennis_de_table->setRanking(3);
-        $nos_partenaires_le_club_tennis_de_table->setNavBarLink($le_club_tennis_de_table);
-        $nos_partenaires_le_club_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($nos_partenaires_le_club_tennis_de_table);
-
-        // NavBarDdLink "Nos_Equipes_Tennis de Table"
-
-        $nationale_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $nationale_nos_equipes_tennis_de_table->setName("Nationale");
-        $nationale_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($nationale_nos_equipes_tennis_de_table->getName()));
-        $nationale_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
-        $nationale_nos_equipes_tennis_de_table->setRanking(1);
-        $nationale_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $nationale_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($nationale_nos_equipes_tennis_de_table);
-
-        $regionale_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $regionale_nos_equipes_tennis_de_table->setName("Régionale");
-        $regionale_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($regionale_nos_equipes_tennis_de_table->getName()));
-        $regionale_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
-        $regionale_nos_equipes_tennis_de_table->setRanking(2);
-        $regionale_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $regionale_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($regionale_nos_equipes_tennis_de_table);
-
-        $departementale_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $departementale_nos_equipes_tennis_de_table->setName("Départementale");
-        $departementale_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($departementale_nos_equipes_tennis_de_table->getName()));
-        $departementale_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
-        $departementale_nos_equipes_tennis_de_table->setRanking(3);
-        $departementale_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $departementale_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($departementale_nos_equipes_tennis_de_table);
-
-        $jeunes_nos_equipes_tennis_de_table = new NavBarDdLink();
-
-        $jeunes_nos_equipes_tennis_de_table->setName("Jeunes");
-        $jeunes_nos_equipes_tennis_de_table->setSlug($this->slugify->slugify($jeunes_nos_equipes_tennis_de_table->getName()));
-        $jeunes_nos_equipes_tennis_de_table->setRouteName('our_teams_section');
-        $jeunes_nos_equipes_tennis_de_table->setRanking(4);
-        $jeunes_nos_equipes_tennis_de_table->setNavBarLink($nos_equipes_tennis_de_table);
-        $jeunes_nos_equipes_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($jeunes_nos_equipes_tennis_de_table);
-
-        // NavBarDdLink "Infos_Pratiques_Tennis de Table"
-
-        $inscriptions_infos_pratiques_tennis_de_table = new NavBarDdLink();
-
-        $inscriptions_infos_pratiques_tennis_de_table->setName("Inscriptions");
-        $inscriptions_infos_pratiques_tennis_de_table->setSlug($this->slugify->slugify($inscriptions_infos_pratiques_tennis_de_table->getName()));
-        $inscriptions_infos_pratiques_tennis_de_table->setRouteName('');
-        $inscriptions_infos_pratiques_tennis_de_table->setRanking(1);
-        $inscriptions_infos_pratiques_tennis_de_table->setNavBarLink($infos_pratiques_tennis_de_table);
-        $inscriptions_infos_pratiques_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($inscriptions_infos_pratiques_tennis_de_table);
-
-        // NavBarDdLink "Accès_Licenciés_Tennis de Table"
-
-        $compte_acces_licencies_tennis_de_table = new NavBarDdLink();
-
-        $compte_acces_licencies_tennis_de_table->setName("Compte");
-        $compte_acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($compte_acces_licencies_tennis_de_table->getName()));
-        $compte_acces_licencies_tennis_de_table->setRouteName('');
-        $compte_acces_licencies_tennis_de_table->setRanking(1);
-        $compte_acces_licencies_tennis_de_table->setNavBarLink($acces_licencies_tennis_de_table);
-        $compte_acces_licencies_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($compte_acces_licencies_tennis_de_table);
-
-        $convocations_acces_licencies_tennis_de_table = new NavBarDdLink();
-
-        $convocations_acces_licencies_tennis_de_table->setName("Convocations");
-        $convocations_acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($convocations_acces_licencies_tennis_de_table->getName()));
-        $convocations_acces_licencies_tennis_de_table->setRouteName('');
-        $convocations_acces_licencies_tennis_de_table->setRanking(2);
-        $convocations_acces_licencies_tennis_de_table->setNavBarLink($acces_licencies_tennis_de_table);
-        $convocations_acces_licencies_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($convocations_acces_licencies_tennis_de_table);
-
-        $se_deconnecter_acces_licencies_tennis_de_table = new NavBarDdLink();
-
-        $se_deconnecter_acces_licencies_tennis_de_table->setName("Se Déconnecter");
-        $se_deconnecter_acces_licencies_tennis_de_table->setSlug($this->slugify->slugify($se_deconnecter_acces_licencies_tennis_de_table->getName()));
-        $se_deconnecter_acces_licencies_tennis_de_table->setRouteName('');
-        $se_deconnecter_acces_licencies_tennis_de_table->setRanking(3);
-        $se_deconnecter_acces_licencies_tennis_de_table->setNavBarLink($acces_licencies_tennis_de_table);
-        $se_deconnecter_acces_licencies_tennis_de_table->setCreatedAtValue();
-
-        $manager->persist($se_deconnecter_acces_licencies_tennis_de_table);
-
+        $this->loadNavBarDdLinks($manager);
         $manager->flush();
+        $this->dumpCreatedEntitiesCount(NavBarDdLink::class, $section);
+    }
+
+    public function loadNavBarLinks(ObjectManager $manager): void
+    {
+        $section = $this->getReference(self::SECTION);
+
+        $navBarLinksData = [
+            ['Accueil', 'section-tennis-de-table', 'home_section', 1],
+            ['Le Club', 'le-club', '', 2],
+            ['Nos Equipes', 'nos-equipes', '', 3],
+            ['Infos Pratiques', 'infos-pratiques', 'useful_informations_section', 4],
+            ['Accès Licenciés', 'acces-licencies', '', 5],
+            ['Retour', '', 'home_association', 6],
+        ];
+
+        foreach ($navBarLinksData as $linkData) {
+            $navBarLink = $this->createNavBarLink($linkData, $section);
+            $manager->persist($navBarLink);
+        }
+    }
+
+    public function loadNavBarDdLinks(ObjectManager $manager): void
+    {
+        $accueil = $this->navBarLinkRepository->findOneBy(['name' => 'Tennis de Table - Accueil']);
+        $le_club = $this->navBarLinkRepository->findOneBy(['name' => 'Tennis de Table - Le Club']);
+        $nos_equipes = $this->navBarLinkRepository->findOneBy(['name' => 'Tennis de Table - Nos Equipes']);
+        $infos_pratiques = $this->navBarLinkRepository->findOneBy(['name' => 'Tennis de Table - Infos Pratiques']);
+        $acces_licencies = $this->navBarLinkRepository->findOneBy(['name' => 'Tennis de Table - Accès Licenciés']);
+
+        $navBarDdLinksData = [
+            ['Actualités', 'actualites', 'news_section', 1, $accueil],
+            ['Notre Histoire', 'notre-histoire', '', 1, $le_club],
+            ["L'Organigramme", 'l-organigramme', '', 2, $le_club],
+            ['Nos Partenaires', 'nos-partenaires', '', 3, $le_club],
+            ['Nationale', 'nationale', 'our_teams_section', 1, $nos_equipes],
+            ['Régionale', 'regionale', 'our_teams_section', 2, $nos_equipes],
+            ['Départementale', 'departementale', 'our_teams_section', 3, $nos_equipes],
+            ['Jeunes', 'jeunes', 'our_teams_section', 4, $nos_equipes],
+            ['Inscriptions', 'inscriptions', '', 1, $infos_pratiques],
+            ['Compte', 'compte', '', 1, $acces_licencies],
+            ['Convocations', 'convocations', '', 2, $acces_licencies],
+            ['Se Déconnecter', 'se-deconnecter', '', 3, $acces_licencies],
+        ];
+
+        foreach ($navBarDdLinksData as $ddLinkData) {
+            $navBarDdLink = $this->createNavBarDdLink($ddLinkData);
+            $manager->persist($navBarDdLink);
+        }
+    }
+
+    private function createNavBarLink(array $navBarLinksData, $section): NavBarLink
+    {
+        [$title, $slug, $routeName, $ranking] = $navBarLinksData;
+
+        $navBarLink = new NavBarLink();
+        $navBarLink
+            ->setName("Tennis de Table - " . $title)
+            ->setTitle($title)
+            ->setSlug($slug)
+            ->setRouteName($routeName)
+            ->setRanking($ranking)
+            ->setSection($section)
+            ->setCreatedAtValue();
+        return $navBarLink;
+    }
+
+    private function createNavBarDdLink(array $navBarDdLinksData): NavBarDdLink
+    {
+        [$name, $slug, $routeName, $ranking, $navBarLink] = $navBarDdLinksData;
+
+        $navBarDdLink = new NavBarDdLink();
+        $navBarDdLink
+            ->setName($name)
+            ->setSlug($slug)
+            ->setRouteName($routeName)
+            ->setRanking($ranking)
+            ->setNavBarLink($navBarLink)
+            ->setCreatedAtValue();
+        return $navBarDdLink;
+    }
+
+    private function dumpCreatedEntitiesCount(string $entityClass, $section): void
+    {
+        $repository = $this->entityManager->getRepository($entityClass);
+
+        if ($entityClass === NavBarLink::class) {
+            $navBarLinks = $repository->findBy(['section' => $section]);
+            $count = count($navBarLinks);
+
+            echo sprintf("Nombre de NavBarLink(s) créé(s) pour la %s : %d\n", $section->getName(), $count);
+
+            foreach ($navBarLinks as $navBarLink) {
+                echo sprintf("- %s\n", $navBarLink->getName());
+            }
+        } elseif ($entityClass === NavBarDdLink::class) {
+            $navBarDdLinks = $repository->createQueryBuilder('ddLink')
+                ->join('ddLink.navBarLink', 'navBarLink')
+                ->where('navBarLink.section = :section')
+                ->setParameter('section', $section)
+                ->getQuery()
+                ->getResult();
+
+            $count = count($navBarDdLinks);
+
+            echo sprintf("Nombre de NavBarDdLink(s) créé(s) pour la %s : %d\n", $section->getName(), $count);
+
+            foreach ($navBarDdLinks as $navBarDdLink) {
+                echo sprintf("- %s\n", $navBarDdLink->getName());
+            }
+        }
     }
 
     public function getDependencies()

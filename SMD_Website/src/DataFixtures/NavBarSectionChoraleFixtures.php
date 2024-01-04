@@ -3,210 +3,144 @@
 namespace App\DataFixtures;
 
 use App\Entity\NavBarLink;
-use Cocur\Slugify\Slugify;
 use App\Entity\NavBarDdLink;
 use Doctrine\Persistence\ObjectManager;
+use App\Repository\NavBarLinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\DataFixtures\AssoSectionsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class NavBarSectionChoraleFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $slugify;
+    private $navBarLinkRepository;
+    private $entityManager;
+    private const SECTION = AssoSectionsFixtures::CHORALE;
 
-    public function __construct(Slugify $slugify)
+    public function __construct(EntityManagerInterface $entityManager, NavBarLinkRepository $navBarLinkRepository)
     {
-        $this->slugify = $slugify;
+        $this->entityManager = $entityManager;
+        $this->navBarLinkRepository = $navBarLinkRepository;
     }
 
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $manager)
     {
-        ##### Entités "NavBarLink" #####
+        $section = $this->getReference(self::SECTION);
 
-        // NavBarLink "Section Chorale"
-
-        $accueil_chorale = new NavBarLink();
-
-        $accueil_chorale->setName("Chorale - Accueil");
-        $accueil_chorale->setTitle("Accueil");
-        $accueil_chorale->setSlug("section-chorale");
-        $accueil_chorale->setRouteName('home_section');
-        $accueil_chorale->setRanking(1);
-        $accueil_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
-        $accueil_chorale->setCreatedAtValue();
-
-        $manager->persist($accueil_chorale);
-
-        $presentation_chorale = new NavBarLink();
-
-        $presentation_chorale->setName("Chorale - Présentation");
-        $presentation_chorale->setTitle("Présentation");
-        $presentation_chorale->setSlug($this->slugify->slugify($presentation_chorale->getTitle()));
-        $presentation_chorale->setRouteName('');
-        $presentation_chorale->setRanking(2);
-        $presentation_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
-        $presentation_chorale->setCreatedAtValue();
-
-        $manager->persist($presentation_chorale);
-
-        $nos_concerts_chorale = new NavBarLink();
-
-        $nos_concerts_chorale->setName("Chorale - Nos Concerts");
-        $nos_concerts_chorale->setTitle("Nos Concerts");
-        $nos_concerts_chorale->setSlug($this->slugify->slugify($nos_concerts_chorale->getTitle()));
-        $nos_concerts_chorale->setRouteName('');
-        $nos_concerts_chorale->setRanking(3);
-        $nos_concerts_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
-        $nos_concerts_chorale->setCreatedAtValue();
-
-        $manager->persist($nos_concerts_chorale);
-
-        $infos_pratiques_chorale = new NavBarLink();
-
-        $infos_pratiques_chorale->setName("Chorale - Infos Pratiques");
-        $infos_pratiques_chorale->setTitle("Infos Pratiques");
-        $infos_pratiques_chorale->setSlug($this->slugify->slugify($infos_pratiques_chorale->getTitle()));
-        $infos_pratiques_chorale->setRouteName('useful_informations_section');
-        $infos_pratiques_chorale->setRanking(4);
-        $infos_pratiques_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
-        $infos_pratiques_chorale->setCreatedAtValue();
-
-        $manager->persist($infos_pratiques_chorale);
-
-        $acces_membres_chorale = new NavBarLink();
-
-        $acces_membres_chorale->setName("Chorale - Accès Membres");
-        $acces_membres_chorale->setTitle("Accès Membres");
-        $acces_membres_chorale->setSlug($this->slugify->slugify($acces_membres_chorale->getTitle()));
-        $acces_membres_chorale->setRouteName('');
-        $acces_membres_chorale->setRanking(5);
-        $acces_membres_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
-        $acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($acces_membres_chorale);
-
-        $retour_chorale = new NavBarLink();
-
-        $retour_chorale->setName("Chorale - Retour");
-        $retour_chorale->setTitle("Retour");
-        $retour_chorale->setSlug($this->slugify->slugify($retour_chorale->getTitle()));
-        $retour_chorale->setRouteName('home_association');
-        $retour_chorale->setRanking(6);
-        $retour_chorale->setSection($this->getReference(AssoSectionsFixtures::CHORALE));
-        $retour_chorale->setCreatedAtValue();
-
-        $manager->persist($retour_chorale);
-
+        $this->loadNavBarLinks($manager);
         $manager->flush();
+        $this->dumpCreatedEntitiesCount(NavBarLink::class, $section);
 
-        ##### Entités "NavBarDdLink" #####
-
-        // NavBarDdLink "Accueil_Chorale"
-
-        $actualites_accueil_chorale = new NavBarDdLink();
-
-        $actualites_accueil_chorale->setName("Actualités");
-        $actualites_accueil_chorale->setSlug($this->slugify->slugify($actualites_accueil_chorale->getName()));
-        $actualites_accueil_chorale->setRouteName('news_section');
-        $actualites_accueil_chorale->setRanking(1);
-        $actualites_accueil_chorale->setNavBarLink($accueil_chorale);
-        $actualites_accueil_chorale->setCreatedAtValue();
-
-        $manager->persist($actualites_accueil_chorale);
-
-        // NavBarDdLink "Présentation_Chorale"
-
-        $repertoire_presentation_chorale = new NavBarDdLink();
-
-        $repertoire_presentation_chorale->setName("Répertoire");
-        $repertoire_presentation_chorale->setSlug($this->slugify->slugify($repertoire_presentation_chorale->getName()));
-        $repertoire_presentation_chorale->setRouteName('');
-        $repertoire_presentation_chorale->setRanking(1);
-        $repertoire_presentation_chorale->setNavBarLink($presentation_chorale);
-        $repertoire_presentation_chorale->setCreatedAtValue();
-
-        $manager->persist($repertoire_presentation_chorale);
-
-        $modalites_de_travail_presentation_chorale = new NavBarDdLink();
-
-        $modalites_de_travail_presentation_chorale->setName("Modalités de Travail");
-        $modalites_de_travail_presentation_chorale->setSlug($this->slugify->slugify($modalites_de_travail_presentation_chorale->getName()));
-        $modalites_de_travail_presentation_chorale->setRouteName('');
-        $modalites_de_travail_presentation_chorale->setRanking(2);
-        $modalites_de_travail_presentation_chorale->setNavBarLink($presentation_chorale);
-        $modalites_de_travail_presentation_chorale->setCreatedAtValue();
-
-        $manager->persist($modalites_de_travail_presentation_chorale);
-
-        // NavBarDdLink "Accès_Membres_Chorale"
-
-        $compte_acces_membres_chorale = new NavBarDdLink();
-
-        $compte_acces_membres_chorale->setName("Compte");
-        $compte_acces_membres_chorale->setSlug($this->slugify->slugify($compte_acces_membres_chorale->getName()));
-        $compte_acces_membres_chorale->setRouteName('');
-        $compte_acces_membres_chorale->setRanking(1);
-        $compte_acces_membres_chorale->setNavBarLink($acces_membres_chorale);
-        $compte_acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($compte_acces_membres_chorale);
-
-        $echo_raleur_acces_membres_chorale = new NavBarDdLink();
-
-        $echo_raleur_acces_membres_chorale->setName("Echo Raleur");
-        $echo_raleur_acces_membres_chorale->setSlug($this->slugify->slugify($echo_raleur_acces_membres_chorale->getName()));
-        $echo_raleur_acces_membres_chorale->setRouteName('');
-        $echo_raleur_acces_membres_chorale->setRanking(2);
-        $echo_raleur_acces_membres_chorale->setNavBarLink($acces_membres_chorale);
-        $echo_raleur_acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($echo_raleur_acces_membres_chorale);
-
-        $lire_une_partition_acces_membres_chorale = new NavBarDdLink();
-
-        $lire_une_partition_acces_membres_chorale->setName("Lire une Partition");
-        $lire_une_partition_acces_membres_chorale->setSlug($this->slugify->slugify($lire_une_partition_acces_membres_chorale->getName()));
-        $lire_une_partition_acces_membres_chorale->setRouteName('');
-        $lire_une_partition_acces_membres_chorale->setRanking(3);
-        $lire_une_partition_acces_membres_chorale->setNavBarLink($acces_membres_chorale);
-        $lire_une_partition_acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($lire_une_partition_acces_membres_chorale);
-
-        $fichiers_mp3_acces_membres_chorale = new NavBarDdLink();
-
-        $fichiers_mp3_acces_membres_chorale->setName("Fichiers MP3");
-        $fichiers_mp3_acces_membres_chorale->setSlug($this->slugify->slugify($fichiers_mp3_acces_membres_chorale->getName()));
-        $fichiers_mp3_acces_membres_chorale->setRouteName('');
-        $fichiers_mp3_acces_membres_chorale->setRanking(4);
-        $fichiers_mp3_acces_membres_chorale->setNavBarLink($acces_membres_chorale);
-        $fichiers_mp3_acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($fichiers_mp3_acces_membres_chorale);
-
-        $pv_bureau_acces_membres_chorale = new NavBarDdLink();
-
-        $pv_bureau_acces_membres_chorale->setName("PV Bureau");
-        $pv_bureau_acces_membres_chorale->setSlug($this->slugify->slugify($pv_bureau_acces_membres_chorale->getName()));
-        $pv_bureau_acces_membres_chorale->setRouteName('');
-        $pv_bureau_acces_membres_chorale->setRanking(5);
-        $pv_bureau_acces_membres_chorale->setNavBarLink($acces_membres_chorale);
-        $pv_bureau_acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($pv_bureau_acces_membres_chorale);
-
-        $se_deconnecter_acces_membres_chorale = new NavBarDdLink();
-
-        $se_deconnecter_acces_membres_chorale->setName("Se Déconnecter");
-        $se_deconnecter_acces_membres_chorale->setSlug($this->slugify->slugify($se_deconnecter_acces_membres_chorale->getName()));
-        $se_deconnecter_acces_membres_chorale->setRouteName('');
-        $se_deconnecter_acces_membres_chorale->setRanking(6);
-        $se_deconnecter_acces_membres_chorale->setNavBarLink($acces_membres_chorale);
-        $se_deconnecter_acces_membres_chorale->setCreatedAtValue();
-
-        $manager->persist($se_deconnecter_acces_membres_chorale);
-
+        $this->loadNavBarDdLinks($manager);
         $manager->flush();
+        $this->dumpCreatedEntitiesCount(NavBarDdLink::class, $section);
+    }
+
+    public function loadNavBarLinks(ObjectManager $manager): void
+    {
+        $section = $this->getReference(self::SECTION);
+
+        $navBarLinksData = [
+            ['Accueil', 'section-chorale', 'home_section', 1],
+            ['Présentation', 'presentation', '', 2],
+            ['Nos Concerts', 'nos-concerts', '', 3],
+            ['Infos Pratiques', 'infos-pratiques', 'useful_informations_section', 4],
+            ['Accès Membres', 'acces-membres', '', 5],
+            ['Retour', '', 'home_association', 6],
+        ];
+
+        foreach ($navBarLinksData as $linkData) {
+            $navBarLink = $this->createNavBarLink($linkData, $section);
+            $manager->persist($navBarLink);
+        }
+    }
+
+    public function loadNavBarDdLinks(ObjectManager $manager): void
+    {
+        $accueil = $this->navBarLinkRepository->findOneBy(['name' => 'Chorale - Accueil']);
+        $presentation = $this->navBarLinkRepository->findOneBy(['name' => 'Chorale - Présentation']);
+        $infos_pratiques = $this->navBarLinkRepository->findOneBy(['name' => 'Chorale - Infos Pratiques']);
+        $acces_membres = $this->navBarLinkRepository->findOneBy(['name' => 'Chorale - Accès Membres']);
+
+        $navBarDdLinksData = [
+            ['Actualités', 'actualites', 'news_section', 1, $accueil],
+            ['Répertoire', 'repertoire', '', 1, $presentation],
+            ["Modalités de Travail", 'modalite-de-travail', '', 2, $presentation],
+            ['Inscriptions', 'inscriptions', '', 1, $infos_pratiques],
+            ['Compte', 'compte', '', 1, $acces_membres],
+            ['Echo Raleur', 'echo-raleur', '', 2, $acces_membres],
+            ['Lire une Partition', 'lire-une-partition', '', 3, $acces_membres],
+            ['Fichiers MP3', 'fichiers-mp3', '', 4, $acces_membres],
+            ['PV Bureau', 'pv-bureau', '', 5, $acces_membres],
+            ['Se Déconnecter', 'se-deconnecter', '', 6, $acces_membres],
+        ];
+
+        foreach ($navBarDdLinksData as $ddLinkData) {
+            $navBarDdLink = $this->createNavBarDdLink($ddLinkData);
+            $manager->persist($navBarDdLink);
+        }
+    }
+
+    private function createNavBarLink(array $navBarLinksData, $section): NavBarLink
+    {
+        [$title, $slug, $routeName, $ranking] = $navBarLinksData;
+
+        $navBarLink = new NavBarLink();
+        $navBarLink
+            ->setName("Chorale - " . $title)
+            ->setTitle($title)
+            ->setSlug($slug)
+            ->setRouteName($routeName)
+            ->setRanking($ranking)
+            ->setSection($section)
+            ->setCreatedAtValue();
+        return $navBarLink;
+    }
+
+    private function createNavBarDdLink(array $navBarDdLinksData): NavBarDdLink
+    {
+        [$name, $slug, $routeName, $ranking, $navBarLink] = $navBarDdLinksData;
+
+        $navBarDdLink = new NavBarDdLink();
+        $navBarDdLink
+            ->setName($name)
+            ->setSlug($slug)
+            ->setRouteName($routeName)
+            ->setRanking($ranking)
+            ->setNavBarLink($navBarLink)
+            ->setCreatedAtValue();
+        return $navBarDdLink;
+    }
+
+    private function dumpCreatedEntitiesCount(string $entityClass, $section): void
+    {
+        $repository = $this->entityManager->getRepository($entityClass);
+
+        if ($entityClass === NavBarLink::class) {
+            $navBarLinks = $repository->findBy(['section' => $section]);
+            $count = count($navBarLinks);
+
+            echo sprintf("Nombre de NavBarLink(s) créé(s) pour la %s : %d\n", $section->getName(), $count);
+
+            foreach ($navBarLinks as $navBarLink) {
+                echo sprintf("- %s\n", $navBarLink->getName());
+            }
+        } elseif ($entityClass === NavBarDdLink::class) {
+            $navBarDdLinks = $repository->createQueryBuilder('ddLink')
+                ->join('ddLink.navBarLink', 'navBarLink')
+                ->where('navBarLink.section = :section')
+                ->setParameter('section', $section)
+                ->getQuery()
+                ->getResult();
+
+            $count = count($navBarDdLinks);
+
+            echo sprintf("Nombre de NavBarDdLink(s) créé(s) pour la %s : %d\n", $section->getName(), $count);
+
+            foreach ($navBarDdLinks as $navBarDdLink) {
+                echo sprintf("- %s\n", $navBarDdLink->getName());
+            }
+        }
     }
 
     public function getDependencies()

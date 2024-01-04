@@ -2,14 +2,15 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Member;
 use App\Entity\Article;
 use App\Entity\Section;
 use App\Entity\NavBarLink;
 use App\Entity\Association;
 use App\Entity\NavBarDdLink;
+use App\Entity\TeamCategory;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
-use App\Entity\TeamCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -63,6 +64,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section("Gestion des Articles");
         yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', Article::class);
         yield MenuItem::linkToCrud('Catégorie Actualités', 'fas fa-folder', ArticleCategory::class);
+
+        yield MenuItem::section('Gestion des adhérents');
+        yield MenuItem::linkToCrud('Adhérents', 'fas fa-person', Member::class);
 
         yield MenuItem::section("Paramétrage");
         yield MenuItem::linkToCrud("Lieux d'Activités", 'fas fa-map-location-dot', ActivityPlace::class);
