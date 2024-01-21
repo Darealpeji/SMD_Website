@@ -61,6 +61,9 @@ class Section
     private ?string $scoreNCoCode = null;
 
     #[ORM\Column]
+    private ?bool $manageConvocation = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
@@ -70,8 +73,8 @@ class Section
     #[ORM\JoinColumn(nullable: false)]
     private ?Association $association = null;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: NavBarLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private $navBarLinks;
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: NavBarMenu::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private $navBarMenus;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $articles;
@@ -85,13 +88,25 @@ class Section
     #[ORM\ManyToMany(targetEntity: Member::class, mappedBy: 'sections')]
     private Collection $members;
 
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Activity::class, orphanRemoval: true)]
+    private Collection $activities;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Post::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $posts;
+
+    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'sections')]
+    private Collection $roles;
+
     public function __construct()
     {
-        $this->navBarLinks = new ArrayCollection();
+        $this->navBarMenus = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->activityPlaces = new ArrayCollection();
         $this->teamCategories = new ArrayCollection();
         $this->members = new ArrayCollection();
+        $this->activities = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,6 +222,18 @@ class Section
         return $this;
     }
 
+    public function isManageConvocation(): ?bool
+    {
+        return $this->manageConvocation;
+    }
+
+    public function setManageConvocation(bool $manageConvocation): static
+    {
+        $this->manageConvocation = $manageConvocation;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -248,29 +275,29 @@ class Section
     }
 
     /**
-     * @return Collection<int, NavBarLink>
+     * @return Collection<int, NavBarMenu>
      */
-    public function getNavBarLinks(): Collection
+    public function getNavBarMenus(): Collection
     {
-        return $this->navBarLinks;
+        return $this->navBarMenus;
     }
 
-    public function addNavBarLink(NavBarLink $navBarLink): static
+    public function addNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if (!$this->navBarLinks->contains($navBarLink)) {
-            $this->navBarLinks->add($navBarLink);
-            $navBarLink->setSection($this);
+        if (!$this->navBarMenus->contains($navBarMenu)) {
+            $this->navBarMenus->add($navBarMenu);
+            $navBarMenu->setSection($this);
         }
 
         return $this;
     }
 
-    public function removeNavBarLink(NavBarLink $navBarLink): static
+    public function removeNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if ($this->navBarLinks->removeElement($navBarLink)) {
+        if ($this->navBarMenus->removeElement($navBarMenu)) {
             // set the owning side to null (unless already changed)
-            if ($navBarLink->getSection() === $this) {
-                $navBarLink->setSection(null);
+            if ($navBarMenu->getSection() === $this) {
+                $navBarMenu->setSection(null);
             }
         }
 
@@ -386,6 +413,93 @@ class Section
     {
         if ($this->members->removeElement($member)) {
             $member->removeSections($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activity>
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): static
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities->add($activity);
+            $activity->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): static
+    {
+        if ($this->activities->removeElement($activity)) {
+            // set the owning side to null (unless already changed)
+            if ($activity->getSection() === $this) {
+                $activity->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getSection() === $this) {
+                $post->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): static
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+            $role->addSections($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): static
+    {
+        if ($this->roles->removeElement($role)) {
+            $role->removeSections($this);
         }
 
         return $this;

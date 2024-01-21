@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Section;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Section>
@@ -21,28 +22,35 @@ class SectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Section::class);
     }
 
-//    /**
-//     * @return Section[] Returns an array of Section objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findOneByWithNavBarMenus(array $criteria)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->select('s', 'nbm', 'nbsm');
+        $queryBuilder->leftJoin('s.navBarMenus', 'nbm');
+        $queryBuilder->leftJoin('nbm.navBarSubMenus', 'nbsm');
 
-//    public function findOneBySomeField($value): ?Section
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        foreach ($criteria as $field => $value) {
+            $queryBuilder->andWhere('s.' . $field . ' = :' . $field);
+            $queryBuilder->setParameter($field, $value);
+        }
+        $queryBuilder->addOrderBy('nbm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('nbsm.ranking', 'ASC');
+
+        return $queryBuilder
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getTeamsBySection(Section $section)
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s', 'ct', 'te', 'tr')
+            ->leftJoin('s.teamCategories', 'ct')
+            ->leftJoin('ct.teams', 'te')
+            ->leftJoin('te.trainings', 'tr')
+            ->where('s = :section')
+            ->setParameter('section', $section)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

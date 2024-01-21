@@ -10,10 +10,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ArrayFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -107,6 +110,25 @@ class MemberCrudController extends AbstractCrudController
             );
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('sections')
+            ->add('association')
+            ->add('firstName')
+            ->add('lastName')
+            ->add(
+                ArrayFilter::new('roles')
+                    ->setChoices([
+                        'Super Administrateur' => 'ROLE_SUPER_ADMIN',
+                        'Administrateur' => 'ROLE_ADMIN',
+                        "Éditeur d'Actualités" => 'ROLE_EDITOR',
+                        'Licencié' => 'ROLE_LICENSEE',
+                    ])
+                    ->canSelectMultiple(true)
+            );
+    }
+
 
     public function configureFields(string $pageName): iterable
     {
@@ -161,12 +183,12 @@ class MemberCrudController extends AbstractCrudController
             ChoiceField::new('roles', 'Role')
                 ->setFormTypeOptions([
                     'multiple' => true,
-                    'choices' => [
-                        'Super Administrateur' => "ROLE_SUPER_ADMIN",
-                        'Administrateur' => "ROLE_ADMIN",
-                        "Éditeur d'Actualités" => 'ROLE_EDITOR',
-                        "Licencié" => 'ROLE_LICENSEE',
-                    ]
+                    'choices' => array_flip([ // Inverser les clés et les valeurs
+                        'ROLE_SUPER_ADMIN' => 'Super Administrateur',
+                        'ROLE_ADMIN' => 'Administrateur',
+                        'ROLE_EDITOR' => "Éditeur d'Actualités",
+                        'ROLE_LICENSEE' => 'Licencié',
+                    ]),
                 ])->onlyOnForms()->setColumns(6),
             FormField::addRow(),
             $sectionField->onlyOnForms()->setColumns(6),

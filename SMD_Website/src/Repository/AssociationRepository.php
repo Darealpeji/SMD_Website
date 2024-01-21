@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Association;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Association>
@@ -24,5 +25,19 @@ class AssociationRepository extends ServiceEntityRepository
     public function getAssociationData()
     {
         return $this->findOneBy([]);
+    }
+
+    public function getAssociationWithNavBarMenus()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'nbm', 'nbsm')
+            ->leftJoin('a.navBarMenus', 'nbm')
+            ->leftJoin('nbm.navBarSubMenus', 'nbsm')
+            ->where('a.name = :associationName')
+            ->setParameter('associationName', "ASC Saint Médard de Doulon - Nantes")
+            ->addOrderBy('nbm.ranking', 'ASC')
+            ->addOrderBy('nbsm.ranking', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

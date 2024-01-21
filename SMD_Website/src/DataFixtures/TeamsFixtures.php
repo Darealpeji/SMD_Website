@@ -2,135 +2,173 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Post;
 use App\Entity\Team;
-use App\Entity\TeamCategory;
+use App\Entity\Section;
+use App\Entity\Training;
 use Cocur\Slugify\Slugify;
+use App\Entity\TeamCategory;
+use App\DataFixtures\PostsFixtures;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\Constants\TeamsConstants;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TeamsFixtures extends Fixture implements DependentFixtureInterface
 {
     private $slugify;
+    private $entityManager;
+    private $io;
 
-    private const SECTIONS = [
-        'football' => [
-            'name' => 'Section Football',
-            'categories' => [
-                'Séniors' => ['teams' => ['Séniors A', 'Séniors B', 'Séniors C'],],
-                'U19' => ['teams' => ['U19']],
-                'U17' => ['teams' => ['U17']],
-                'U15' => ['teams' => ['U15']],
-                'U13' => ['teams' => ['U13']],
-                'U11' => ['teams' => ['U11']],
-                'U9' => ['teams' => ['U9']],
-                'U7' => ['teams' => ['U7']],
-                'Groupement Féminin' => ['teams' => ['Groupement Féminin']],
-                'Vétérans' => ['teams' => ['Vétérans']],
-                'Loisirs' => ['teams' => ['Loisirs']],
-                'Arbitres' => ['teams' => ['Arbitres']],
-            ],
-        ],
-        'basket' => [
-            'name' => 'Section Basket',
-            'categories' => [
-                'Séniors' => ['teams' => ['Séniors Filles 1', 'Séniors Filles 2', 'Séniors Garçons 1', 'Séniors Garçons 2', 'Séniors Garçons 3']],
-                'U20' => ['teams' => ['U20 Garçons 1']],
-                'U18' => ['teams' => ['U18 Filles 1']],
-                'U17' => ['teams' => ['U17 Garçons 1', 'U17 Garçons 2']],
-                'U15' => ['teams' => ['U15 Filles 1', 'U15 Garçons 1']],
-                'U13' => ['teams' => ['U13 Filles 1', 'U13 Filles 2', 'U13 Garçons 1', 'U13 Garçons 2', 'U13 Garçons 3']],
-                'U11' => ['teams' => ['U11 Filles 1', 'U11 Filles 2', 'U11 Garçons 1', 'U11 Garçons 2']],
-                'U9' => ['teams' => ['U9 Filles', 'U9 Garçons']],
-                'U7' => ['teams' => ['U7 Mixte']],
-            ],
-        ],
-
-        'tennis_de_table' => [
-            'name' => 'Section Tennis de Table',
-            'categories' => [
-                'Nationale' => ['teams' => ['Nationale 2 Garçons', 'Nationale 3 Filles', 'Nationale 3 Garçons', 'Pré Nationale Garçons']],
-                'Régionale' => ['teams' => ['Régionale 1 Garçons', 'Régionale 3 Garçons', 'Pré Régionale Filles']],
-                'Départementale' => ['teams' => ['Départementale 0', 'Départementale 1', 'Départementale 2', 'Départementale 4']],
-                'Jeunes' => ['teams' => ['Jeunes 1', 'Jeunes 2']],
-            ],
-        ],
-    ];
-
-    public function __construct(Slugify $slugify)
+    public function __construct(Slugify $slugify, EntityManagerInterface $entityManager, SymfonyStyle $io)
     {
         $this->slugify = $slugify;
+        $this->entityManager = $entityManager;
+        $this->io = $io;
     }
 
     public function load(ObjectManager $manager): void
     {
-        foreach (self::SECTIONS as $sectionName => $sectionData) {
+        foreach (TeamsConstants::ORGANIZATIONS as $sectionName => $sectionData) {
             $section = $this->getReference($sectionName);
             $this->loadTeamsForSection($manager, $section, $sectionData);
         }
 
         $manager->flush();
+
+        $this->dumpSummaryFixtures($manager);
     }
 
     private function loadTeamsForSection(ObjectManager $manager, $section, array $sectionData): void
     {
-        $categoriesCount = 0;
-        $teamsCount = 0;
+        foreach ($sectionData['categories'] as $category => $categoryData) {
 
-        echo sprintf("%s :\n", ucwords(str_replace('_', ' ', strtolower($section->getName()))));
+            $teamCategory = $this->createTeamCategory($manager, $section, $categoryData);
 
-        foreach ($sectionData['categories'] as $categoryName => $categoryData) {
-            $teamCategory = $this->createTeamCategory($manager, $section, $categoryName);
+            foreach ($categoryData['teams'] as $team => $teamData) {
+                $teamEntity = $this->createTeam($manager, $teamData, $teamCategory);
 
-            $this->addReference($this->getCategoryReferenceName($section->getName(), $categoryName), $teamCategory);
+                if (isset($teamData['trainingSlot'])) {
+                    foreach ($teamData['trainingSlot'] as $trainingSlotName) {
+                        $trainingSlot = $this->findTrainingSlot($trainingSlotName);
+                        $teamEntity->addTraining($trainingSlot);
+                    }
+                }
 
-            $categoriesCount++;
+                if (isset($teamData['posts'])) {
+                    foreach ($teamData['posts'] as $postData) {
+                        $postReference = $section->getName() . " - " . $postData;
+                        $post = $this->getReference($postReference);
+                        $teamEntity->addPost($post);
+                    }
+                }
 
-            echo sprintf("- Catégorie créée : %s - Equipes créées :\n", $categoryName);
-
-            foreach ($categoryData['teams'] as $teamName) {
-                $this->createTeam($manager, $teamName, $teamCategory);
-                $teamsCount++;
-                echo sprintf("  - %s\n", $teamName);
+                $manager->persist($teamEntity);
             }
         }
-
-        echo sprintf("%s : %d catégories créée(s) et %d équipes créée(s)\n", $section->getName(), $categoriesCount, $teamsCount);
     }
 
-    private function createTeamCategory(ObjectManager $manager, $section, string $categoryName): TeamCategory
+    private function createTeamCategory(ObjectManager $manager, $section, array $data): TeamCategory
     {
+        $label = $data['label'];
+        $competition = $data['competition'];
+
         $teamCategory = new TeamCategory();
-        $teamCategory->setName($section->getName() . " - $categoryName");
-        $teamCategory->setTitle($categoryName);
-        $teamCategory->setSlug($this->slugify->slugify($teamCategory->getTitle()));
+        $teamCategory->setName($section->getName() . " - $label");
+        $teamCategory->setLabel($label);
+        $teamCategory->setSlug($this->slugify->slugify($label));
+        $teamCategory->setCompetition($competition);
         $teamCategory->setSection($section);
         $teamCategory->setCreatedAtValue();
         $manager->persist($teamCategory);
 
+        $this->addReference($teamCategory->getName(), $teamCategory);
+
         return $teamCategory;
     }
 
-    private function createTeam(ObjectManager $manager, string $teamName, TeamCategory $teamCategory): Team
+    private function createTeam(ObjectManager $manager, array $teamData, TeamCategory $teamCategory): Team
     {
+        $name = $teamData['name'];
+
         $team = new Team();
-        $team->setName($teamName);
+        $team->setName($name);
         $team->setTeamCategory($teamCategory);
         $team->setCreatedAtValue();
+
         $manager->persist($team);
 
         return $team;
     }
 
-    private function getCategoryReferenceName(string $sectionName, string $categoryName): string
+    private function findTrainingSlot($trainingName)
     {
-        return str_replace('_', ' ', $sectionName) . " - $categoryName";
+        $trainingRepository = $this->entityManager->getRepository(Training::class);
+
+        $trainingSlot = $trainingRepository->findOneBy(['name' => $trainingName]);
+
+        if ($trainingSlot !== null) {
+            return $trainingSlot;
+        }
+
+        throw new \Exception("Créneau d'Entrainement introuvable pour : $trainingName");
+    }
+
+    private function dumpSummaryFixtures(ObjectManager $manager)
+    {
+        $sectionRepository = $manager->getRepository(Section::class);
+        $teamCategorieRepository = $manager->getRepository(TeamCategory::class);
+        $teamRepository = $manager->getRepository(Team::class);
+        $sections = $sectionRepository->findAll();
+
+        foreach ($sections as $section) {
+
+            $teamCategories = $teamCategorieRepository->getTeamCategoriesBySection($section);
+
+            if (!empty($teamCategories)) {
+
+                $sectionName = $section->getName();
+                $this->io->title("$sectionName :");
+
+                $teamCategoriesCount = 0;
+                $teamsCount = 0;
+
+                $teamCategoriesCount = count($teamCategories);
+
+                foreach ($teamCategories as $teamCategory) {
+
+                    $teamCategoryName = $teamCategory->getLabel();
+                    $this->io->text("- Catégorie $teamCategoryName - Equipes :");
+
+                    $teams = $teamRepository->getTeamsByTeamCategory($teamCategory);
+                    $teamsCount += count($teams);
+
+                    foreach ($teams as $team) {
+                        $teamName = $team->getName();
+                        if ($teamName !== '0') {
+                            $teamTimeSlotsCount = count($team->getTrainings());
+                            $this->io->text("   - $teamName (" . $teamTimeSlotsCount . " créneau(x) d'entrainement)");
+                        } else {
+                            $this->io->text("   - Pas d'équipe créée");
+                        }
+                    }
+                }
+
+                $this->io->info("$sectionName : " . $teamCategoriesCount . " Catégorie(s) et " . $teamsCount . " Equipe(s) créée(s)");
+            }
+        }
+
+        $this->io->success("Catégorie(s) et Equipe(s) créée(s) - TeamsFixtures terminé");
     }
 
     public function getDependencies()
     {
         return [
-            AssoSectionsFixtures::class,
+            OrganizationsFixtures::class,
+            TimeSlotsFixtures::class,
+            PostsFixtures::class
         ];
     }
 }

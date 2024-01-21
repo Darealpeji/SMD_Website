@@ -63,8 +63,8 @@ class Association
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Section::class, orphanRemoval: true)]
     private Collection $sections;
 
-    #[ORM\OneToMany(mappedBy: 'association', targetEntity: NavBarLink::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private $navBarLinks;
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: NavBarMenu::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private $navBarMenus;
 
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $articles;
@@ -75,13 +75,21 @@ class Association
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Member::class)]
     private Collection $members;
 
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: Post::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $posts;
+
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: Role::class)]
+    private Collection $roles;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
-        $this->navBarLinks = new ArrayCollection();
+        $this->navBarMenus = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->activityPlaces = new ArrayCollection();
         $this->members = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,35 +235,35 @@ class Association
     }
 
     /**
-     * @return Collection<int, NavBarLink>
+     * @return Collection<int, NavBarMenu>
      */
-    public function getNavBarLinks(): Collection
+    public function getNavBarMenus(): Collection
     {
-        return $this->navBarLinks;
+        return $this->navBarMenus;
     }
 
-    public function addNavBarLink(NavBarLink $navBarLink): static
+    public function addNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if (!$this->navBarLinks->contains($navBarLink)) {
-            $this->navBarLinks->add($navBarLink);
-            $navBarLink->setAssociation($this);
+        if (!$this->navBarMenus->contains($navBarMenu)) {
+            $this->navBarMenus->add($navBarMenu);
+            $navBarMenu->setAssociation($this);
         }
 
         return $this;
     }
 
-    public function removeNavBarLink(NavBarLink $navBarLink): static
+    public function removeNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if ($this->navBarLinks->removeElement($navBarLink)) {
+        if ($this->navBarMenus->removeElement($navBarMenu)) {
             // set the owning side to null (unless already changed)
-            if ($navBarLink->getAssociation() === $this) {
-                $navBarLink->setAssociation(null);
+            if ($navBarMenu->getAssociation() === $this) {
+                $navBarMenu->setAssociation(null);
             }
         }
 
         return $this;
     }
-    
+
     public function __toString()
     {
         return $this->name;
@@ -345,6 +353,66 @@ class Association
             // set the owning side to null (unless already changed)
             if ($member->getAssociation() === $this) {
                 $member->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getAssociation() === $this) {
+                $post->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): static
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+            $role->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): static
+    {
+        if ($this->roles->removeElement($role)) {
+            // set the owning side to null (unless already changed)
+            if ($role->getAssociation() === $this) {
+                $role->setAssociation(null);
             }
         }
 

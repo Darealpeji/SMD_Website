@@ -1,31 +1,62 @@
-<ul>
-    {% if navBarLinks is defined %}
-        {% for navBarLink in section.navBarLinks %}
-            {% if navBarLink.routeName is not defined or not navBarLink.routeName %}
-                <li>{{ navBarLink.name }}</li>
-            {% else %}
-                {% if navBarLink.routeName == 'home_association' %}
-                    <li><a href="{{ path(navBarLink.routeName) }}">{{ navBarLink.name }}</a></li>
-                {% else %}
-                    <li><a href="{{ path(navBarLink.routeName, {'slugSection': section.slug}) }}">{{ navBarLink.name }}</a></li>
-                {% endif %}
-            {% endif %}
+{# Ajoutez cette ligne au début du fichier pour importer la fonction generateLink #}
+{% import _self as helper %}
 
-            {% if navBarLink.navBarDdLinks is defined %}
-                <ul>
-                    {% for navBarDdLink in navBarLink.navBarDdLinks %}
-                        <li>
-                            {% if navBarDdLink.routeName is not defined or not navBarDdLink.routeName %}
-                                {{ navBarDdLink.name }}
-                            {% else %}
-                                <a href="{{ path(navBarDdLink.routeName, {'slugSection': section.slug, 'slugNavBarDdLink': navBarDdLink.slug }) }}">{{ navBarDdLink.name }}</a>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+<ul>
+    {% if section.navBarMenus is defined %}
+        {% for navBarMenu in section.navBarMenus %}
+            <li>
+                {{ navBarMenu.routeName is not defined or not navBarMenu.routeName
+                    ? navBarMenu.label
+                    : helper.generateLink(navBarMenu.label, {'slugSection': section.slug}, navBarMenu.routeName) }}
+
+                {% if navBarMenu.navBarSubMenus is defined %}
+                    <ul>
+                        {% for navBarSubMenu in navBarMenu.navBarSubMenus %}
+                            <li>
+                                {% if navBarSubMenu.routeName is not defined or not navBarSubMenu.routeName %}
+                                    {{ navBarSubMenu.name }}
+                                {% else %}
+                                    {% set parameters = {'slugSection': section.slug} %}
+                                    {% if navBarSubMenu.routeName == 'our_teams_section' %}
+                                        {% set parameters = parameters|merge({'slugNavBarSubMenu': navBarSubMenu.slug}) %}
+                                    {% endif %}
+                                    {{ helper.generateLink(navBarSubMenu.name, parameters, navBarSubMenu.routeName) }}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
         {% endfor %}
     {% else %}
-        <li>Aucune NavBarLink disponible</li>
+        <li>Aucune NavBarMenu disponible</li>
     {% endif %}
+
+    {% if app.user is not null %}
+        <li>Espace Connecté</li>
+    {% else %}
+        <li>{{ helper.generateLink('Se Connecter', {}, 'app_login') }}</li>
+    {% endif %}
+
+    <ul>
+        {% if subMenusLoggedInMember is defined %}
+            {% for subMenu in subMenusLoggedInMember %}
+                <li>
+                    {{ subMenu.routeName is defined
+                        ? helper.generateLink(subMenu.label, {}, subMenu.routeName)
+                        : subMenu.label }}
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+    <li>{{ helper.generateLink('Retour', {}, 'home_association') }}</li>
 </ul>
+
+{% macro generateLink(label, parameters, routeName = null) %}
+    {% if routeName is not null and routeName != '' %}
+        <a href="{{ path(routeName, parameters) }}">{{ label }}</a>
+    {% else %}
+        {{ label }}
+    {% endif %}
+{% endmacro %}

@@ -5,12 +5,17 @@ namespace App\Controller\Admin;
 use App\Entity\Member;
 use App\Entity\Article;
 use App\Entity\Section;
+use App\Entity\Activity;
+use App\Entity\Training;
 use App\Entity\NavBarLink;
+use App\Entity\NavBarMenu;
 use App\Entity\Association;
 use App\Entity\NavBarDdLink;
 use App\Entity\TeamCategory;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
+use App\Entity\NavBarSubMenuLoggedInMember;
+use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -60,6 +65,10 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Gestion des Equipes');
         yield MenuItem::linkToCrud('Catégories & Equipes', 'fas fa-shirt', TeamCategory::class);
+        yield MenuItem::linkToCrud('Entrainements', 'fas fa-stopwatch', Training::class);
+
+        yield MenuItem::section('Gestion des Activités');
+        yield MenuItem::linkToCrud('Activités', 'fas fa-users-between-lines', Activity::class);
 
         yield MenuItem::section("Gestion des Articles");
         yield MenuItem::linkToCrud('Actualités', 'fas fa-newspaper', Article::class);
@@ -70,5 +79,10 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section("Paramétrage");
         yield MenuItem::linkToCrud("Lieux d'Activités", 'fas fa-map-location-dot', ActivityPlace::class);
+        yield MenuItem::linkToCrud("Postes", 'fas fa-briefcase', Post::class);
+
+        yield MenuItem::section("Gestion des Barres de Navigation");
+        yield MenuItem::linkToCrud("Menus Classique", 'fas fa-bars', NavBarMenu::class);
+        yield MenuItem::linkToCrud("Menus Connecté", 'fas fa-bars', NavBarSubMenuLoggedInMember::class);
     }
 }

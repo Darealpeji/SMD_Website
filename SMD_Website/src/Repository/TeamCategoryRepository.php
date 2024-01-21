@@ -21,4 +21,33 @@ class TeamCategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, TeamCategory::class);
     }
+
+    public function findOneByWithTeamsData(array $criteria)
+    {
+        $queryBuilder = $this->createQueryBuilder('ct');
+        $queryBuilder->select('ct', 'te', 'tr', 'ap');
+        $queryBuilder->leftJoin('ct.teams', 'te');
+        $queryBuilder->leftJoin('te.trainings', 'tr');
+        $queryBuilder->leftJoin('tr.activityPlace', 'ap');
+
+        foreach ($criteria as $field => $value) {
+            $queryBuilder->andWhere('ct.' . $field . ' = :' . $field);
+            $queryBuilder->setParameter($field, $value);
+        }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getTeamCategoriesBySection(Section $section)
+    {
+        return $this->createQueryBuilder('tc')
+            ->select('tc', 'te')
+            ->leftJoin('tc.teams', 'te')
+            ->where('tc.section = :section')
+            ->setParameter('section', $section)
+            ->getQuery()
+            ->getResult();
+    }
 }

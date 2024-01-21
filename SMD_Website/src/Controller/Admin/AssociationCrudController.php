@@ -6,6 +6,7 @@ use App\Entity\Association;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use App\Controller\Admin\NavBarLinkCrudController;
+use App\Controller\Admin\NavBarMenuCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -96,7 +97,7 @@ class AssociationCrudController extends AbstractCrudController
     {
         return [
             FormField::addTab('Données Générales'),
-            
+
             FormField::addFieldset('Informations Générales'),
             TextField::new('name', "Nom de l'Association :")->setColumns(6),
             TextField::new('motto', 'Devise :')->setColumns(6)->hideOnIndex(),
@@ -110,7 +111,7 @@ class AssociationCrudController extends AbstractCrudController
             TextField::new('mail', 'Email :')->setColumns(4)->hideOnIndex(),
 
             FormField::addTab('Barre de Navigation'),
-            CollectionField::new('navBarLinks', 'Barre de Navigation :')->useEntryCrudForm(NavBarLinkCrudController::class)->setColumns(8)->hideOnIndex(),
+            CollectionField::new('navBarMenus', 'Barre de Navigation :')->useEntryCrudForm(NavBarMenuCrudController::class)->setColumns(8)->hideOnIndex(),
 
             FormField::addTab('Infos Pratiques'),
             AssociationField::new('activityPlaces', "Lieu(x) d'activités :")->setColumns(6)->hideOnIndex(),

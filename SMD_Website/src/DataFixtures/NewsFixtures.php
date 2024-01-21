@@ -10,15 +10,16 @@ use Cocur\Slugify\Slugify;
 use App\Entity\Association;
 use App\Entity\ArticleCategory;
 use Doctrine\Persistence\ObjectManager;
-use App\DataFixtures\AssoSectionsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\Repository\ArticleCategoryRepository;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use App\DataFixtures\Constants\OrganizationsConstants;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class NewsFixtures extends Fixture implements DependentFixtureInterface
 {
     private const CATEGORIES = [
-        "Evènement",
+        "Événement",
         "Information",
         "Concert",
     ];
@@ -28,31 +29,31 @@ class NewsFixtures extends Fixture implements DependentFixtureInterface
     private $slugify;
     private $articleCategories;
 
-    public function __construct(Slugify $slugify, ArticleCategoryRepository $articleCategories)
+    private $io;
+
+    public function __construct(Slugify $slugify, ArticleCategoryRepository $articleCategories, SymfonyStyle $io)
     {
         $this->slugify = $slugify;
         $this->articleCategories = $articleCategories;
+        $this->io = $io;
     }
 
     public function load(ObjectManager $manager): void
     {
-        $articleCategoryCount = $this->loadArticleCategories($manager);
-        echo sprintf("Nombre de catégories d'article créées : %d\n", $articleCategoryCount);
+        $this->loadArticleCategories($manager);
         $manager->flush();
 
-        $association = $this->getReference(AssoSectionsFixtures::ASSOCIATION);
-        $associationArticleCount = $this->loadArticles($manager, $association, self::ARTICLE_COUNT_RANGE);
+        $association = $this->getReference(OrganizationsConstants::ASSOCIATION);
+        $this->loadArticles($manager, $association, self::ARTICLE_COUNT_RANGE);
 
-        echo sprintf("Nombre d'articles liés à l'Association : %d\n", $associationArticleCount);
-
-        foreach ($this->getSectionReferences() as $section) {
+        foreach (OrganizationsConstants::getSections() as $section) {
             $sectionEntity = $this->getReference($section);
-            $sectionArticleCount = $this->loadArticles($manager, $sectionEntity, self::ARTICLE_COUNT_RANGE);
-
-            echo sprintf("Nombre d'articles liés à la %s : %d\n", $sectionEntity->getName(), $sectionArticleCount);
+            $this->loadArticles($manager, $sectionEntity, self::ARTICLE_COUNT_RANGE);
         }
 
         $manager->flush();
+
+        $this->dumpSummaryFixtures($manager);
     }
 
     private function loadArticleCategories(ObjectManager $manager): int
@@ -101,25 +102,44 @@ class NewsFixtures extends Fixture implements DependentFixtureInterface
         return $articleCount;
     }
 
-    private function getSectionReferences(): array
+    private function dumpSummaryFixtures(ObjectManager $manager)
     {
-        return [
-            AssoSectionsFixtures::BASKET,
-            AssoSectionsFixtures::CHORALE,
-            AssoSectionsFixtures::DANSE,
-            AssoSectionsFixtures::FOOTBALL,
-            AssoSectionsFixtures::GYM_SPORTIVE,
-            AssoSectionsFixtures::GYM_TONIQUE,
-            AssoSectionsFixtures::LOISIRS,
-            AssoSectionsFixtures::PETANQUE,
-            AssoSectionsFixtures::TENNIS_DE_TABLE,
-        ];
+        $categoryRepository = $manager->getRepository(ArticleCategory::class);
+        $categories = $categoryRepository->findAll();
+
+        $associationRepository = $manager->getRepository(Association::class);
+        $association = $associationRepository->findAll();
+
+        $sectionRepository = $manager->getRepository(Section::class);
+        $sections = $sectionRepository->findAll();
+
+        $countCategories = count($categories);
+
+        $this->io->title("Catégorie(s) d'Article créée(s) : $countCategories");
+
+        $this->io->title("Nombre  d'Article(s) créé(s) par Organisations : ");
+
+        $this->dumpNewsData($this->io, $associationRepository);
+        $this->dumpNewsData($this->io, $sectionRepository);
+
+        $this->io->success("Catégorie(s) d'Article et Article(s) créé(s) - NewsFixtures terminé");
+    }
+
+    private function dumpNewsData($io, $repository)
+    {
+        $organizations = $repository->findAll();
+
+        foreach ($organizations as $organization) {
+            $organizationName = $organization->getName();
+            $count = count($organization->getArticles());
+            $io->text("- $organizationName : " . $count);
+        }
     }
 
     public function getDependencies()
     {
         return [
-            AssoSectionsFixtures::class,
+            OrganizationsFixtures::class,
         ];
     }
 }

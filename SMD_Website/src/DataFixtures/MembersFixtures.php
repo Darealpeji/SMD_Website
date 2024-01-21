@@ -4,8 +4,15 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Member;
+use App\Entity\Section;
+use App\Entity\Association;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\Constants\RolesConstants;
+use App\DataFixtures\Constants\MembersConstants;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use App\DataFixtures\Constants\OrganizationsConstants;
+use App\Entity\Role;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -13,206 +20,221 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
 {
     private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    private $io;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher, SymfonyStyle $io)
     {
         $this->passwordHasher = $passwordHasher;
+        $this->io = $io;
     }
 
     public function load(ObjectManager $manager)
     {
-        // ...
+        $this->loadRole($manager);
+        $this->loadMember($manager);
+        $this->loadLicensees($manager);
+        $this->dumpSummaryFixtures($manager);
+    }
 
-        $superAdminCount = 0;
-        $adminCount = 0;
-        $editorCount = 0;
-        $licenseeCounts = [];
-        $adminEmails = [];
-        $editorEmails = [];
+    private function loadRole(ObjectManager $manager)
+    {
+        $rolesData = RolesConstants::ROLES;
 
-        $this->loadSuperAdmin($manager);
-        $superAdminCount++;
+        foreach ($rolesData as $roleReference => $roleData) {
+            $name = $roleData["name"];
+            $label = $roleData["label"];
+            $organizations = $roleData["organizations"];
 
-        $adminCount += $this->loadRoleMembers($manager, 'ROLE_ADMIN', $adminEmails);
+            $role = $this->createRole(
+                $name,
+                $label,
+                $organizations
+            );
 
-        echo sprintf("Admins créés: %d\n", $adminCount);
-        foreach ($adminEmails as $email) {
-            echo sprintf("- %s\n", $email);
-        }
-
-        $editorCount += $this->loadRoleMembers($manager, 'ROLE_EDITOR', $editorEmails);
-
-        echo sprintf("Éditeurs créés: %d\n", $editorCount);
-        foreach ($editorEmails as $email) {
-            echo sprintf("- %s\n", $email);
-        }
-
-        $licenseeCounts = $this->loadLicensees($manager);
-
-        foreach ($licenseeCounts as $groupType => $count) {
-            echo sprintf("Nombre de licenciés pour %s: %d\n", $groupType, $count);
+            $manager->persist($role);
+            $this->setReference($roleReference, $role);
         }
 
         $manager->flush();
     }
 
-    private function loadSuperAdmin(ObjectManager $manager)
+    private function loadMember(ObjectManager $manager)
     {
-        $superAdmin = new Member();
-        $superAdmin
-            ->setFirstName('Super')
-            ->setLastName('Admin')
-            ->setEmail('superadmin@saintmedard-nantes.fr')
-            ->setRoles(['ROLE_SUPER_ADMIN'])
-            ->setCreatedAtValue();
+        $membersData = MembersConstants::MEMBERS;
+        $membersCount = count($membersData);
 
-        $encodedPassword = $this->passwordHasher->hashPassword($superAdmin, 'password123');
-        $superAdmin->setPassword($encodedPassword);
+        $this->io->title("Création des Membres");
+        $this->io->progressStart($membersCount);
 
-        $association = $this->getReference(AssoSectionsFixtures::ASSOCIATION);
-        $superAdmin->setAssociation($association);
+        foreach ($membersData as $memberReference => $memberData) {
+            $firstName = $memberData['firstName'];
+            $lastName = $memberData['lastName'];
+            $roles = $memberData['roles'];
+            $organizations = $memberData['organizations'];
 
-        $sectionReferences = $this->getSectionReferences();
-        foreach ($sectionReferences as $sectionReference) {
-            $superAdmin->addSections($this->getReference($sectionReference));
+            $member = $this->createMember(
+                $firstName,
+                $lastName,
+                $roles,
+                $organizations
+            );
+
+            $manager->persist($member);
+            $this->setReference($memberReference, $member);
+            $this->io->progressAdvance();
         }
 
-        $manager->persist($superAdmin);
-    }
-
-    private function loadRoleMembers(ObjectManager $manager, string $role, array &$emailList)
-    {
-        $groupTypes = [
-            'association', 'basket', 'chorale', 'danse', 'football',
-            'gym_sportive', 'gym_tonique', 'loisirs', 'petanque', 'tennis_de_table',
-        ];
-
-        $membersCount = 0;
-
-        foreach ($groupTypes as $groupType) {
-            $email = $this->loadMember($manager, $role, $groupType);
-            if ($email !== null) {
-                $emailList[] = $email;
-                $membersCount++;
-            }
-        }
-
-        return $membersCount;
-    }
-
-    private function loadMember(ObjectManager $manager, string $role, string $groupType, ?string $firstName = null, ?string $lastName = null, ?string $email = null, ?string $password = null)
-    {
-        if ($firstName === null) {
-            $firstName = ($role === 'ROLE_ADMIN') ? 'Admin' : 'Editeur';
-        }
-
-        if ($lastName === null) {
-            $lastName = ucwords(str_replace('_', ' ', $groupType));
-        }
-
-        if ($email === null) {
-            $email = strtolower(str_replace(' ', '_', $firstName) . "_" . str_replace(' ', '_', $lastName) . "@saintmedard-nantes.fr");
-        }
-
-        if ($password === null) {
-            $password = 'password123';
-        }
-
-        $memberData = [
-            $firstName,
-            $lastName,
-            $email,
-            [$role],
-            $password,
-            $groupType,
-        ];
-
-        $member = $this->createMember($memberData);
-
-        if ($groupType === 'association') {
-            $member->setAssociation($this->getReference(AssoSectionsFixtures::ASSOCIATION));
-        } else {
-            $member->addSections($this->getReference($groupType));
-        }
-
-        $manager->persist($member);
-
-        return $email;
+        $manager->flush();
+        $this->io->progressFinish();
     }
 
     private function loadLicensees(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $licenseeCounts = [];
 
-        $groupTypes = [
-            'association', 'basket', 'chorale', 'danse', 'football',
-            'gym_sportive', 'gym_tonique', 'loisirs', 'petanque', 'tennis_de_table',
-        ];
+        $organizations = OrganizationsConstants::getSections();
 
-        foreach ($groupTypes as $groupType) {
+        $this->io->title("Création des Licenciés");
+        $this->io->progressStart(90);
 
-            $membersCount = 0;
+        foreach ($organizations as $organization) {
 
             for ($i = 0; $i < 10; $i++) {
                 $firstName = $faker->firstName;
                 $lastName = $faker->lastName;
-                $email = strtolower(str_replace(' ', '_', $firstName) . "_" . str_replace(' ', '_', $lastName) . "@saintmedard-nantes.fr");
+                $roles = [rolesConstants::ROLE_LICENSEE];
 
-                $this->loadMember(
-                    $manager,
-                    'ROLE_LICENSEE',
-                    $groupType,
+                $member = $this->createMember(
                     $firstName,
                     $lastName,
-                    $email,
-                    'password123'
+                    $roles,
+                    [$organization]
                 );
-                $membersCount++;
-            }
 
-            $licenseeCounts[$groupType] = $membersCount;
+                $manager->persist($member);
+                $this->io->progressAdvance();
+            }
         }
 
-        return $licenseeCounts;
+        $manager->flush();
+        $this->io->progressFinish();
     }
 
-    private function createMember(array $memberData): Member
+    private function createRole(string $name, string $label, array $organizations): Role
     {
-        [$firstName, $lastName, $email, $roles, $password] = $memberData;
+        $role = new Role();
+        $role
+            ->setName($name)
+            ->setLabel($label)
+            ->setCreatedAtValue();
+
+        $this->addRoleToOrganization($role, $organizations);
+
+        return $role;
+    }
+
+    private function createMember(string $firstName, string $lastName, array $roles, array $organizations): Member
+    {
+        $email = strtolower(str_replace(' ', '_', $firstName) . "_" . str_replace(' ', '_', $lastName) . MembersConstants::DOMAIN_NAME_EMAIL);
 
         $member = new Member();
         $member
             ->setFirstName($firstName)
             ->setLastName($lastName)
             ->setEmail($email)
-            ->setRoles($roles)
+            ->setPassword(MembersConstants::PASSWORD)
             ->setCreatedAtValue();
 
-        $encodedPassword = $this->passwordHasher->hashPassword($member, $password);
+        $encodedPassword = $this->passwordHasher->hashPassword($member, MembersConstants::PASSWORD);
         $member->setPassword($encodedPassword);
+
+        foreach ($roles as $role) {
+            $roleReference = $this->getReference($role);
+            $member->addRoles($roleReference);
+        }
+
+        $this->addMemberToOrganization($member, $organizations);
 
         return $member;
     }
 
-    private function getSectionReferences(): array
+    private function addMemberToOrganization(Member $member, array $organizations)
     {
-        return [
-            AssoSectionsFixtures::BASKET,
-            AssoSectionsFixtures::CHORALE,
-            AssoSectionsFixtures::DANSE,
-            AssoSectionsFixtures::FOOTBALL,
-            AssoSectionsFixtures::GYM_SPORTIVE,
-            AssoSectionsFixtures::GYM_TONIQUE,
-            AssoSectionsFixtures::LOISIRS,
-            AssoSectionsFixtures::PETANQUE,
-            AssoSectionsFixtures::TENNIS_DE_TABLE,
-        ];
+        foreach ($organizations as $organization) {
+
+            $organizationReference = $this->getReference($organization);
+
+            if ($organization === OrganizationsConstants::ASSOCIATION) {
+                $member->setAssociation($organizationReference);
+            } else {
+                $member->addSections($organizationReference);
+            }
+        }
+    }
+
+    private function addRoleToOrganization(Role $role, array $organizations)
+    {
+        foreach ($organizations as $organization) {
+
+            $organizationReference = $this->getReference($organization);
+
+            if ($organization === OrganizationsConstants::ASSOCIATION) {
+                $role->setAssociation($organizationReference);
+            } else {
+                $role->addSections($organizationReference);
+            }
+        }
+    }
+
+    private function dumpSummaryFixtures(ObjectManager $manager)
+    {
+        $associationRepository = $manager->getRepository(Association::class);
+        $sectionRepository = $manager->getRepository(Section::class);
+        $roleRepository = $manager->getRepository(Role::class);
+
+
+        $this->io->newLine();
+        $this->io->title("Nombre d'Utilisateurs pour l'");
+        $this->dumpMembersByOrganizations($this->io, $associationRepository);
+        $this->io->title("Nombre d'Utilisateurs par Section :");
+        $this->dumpMembersByOrganizations($this->io, $sectionRepository);
+        $this->dumpMembersByRoles($this->io, $roleRepository);
+
+        $this->io->success("Membre(s) créée(s) - MembersFixtures terminé");
+    }
+
+    private function dumpMembersByOrganizations($io, $organizationRepository)
+    {
+        $organizations = $organizationRepository->findAll();
+
+        foreach ($organizations as $organization) {
+
+            $organizationName = $organization->getName();
+            $membersCount = $organization->getMembers()->count();
+
+            $io->text("- $organizationName : " . $membersCount . " utilisateur(s) affecté(s)");
+        }
+    }
+
+    private function dumpMembersByRoles($io, $roleRepository)
+    {
+        $io->title("Nombre d'Utilisateurs par Rôles :");
+
+        $dumpMembers = $roleRepository->getMembersByRoles();
+
+        foreach ($dumpMembers as $result) {
+            $roleName = $result['roleName'];
+            $roleLabel = $result['roleLabel'];
+            $membersCount = $result['membersCount'];
+
+            $io->text("- $roleName - $roleLabel : " . $membersCount . " utilisateur(s) affecté(s)");
+        }
     }
 
     public function getDependencies()
     {
         return [
-            AssoSectionsFixtures::class,
+            OrganizationsFixtures::class,
         ];
     }
 }

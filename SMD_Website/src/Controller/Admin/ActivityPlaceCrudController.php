@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class ActivityPlaceCrudController extends AbstractCrudController
 {
@@ -94,7 +95,8 @@ class ActivityPlaceCrudController extends AbstractCrudController
     {
         return [
             IntegerField::new('id', 'ID :')->onlyOnIndex(),
-            FormField::addFieldset('Informations Générales'),
+
+            FormField::addTab('Informations Générales'),
             TextField::new('name', 'Nom du Lieu :')->setColumns(6),
             FormField::addRow(),
             TextField::new('adress', 'Adresse :')->setColumns(6)->hideOnIndex(),
@@ -102,6 +104,9 @@ class ActivityPlaceCrudController extends AbstractCrudController
             TextField::new('city', 'Ville :')->setColumns(4)->hideOnIndex(),
             TextField::new('googleMapLink', 'Lien Google Map :')->setColumns(6)->hideOnIndex(),
             TextEditorField::new('recommendedRoute', "Itinéraire(s) Conseillé(s) :")->setColumns(12)->hideOnIndex(),
+
+            FormField::addTab("Créneaux d'Entrainements"),
+            CollectionField::new("trainings", "Créneaux :")->useEntryCrudForm(TrainingCrudController::class)->hideOnIndex(),
 
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),

@@ -55,9 +55,13 @@ class ActivityPlace
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'activityPlaces')]
     private Collection $sections;
 
+    #[ORM\OneToMany(mappedBy: 'activityPlace', targetEntity: Training::class)]
+    private Collection $trainings;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->trainings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +201,36 @@ class ActivityPlace
     public function removeSection(Section $section): static
     {
         $this->sections->removeElement($section);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Training>
+     */
+    public function getTrainings(): Collection
+    {
+        return $this->trainings;
+    }
+
+    public function addTraining(Training $training): static
+    {
+        if (!$this->trainings->contains($training)) {
+            $this->trainings->add($training);
+            $training->setActivityPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTraining(Training $training): static
+    {
+        if ($this->trainings->removeElement($training)) {
+            // set the owning side to null (unless already changed)
+            if ($training->getActivityPlace() === $this) {
+                $training->setActivityPlace(null);
+            }
+        }
 
         return $this;
     }

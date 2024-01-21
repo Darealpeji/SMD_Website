@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Team;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\TeamCategory;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Team>
@@ -21,28 +22,23 @@ class TeamRepository extends ServiceEntityRepository
         parent::__construct($registry, Team::class);
     }
 
-//    /**
-//     * @return Team[] Returns an array of Team objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findTeamsWithTrainingDetails()
+    {
+        return $this->createQueryBuilder('team')
+            ->leftJoin('team.training', 'training')
+            ->addSelect('training')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Team
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getTeamsByTeamCategory(TeamCategory $teamCategory)
+    {
+        return $this->createQueryBuilder('te')
+            ->select('te', 'tr')
+            ->leftJoin('te.trainings', 'tr')
+            ->where('te.teamCategory = :teamCategory')
+            ->setParameter('teamCategory', $teamCategory)
+            ->getQuery()
+            ->getResult();
+    }
 }

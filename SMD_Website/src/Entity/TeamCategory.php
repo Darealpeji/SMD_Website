@@ -19,10 +19,13 @@ class TeamCategory
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private ?string $label = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\Column]
+    private ?bool $competition = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -59,14 +62,14 @@ class TeamCategory
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getLabel(): ?string
     {
-        return $this->title;
+        return $this->label;
     }
 
-    public function setTitle(string $title): static
+    public function setLabel(string $label): static
     {
-        $this->title = $title;
+        $this->label = $label;
 
         return $this;
     }
@@ -79,6 +82,18 @@ class TeamCategory
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function isCompetition(): ?bool
+    {
+        return $this->competition;
+    }
+
+    public function setCompetition(bool $competition): static
+    {
+        $this->competition = $competition;
 
         return $this;
     }

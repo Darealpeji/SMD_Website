@@ -6,11 +6,13 @@ use App\Entity\Section;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use App\Controller\Admin\NavBarLinkCrudController;
+use App\Controller\Admin\NavBarMenuCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -97,13 +99,14 @@ class SectionCrudController extends AbstractCrudController
     {
         return [
             IntegerField::new('id', 'ID :')->onlyOnIndex(),
-            
+
             FormField::addTab('Données Générales'),
 
             FormField::addFieldset('Informations Générales'),
-            TextField::new('name', "Nom de la Section :")->setColumns(3),
-            AssociationField::new('association', 'Association :')->setColumns(3)->hideOnIndex(),
-            TextField::new('motto', 'Devise :')->setColumns(6)->hideOnIndex(),
+            TextField::new('name', "Nom de la Section :")->setColumns(6),
+            AssociationField::new('association', 'Association :')->setColumns(6)->hideOnIndex(),
+            TextField::new('motto', 'Devise :')->setColumns(8)->hideOnIndex(),
+            BooleanField::new('manageConvocation', 'Gestion des Convocations :')->setColumns(4)->hideOnIndex(),
 
             FormField::addFieldset('Coordonnées'),
             TextField::new('adress', 'Adresse :')->setColumns(6)->hideOnIndex(),
@@ -115,12 +118,13 @@ class SectionCrudController extends AbstractCrudController
 
             FormField::addFieldset('Liens'),
             SlugField::new('slug', "Nom dans l'url :")->setTargetFieldName('name')->setColumns(6)->hideOnIndex()
-            ->setUnlockConfirmationMessage(
-                "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"),
+                ->setUnlockConfirmationMessage(
+                    "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"
+                ),
             TextField::new('scoreNCoCode', "Lien Score'n'Co :")->setColumns(6)->hideOnIndex(),
-            
+
             FormField::addTab('Barre de Navigation'),
-            CollectionField::new('navBarLinks', 'Barre de Navigation :')->useEntryCrudForm(NavBarLinkCrudController::class)->setColumns(8)->hideOnIndex(),
+            CollectionField::new('navBarMenus', 'Barre de Navigation :')->useEntryCrudForm(NavBarMenuCrudController::class)->setColumns(8)->hideOnIndex(),
 
             FormField::addTab('Infos Pratiques'),
             AssociationField::new('activityPlaces', "Lieu(x) d'activités :")->setColumns(6)->hideOnIndex(),

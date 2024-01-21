@@ -2,15 +2,21 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Post;
 use App\Entity\Team;
 use App\Entity\Member;
 use App\Entity\Article;
 use App\Entity\Section;
+use App\Entity\Activity;
+use App\Entity\Training;
 use App\Entity\Association;
 use App\Entity\TeamCategory;
+use App\Entity\ActivityClass;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\NavBarSubMenuLoggedInMember;
+use App\Entity\Role;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
@@ -42,22 +48,22 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         $entityInstance->setCreatedAtValue();
 
-        if (method_exists($entityInstance, 'getNavBarLinks')) {
+        if (method_exists($entityInstance, 'getNavBarMenus')) {
 
-            $navBarLinks = $entityInstance->getNavBarLinks();
+            $navBarMenus = $entityInstance->getNavBarMenus();
 
-            foreach ($navBarLinks as $navBarLink) {
+            foreach ($navBarMenus as $navBarMenu) {
 
-                $navBarDdLinks = $navBarLink->getNavBarDdLinks();
+                $navBarSubMenus = $navBarMenu->getNavBarSubMenus();
 
-                if ($navBarLink->getCreatedAt() === null) {
-                    $navBarLink->setCreatedAtValue();
+                if ($navBarMenu->getCreatedAt() === null) {
+                    $navBarMenu->setCreatedAtValue();
                 }
 
-                foreach ($navBarDdLinks as $navBarDdLink) {
+                foreach ($navBarSubMenus as $navBarSubMenu) {
 
-                    if ($navBarDdLink->getCreatedAt() === null) {
-                        $navBarDdLink->setCreatedAtValue();
+                    if ($navBarSubMenu->getCreatedAt() === null) {
+                        $navBarSubMenu->setCreatedAtValue();
                     }
                 }
             }
@@ -71,6 +77,18 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
                 if ($team->getCreatedAt() === null) {
                     $team->setCreatedAtValue();
+                }
+            }
+        }
+
+        if (method_exists($entityInstance, 'getActivityClasses')) {
+
+            $activityClasses = $entityInstance->getActivityClasses();
+
+            foreach ($activityClasses as $activityClass) {
+
+                if ($activityClass->getCreatedAt() === null) {
+                    $activityClass->setCreatedAtValue();
                 }
             }
         }
@@ -90,32 +108,18 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $entityInstance->setUpdatedAtValue();
         }
 
-        if (method_exists($entityInstance, 'getNavBarLinks')) {
+        if (method_exists($entityInstance, 'getNavBarMenus')) {
 
-            $navBarLinks = $entityInstance->getNavBarLinks();
+            $navBarMenus = $entityInstance->getNavBarMenus();
 
-            foreach ($navBarLinks as $navBarLink) {
+            foreach ($navBarMenus as $navBarMenu) {
 
-                $section = $navBarLink->getSection();
-                $association = $navBarLink->getAssociation();
-                $navBarDdLinks = $navBarLink->getNavBarDdLinks();
+                $section = $navBarMenu->getSection();
+                $association = $navBarMenu->getAssociation();
+                $navBarSubMenus = $navBarMenu->getNavBarSubMenus();
 
-                if ($navBarLink->getCreatedAt() === null) {
-                    $navBarLink->setCreatedAtValue();
-
-                    if ($section !== null) {
-                        $section->setUpdatedAtValue();
-                    }
-
-                    if ($association !== null) {
-                        $association->setUpdatedAtValue();
-                    }
-                }
-
-                $originalNavBarLink = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarLink);
-
-                if ($this->hasChanges($navBarLink, $originalNavBarLink)) {
-                    $navBarLink->setUpdatedAtValue();
+                if ($navBarMenu->getCreatedAt() === null) {
+                    $navBarMenu->setCreatedAtValue();
 
                     if ($section !== null) {
                         $section->setUpdatedAtValue();
@@ -126,26 +130,24 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                     }
                 }
 
-                foreach ($navBarDdLinks as $navBarDdLink) {
+                $originalNavBarMenu = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarMenu);
 
-                    if ($navBarDdLink->getCreatedAt() === null) {
-                        $navBarDdLink->setCreatedAtValue();
+                if ($this->hasChanges($navBarMenu, $originalNavBarMenu)) {
+                    $navBarMenu->setUpdatedAtValue();
 
-                        if ($section !== null) {
-                            $section->setUpdatedAtValue();
-                        }
-
-                        if ($association !== null) {
-                            $association->setUpdatedAtValue();
-                        }
-
-                        $navBarLink->setUpdatedAtValue();
+                    if ($section !== null) {
+                        $section->setUpdatedAtValue();
                     }
 
-                    $originalNavBarDdLink = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarDdLink);
+                    if ($association !== null) {
+                        $association->setUpdatedAtValue();
+                    }
+                }
 
-                    if ($this->hasChanges($navBarDdLink, $originalNavBarDdLink)) {
-                        $navBarDdLink->setUpdatedAtValue();
+                foreach ($navBarSubMenus as $navBarSubMenu) {
+
+                    if ($navBarSubMenu->getCreatedAt() === null) {
+                        $navBarSubMenu->setCreatedAtValue();
 
                         if ($section !== null) {
                             $section->setUpdatedAtValue();
@@ -155,7 +157,23 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                             $association->setUpdatedAtValue();
                         }
 
-                        $navBarLink->setUpdatedAtValue();
+                        $navBarMenu->setUpdatedAtValue();
+                    }
+
+                    $originalNavBarSubMenu = $this->entityManager->getUnitOfWork()->getOriginalEntityData($navBarSubMenu);
+
+                    if ($this->hasChanges($navBarSubMenu, $originalNavBarSubMenu)) {
+                        $navBarSubMenu->setUpdatedAtValue();
+
+                        if ($section !== null) {
+                            $section->setUpdatedAtValue();
+                        }
+
+                        if ($association !== null) {
+                            $association->setUpdatedAtValue();
+                        }
+
+                        $navBarMenu->setUpdatedAtValue();
                     }
                 }
             }
@@ -188,31 +206,62 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 }
             }
         }
+
+        if (method_exists($entityInstance, 'getActivityClasses')) {
+
+            $activityClasses = $entityInstance->getActivityClasses();
+
+            foreach ($activityClasses as $activityClass) {
+
+                $activity = $activityClass->getActivity();
+
+                if ($activityClass->getCreatedAt() === null) {
+                    $activityClass->setCreatedAtValue();
+
+                    if ($activity !== null) {
+                        $activity->setUpdatedAtValue();
+                    }
+                }
+
+                $originalActivityClass = $this->entityManager->getUnitOfWork()->getOriginalEntityData($activityClass);
+
+                if ($this->hasChanges($activityClass, $originalActivityClass)) {
+                    $activityClass->setUpdatedAtValue();
+
+                    if ($activity !== null) {
+                        $activity->setUpdatedAtValue();
+                    }
+                }
+            }
+        }
     }
 
     private function supportsEntity($entity): bool
     {
         return $entity instanceof Association
             || $entity instanceof Section
+            || $entity instanceof NavBarSubMenuLoggedInMember
             || $entity instanceof Article
             || $entity instanceof ArticleCategory
             || $entity instanceof ActivityPlace
             || $entity instanceof TeamCategory
             || $entity instanceof Team
+            || $entity instanceof Training
+            || $entity instanceof Activity
+            || $entity instanceof ActivityClass
+            || $entity instanceof Post
+            || $entity instanceof Role
             || $entity instanceof Member;
     }
 
     private function hasChanges($entity, $originalData): bool
     {
         foreach ($originalData as $property => $originalValue) {
-            // Convertir le nom de la propriété en méthode getter
             $getterMethod = 'get' . ucfirst($property);
 
-            // Vérifier si la méthode getter existe
             if (method_exists($entity, $getterMethod)) {
                 $currentValue = $entity->$getterMethod();
 
-                // Si la valeur a changé, retourner true
                 if ($originalValue !== $currentValue) {
                     return true;
                 }

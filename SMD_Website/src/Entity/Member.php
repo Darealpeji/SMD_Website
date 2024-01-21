@@ -26,8 +26,8 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'members')]
+    private Collection $roles;
 
     /**
      * @var string The hashed password
@@ -47,9 +47,14 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'members')]
     private ?Association $association = null;
 
+    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'members')]
+    private Collection $posts;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +99,42 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return array<string>
+     */
+    public function getRolesAsArray(): array
+    {
+        return $this->roles->map(fn (Role $role) => $role->getRole())->toArray();
+    }
+
+    /**
+     * @see UserInterface
+     * @deprecated Utilisez getRolesAsArray à la place
+     */
+    public function getRoles(): array
+    {
+        return $this->getRolesAsArray();
+    }
+
+    public function addRoles(Role $roles): static
+    {
+        if (!$this->roles->contains($roles)) {
+            $this->roles->add($roles);
+            $roles->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoles(Role $roles): static
+    {
+        if ($this->roles->removeElement($roles)) {
+            $roles->removeMember($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -101,25 +142,6 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -201,6 +223,33 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAssociation(?Association $association): static
     {
         $this->association = $association;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            $post->removeMember($this);
+        }
 
         return $this;
     }

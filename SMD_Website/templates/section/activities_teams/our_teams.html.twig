@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Section Détail Equipe{% endblock %}
+
+{% block body %}
+    <h1>{{section.name}} - Détail {{ teamCategory }}</h1>
+
+    {% include('section/navbar.html.twig') %}
+
+   <ul>
+        {% if teamCategory is defined and teamCategory is not empty %}
+            {% for team in teamCategory.teams %}
+                <li>{{ team.name }} - Entrainements :
+                    <ul>
+                        {% for training in team.trainings %}
+                            <li>{{ training.activityPlace.name }} - Le {{ training.day }} 
+                            de {{ training.getFormattedStartTimeSlotWithDay()|replace({':': 'h'}) }} 
+                            à {{ training.getFormattedEndTimeSlotWithDay()|replace({':': 'h'}) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Aucune équipe disponible pour cette catégorie</li>
+        {% endif %}
+    </ul>
+
+{% endblock %}

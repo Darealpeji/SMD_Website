@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -103,12 +104,13 @@ class TeamCategoryCrudController extends AbstractCrudController
 
             FormField::addFieldset('Informations Générales'),
             TextField::new('name', "Nom Unique de la Catégorie :")->setColumns(3),
-            TextField::new('title', "Titre de la Catégorie :")->setColumns(3)->hideOnIndex(),
+            TextField::new('label', "Titre de la Catégorie :")->setColumns(3)->hideOnIndex(),
             AssociationField::new('section', 'Section :')->setColumns(3)->hideOnIndex(),
-            SlugField::new('slug', "Nom dans l'url :")->setTargetFieldName('title')->setColumns(6)->hideOnIndex()
+            SlugField::new('slug', "Nom dans l'url :")->setTargetFieldName('label')->setColumns(6)->hideOnIndex()
                 ->setUnlockConfirmationMessage(
                     "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"
                 ),
+            BooleanField::new("competition")->hideOnIndex(),
 
             FormField::addFieldset('Equipes'),
             CollectionField::new('teams', 'Equipes :')->useEntryCrudForm(TeamCrudController::class)->setColumns(8)->hideOnIndex(),

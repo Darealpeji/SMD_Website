@@ -21,20 +21,92 @@ security:
         check_path: app_login
         enable_csrf: true
         default_target_path: url_after_login
+        always_use_default_target_path: true
       logout:
         path: app_logout
-        target: association_accueil
+        target: home_association
+      remember_me:
+        secret: "%kernel.secret%"
+        lifetime: 2592000
+        path: /
+        domain: ~
+    target_path_trait: ~
 
   role_hierarchy:
-    ROLE_SUPER_ADMIN: [ROLE_ADMIN]
-    ROLE_ADMIN: [ROLE_EDITOR]
-    ROLE_EDITOR: [ROLE_USER]
+    ROLE_SUPER_ADMIN:
+      [
+        ROLE_ADMIN_ASSOCIATION,
+        ROLE_ADMIN_BASKET,
+        ROLE_ADMIN_CHORALE,
+        ROLE_ADMIN_DANSE,
+        ROLE_ADMIN_FOOTBALL,
+        ROLE_ADMIN_GYM_SPORTIVE,
+        ROLE_ADMIN_GYM_TONIQUE,
+        ROLE_ADMIN_LOISIRS,
+        ROLE_ADMIN_PETANQUE,
+        ROLE_ADMIN_TENNIS_DE_TABLE,
+      ]
+    ROLE_ADMIN_ASSOCIATION: [ROLE_EDITOR_ASSOCIATION]
+    ROLE_ADMIN_BASKET: [ROLE_EDITOR_BASKET, ROLE_COACH_BASKET]
+    ROLE_ADMIN_CHORALE: [ROLE_EDITOR_CHORALE, ROLE_COACH_CHORALE]
+    ROLE_ADMIN_DANSE: [ROLE_EDITOR_DANSE, ROLE_COACH_DANSE]
+    ROLE_ADMIN_FOOTBALL: [ROLE_EDITOR_FOOTBALL, ROLE_COACH_FOOTBALL]
+    ROLE_ADMIN_GYM_SPORTIVE: [ROLE_EDITOR_GYM_SPORTIVE, ROLE_COACH_GYM_SPORTIVE]
+    ROLE_ADMIN_GYM_TONIQUE: [ROLE_EDITOR_GYM_TONIQUE, ROLE_COACH_GYM_TONIQUE]
+    ROLE_ADMIN_LOISIRS: [ROLE_EDITOR_LOISIRS, ROLE_COACH_LOISIRS]
+    ROLE_ADMIN_PETANQUE: [ROLE_EDITOR_PETANQUE, ROLE_COACH_PETANQUE]
+    ROLE_ADMIN_TENNIS_DE_TABLE:
+      [ROLE_EDITOR_TENNIS_DE_TABLE, ROLE_COACH_TENNIS_DE_TABLE]
+    ROLE_EDITOR_ASSOCIATION: [ROLE_USER]
+    ROLE_EDITOR_BASKET: [ROLE_USER]
+    ROLE_EDITOR_CHORALE: [ROLE_USER]
+    ROLE_EDITOR_DANSE: [ROLE_USER]
+    ROLE_EDITOR_FOOTBALL: [ROLE_USER]
+    ROLE_EDITOR_GYM_SPORTIVE: [ROLE_USER]
+    ROLE_EDITOR_GYM_TONIQUE: [ROLE_USER]
+    ROLE_EDITOR_LOISIRS: [ROLE_USER]
+    ROLE_EDITOR_PETANQUE: [ROLE_USER]
+    ROLE_EDITOR_TENNIS_DE_TABLE: [ROLE_USER]
+    ROLE_COACH_BASKET: [ROLE_USER]
+    ROLE_COACH_CHORALE: [ROLE_USER]
+    ROLE_COACH_DANSE: [ROLE_USER]
+    ROLE_COACH_FOOTBALL: [ROLE_USER]
+    ROLE_COACH_GYM_SPORTIVE: [ROLE_USER]
+    ROLE_COACH_GYM_TONIQUE: [ROLE_USER]
+    ROLE_COACH_LOISIRS: [ROLE_USER]
+    ROLE_COACH_PETANQUE: [ROLE_USER]
+    ROLE_COACH_TENNIS_DE_TABLE: [ROLE_USER]
     ROLE_LICENSEE: [ROLE_USER]
 
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/admin, roles: ROLE_EDITOR }
+    - {
+        path: ^/admin,
+        roles:
+          [
+            ROLE_EDITOR_ASSOCIATION,
+            ROLE_EDITOR_BASKET,
+            ROLE_EDITOR_CHORALE,
+            ROLE_EDITOR_DANSE,
+            ROLE_EDITOR_FOOTBALL,
+            ROLE_EDITOR_GYM_SPORTIVE,
+            ROLE_EDITOR_GYM_TONIQUE,
+            ROLE_EDITOR_LOISIRS,
+            ROLE_EDITOR_PETANQUE,
+            ROLE_EDITOR_TENNIS_DE_TABLE,
+            ROLE_COACH_ASSOCIATION,
+            ROLE_EDITOR_BASKET,
+            ROLE_COACH_CHORALE,
+            ROLE_EDITOR_DANSE,
+            ROLE_COACH_FOOTBALL,
+            ROLE_EDITOR_GYM_SPORTIVE,
+            ROLE_COACH_GYM_TONIQUE,
+            ROLE_EDITOR_LOISIRS,
+            ROLE_COACH_PETANQUE,
+            ROLE_COACH_TENNIS_DE_TABLE,
+          ],
+      }
 
 when@test:
   security:

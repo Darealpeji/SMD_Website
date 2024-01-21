@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Post;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Section;
+use Doctrine\ORM\Query;
+use App\Entity\Association;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Post>
@@ -21,28 +24,29 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-//    /**
-//     * @return Post[] Returns an array of Post objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getPostCountByHierarchicalGroupByAssociation(Association $sassociation)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.hierarchicalGroup as hierarchy', 'COUNT(DISTINCT p.id) as postsCount', 'COUNT(DISTINCT m.id) as membersCount')
+            ->leftJoin('p.association', 'a')
+            ->leftJoin('p.members', 'm')
+            ->where('a = :association')
+            ->setParameter('association', $sassociation)
+            ->groupBy('a', 'hierarchy')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+    }
 
-//    public function findOneBySomeField($value): ?Post
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getPostCountByHierarchicalGroupBySection(Section $section)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.hierarchicalGroup as hierarchy', 'COUNT(DISTINCT p.id) as postsCount', 'COUNT(DISTINCT m.id) as membersCount')
+            ->leftJoin('p.section', 's')
+            ->leftJoin('p.members', 'm')
+            ->where('s = :section')
+            ->setParameter('section', $section)
+            ->groupBy('s', 'hierarchy')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+    }
 }
