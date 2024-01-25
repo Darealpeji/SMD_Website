@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AssociationRepository;
 use Doctrine\Common\Collections\Collection;
@@ -54,6 +55,12 @@ class Association
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $presentation = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $historical = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -75,11 +82,14 @@ class Association
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Member::class)]
     private Collection $members;
 
-    #[ORM\OneToMany(mappedBy: 'association', targetEntity: Post::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $posts;
-
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Role::class)]
     private Collection $roles;
+
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: HistoricalDate::class)]
+    private Collection $historicalDates;
+
+    #[ORM\OneToMany(mappedBy: 'association', targetEntity: PostChartCategory::class)]
+    private Collection $postChartCategories;
 
     public function __construct()
     {
@@ -88,8 +98,9 @@ class Association
         $this->articles = new ArrayCollection();
         $this->activityPlaces = new ArrayCollection();
         $this->members = new ArrayCollection();
-        $this->posts = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->historicalDates = new ArrayCollection();
+        $this->postChartCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +188,30 @@ class Association
     public function setMail(?string $mail): static
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): static
+    {
+        $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getHistorical(): ?string
+    {
+        return $this->historical;
+    }
+
+    public function setHistorical(?string $historical): static
+    {
+        $this->historical = $historical;
 
         return $this;
     }
@@ -360,36 +395,6 @@ class Association
     }
 
     /**
-     * @return Collection<int, Post>
-     */
-    public function getPosts(): Collection
-    {
-        return $this->posts;
-    }
-
-    public function addPost(Post $post): static
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts->add($post);
-            $post->setAssociation($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): static
-    {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getAssociation() === $this) {
-                $post->setAssociation(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Role>
      */
     public function getRoles(): Collection
@@ -413,6 +418,66 @@ class Association
             // set the owning side to null (unless already changed)
             if ($role->getAssociation() === $this) {
                 $role->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoricalDate>
+     */
+    public function getHistoricalDates(): Collection
+    {
+        return $this->historicalDates;
+    }
+
+    public function addHistoricalDate(HistoricalDate $historicalDate): static
+    {
+        if (!$this->historicalDates->contains($historicalDate)) {
+            $this->historicalDates->add($historicalDate);
+            $historicalDate->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricalDate(HistoricalDate $historicalDate): static
+    {
+        if ($this->historicalDates->removeElement($historicalDate)) {
+            // set the owning side to null (unless already changed)
+            if ($historicalDate->getAssociation() === $this) {
+                $historicalDate->setAssociation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostChartCategory>
+     */
+    public function getPostChartCategories(): Collection
+    {
+        return $this->postChartCategories;
+    }
+
+    public function addPostChartCategory(PostChartCategory $postChartCategory): static
+    {
+        if (!$this->postChartCategories->contains($postChartCategory)) {
+            $this->postChartCategories->add($postChartCategory);
+            $postChartCategory->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganizationChart(PostChartCategory $postChartCategory): static
+    {
+        if ($this->postChartCategories->removeElement($postChartCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($postChartCategory->getAssociation() === $this) {
+                $postChartCategory->setAssociation(null);
             }
         }
 

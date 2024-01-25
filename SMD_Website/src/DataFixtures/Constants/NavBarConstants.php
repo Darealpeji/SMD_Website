@@ -21,11 +21,11 @@ class NavBarConstants
                 [
                     'label' => "L'Association",
                     'slug' => 'l-association',
-                    'routeName' => '',
+                    'routeName' => 'presentation_association',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => '', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => '', 'ranking' => 2],
+                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'historical_association', 'ranking' => 1],
+                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_association', 'ranking' => 2],
                         ['label' => 'Documents', 'slug' => 'documents', 'routeName' => '', 'ranking' => 3],
                         ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 4]
                     ]
@@ -72,18 +72,17 @@ class NavBarConstants
                 [
                     'label' => 'Le Club',
                     'slug' => 'le-club',
-                    'routeName' => '',
+                    'routeName' => 'the_club_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => '', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => '', 'ranking' => 2],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 3]
+                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 1],
+                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 2]
                     ]
                 ],
                 [
                     'label' => 'Nos Equipes',
                     'slug' => 'nos-equipes',
-                    'routeName' => '',
+                    'routeName' => 'our_team_categories_section',
                     'ranking' => 3,
                     'navBarSubMenus' => [
                         ['label' => 'Séniors', 'slug' => 'seniors', 'routeName' => 'our_teams_section', 'ranking' => 1],
@@ -129,7 +128,7 @@ class NavBarConstants
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
-                    'routeName' => '',
+                    'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
                         ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
@@ -167,7 +166,7 @@ class NavBarConstants
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
-                    'routeName' => '',
+                    'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => []
                 ],
@@ -211,11 +210,11 @@ class NavBarConstants
                 [
                     'label' => 'Le Club',
                     'slug' => 'le-club',
-                    'routeName' => '',
+                    'routeName' => 'the_club_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => '', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => '', 'ranking' => 2],
+                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'club_historical_section', 'ranking' => 1],
+                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 2],
                         ['label' => 'P.E.F.', 'slug' => 'p-e-f', 'routeName' => '', 'ranking' => 3],
                         ['label' => "Règlement et Charte", 'slug' => 'reglement-et-charte', 'routeName' => '', 'ranking' => 4],
                         ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 5]
@@ -224,7 +223,7 @@ class NavBarConstants
                 [
                     'label' => 'Nos Equipes',
                     'slug' => 'nos-equipes',
-                    'routeName' => '',
+                    'routeName' => 'our_team_categories_section',
                     'ranking' => 3,
                     'navBarSubMenus' => [
                         ['label' => 'Séniors', 'slug' => 'seniors', 'routeName' => 'our_teams_section', 'ranking' => 1],
@@ -273,7 +272,7 @@ class NavBarConstants
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
-                    'routeName' => '',
+                    'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => []
                 ],
@@ -320,7 +319,7 @@ class NavBarConstants
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
-                    'routeName' => '',
+                    'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => []
                 ],
@@ -356,7 +355,7 @@ class NavBarConstants
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
-                    'routeName' => '',
+                    'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => []
                 ],
@@ -383,7 +382,7 @@ class NavBarConstants
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
-                    'routeName' => '',
+                    'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => []
                 ],
@@ -410,11 +409,11 @@ class NavBarConstants
                 [
                     'label' => 'Le Club',
                     'slug' => 'le-club',
-                    'routeName' => '',
+                    'routeName' => 'the_club_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => '', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => '', 'ranking' => 2],
+                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'club_historical_section', 'ranking' => 1],
+                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 2],
                         ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 3]
                     ]
                 ],

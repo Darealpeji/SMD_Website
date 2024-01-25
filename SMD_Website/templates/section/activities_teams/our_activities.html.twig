@@ -10,7 +10,7 @@
      <ul>
         {% if activities is defined and activities is not empty %}
             {% for activity in activities %}
-             <li>{{ activity.title }} - Cours :
+             <li>{{ activity.label }} - Cours :
                 {% if activity.activityClasses is not empty %}
                     {% for class in activity.activityClasses %}
                             <ul>

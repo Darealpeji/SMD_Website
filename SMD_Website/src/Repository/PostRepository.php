@@ -24,28 +24,33 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function getPostCountByHierarchicalGroupByAssociation(Association $sassociation)
+    public function getPostCountByCategoriesByAssociation(Association $sassociation)
     {
         return $this->createQueryBuilder('p')
-            ->select('p.hierarchicalGroup as hierarchy', 'COUNT(DISTINCT p.id) as postsCount', 'COUNT(DISTINCT m.id) as membersCount')
-            ->leftJoin('p.association', 'a')
+            ->select('pcc.name as postChartCategoryName', 'ptc.name as postTeamCategoryName', 'COUNT(DISTINCT p.id) as postsCount', 'COUNT(DISTINCT m.id) as membersCount')
             ->leftJoin('p.members', 'm')
+            ->leftJoin('p.postChartCategory', 'pcc')
+            ->leftJoin('p.postTeamCategory', 'ptc')
+            ->leftJoin('pcc.association', 'a')
             ->where('a = :association')
             ->setParameter('association', $sassociation)
-            ->groupBy('a', 'hierarchy')
+            ->groupBy('a', 'postChartCategoryName', 'postTeamCategoryName')
             ->getQuery()
             ->getResult(Query::HYDRATE_ARRAY);
     }
 
-    public function getPostCountByHierarchicalGroupBySection(Section $section)
+    public function getPostCountByCategoriesBySection(Section $section)
     {
         return $this->createQueryBuilder('p')
-            ->select('p.hierarchicalGroup as hierarchy', 'COUNT(DISTINCT p.id) as postsCount', 'COUNT(DISTINCT m.id) as membersCount')
-            ->leftJoin('p.section', 's')
+            ->select('pcc.name as postChartCategoryName', 'ptc.name as postTeamCategoryName', 'COUNT(DISTINCT p.id) as postsCount', 'COUNT(DISTINCT m.id) as membersCount')
             ->leftJoin('p.members', 'm')
+            ->leftJoin('p.postChartCategory', 'pcc')
+            ->leftJoin('p.postTeamCategory', 'ptc')
+            ->leftJoin('pcc.sections', 's')
+            ->leftJoin('ptc.sections', 's')
             ->where('s = :section')
             ->setParameter('section', $section)
-            ->groupBy('s', 'hierarchy')
+            ->groupBy('s', 'postChartCategoryName', 'postTeamCategoryName')
             ->getQuery()
             ->getResult(Query::HYDRATE_ARRAY);
     }

@@ -2,22 +2,34 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Member;
 use App\Entity\Association;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Bundle\SecurityBundle\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use App\Controller\Admin\NavBarLinkCrudController;
 use App\Controller\Admin\NavBarMenuCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AssociationCrudController extends AbstractCrudController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public static function getEntityFqcn(): string
     {
         return Association::class;
@@ -101,6 +113,7 @@ class AssociationCrudController extends AbstractCrudController
             FormField::addFieldset('Informations Générales'),
             TextField::new('name', "Nom de l'Association :")->setColumns(6),
             TextField::new('motto', 'Devise :')->setColumns(6)->hideOnIndex(),
+            CollectionField::new('roles', 'Roles :')->setColumns(6)->hideOnIndex(),
 
             FormField::addFieldset('Coordonnées'),
             TextField::new('adress', 'Adresse :')->setColumns(6)->hideOnIndex(),
@@ -119,5 +132,25 @@ class AssociationCrudController extends AbstractCrudController
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),
         ];
+    }
+
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        $user = $this->security->getUser();
+
+        if ($user instanceof Member) {
+            $memberRoles = $user->getRolesAsArray();
+
+            $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+
+            $queryBuilder
+                ->join('entity.roles', 'r')
+                ->andWhere('r.name IN (:memberRoles)')
+                ->setParameter('memberRoles', $memberRoles);
+
+            return $queryBuilder;
+        }
+
+        return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
     }
 }

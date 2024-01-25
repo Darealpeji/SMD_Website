@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\Collection;
@@ -63,6 +64,12 @@ class Section
     #[ORM\Column]
     private ?bool $manageConvocation = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $presentation = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $historical = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -91,11 +98,17 @@ class Section
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Activity::class, orphanRemoval: true)]
     private Collection $activities;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Post::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $posts;
-
     #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'sections')]
     private Collection $roles;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: HistoricalDate::class)]
+    private Collection $historicalDates;
+
+    #[ORM\ManyToMany(targetEntity: PostChartCategory::class, mappedBy: 'sections')]
+    private Collection $postChartCategories;
+
+    #[ORM\ManyToMany(targetEntity: PostTeamCategory::class, mappedBy: 'sections')]
+    private Collection $postTeamCategories;
 
     public function __construct()
     {
@@ -105,8 +118,10 @@ class Section
         $this->teamCategories = new ArrayCollection();
         $this->members = new ArrayCollection();
         $this->activities = new ArrayCollection();
-        $this->posts = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->historicalDates = new ArrayCollection();
+        $this->postChartCategories = new ArrayCollection();
+        $this->postTeamCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -230,6 +245,30 @@ class Section
     public function setManageConvocation(bool $manageConvocation): static
     {
         $this->manageConvocation = $manageConvocation;
+
+        return $this;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): static
+    {
+        $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getHistorical(): ?string
+    {
+        return $this->historical;
+    }
+
+    public function setHistorical(?string $historical): static
+    {
+        $this->historical = $historical;
 
         return $this;
     }
@@ -449,36 +488,6 @@ class Section
     }
 
     /**
-     * @return Collection<int, Post>
-     */
-    public function getPosts(): Collection
-    {
-        return $this->posts;
-    }
-
-    public function addPost(Post $post): static
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts->add($post);
-            $post->setSection($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): static
-    {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getSection() === $this) {
-                $post->setSection(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Role>
      */
     public function getRoles(): Collection
@@ -500,6 +509,90 @@ class Section
     {
         if ($this->roles->removeElement($role)) {
             $role->removeSections($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HistoricalDate>
+     */
+    public function getHistoricalDates(): Collection
+    {
+        return $this->historicalDates;
+    }
+
+    public function addHistoricalDate(HistoricalDate $historicalDate): static
+    {
+        if (!$this->historicalDates->contains($historicalDate)) {
+            $this->historicalDates->add($historicalDate);
+            $historicalDate->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistoricalDate(HistoricalDate $historicalDate): static
+    {
+        if ($this->historicalDates->removeElement($historicalDate)) {
+            // set the owning side to null (unless already changed)
+            if ($historicalDate->getSection() === $this) {
+                $historicalDate->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostChartCategory>
+     */
+    public function getPostChartCategories(): Collection
+    {
+        return $this->postChartCategories;
+    }
+
+    public function addPostChartCategory(PostChartCategory $postChartCategory): static
+    {
+        if (!$this->postChartCategories->contains($postChartCategory)) {
+            $this->postChartCategories->add($postChartCategory);
+            $postChartCategory->addSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganizationChart(PostChartCategory $postChartCategory): static
+    {
+        if ($this->postChartCategories->removeElement($postChartCategory)) {
+            $postChartCategory->removeSection($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostTeamCategory>
+     */
+    public function getPostTeamCategories(): Collection
+    {
+        return $this->postTeamCategories;
+    }
+
+    public function addPostTeamCategory(PostTeamCategory $postTeamCategory): static
+    {
+        if (!$this->postTeamCategories->contains($postTeamCategory)) {
+            $this->postTeamCategories->add($postTeamCategory);
+            $postTeamCategory->addSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostTeamCategory(PostTeamCategory $postTeamCategory): static
+    {
+        if ($this->postTeamCategories->removeElement($postTeamCategory)) {
+            $postTeamCategory->removeSection($this);
         }
 
         return $this;

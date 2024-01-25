@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association Presentation{% endblock %}
+
+{% block body %}
+    <h1>Présentation {{association.name}}</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+        {% if association.presentation is defined %}
+            <p>{{association.presentation}}</p>
+        {% else %}
+            <li>Aucune présentation disponible</li>
+        {% endif %}
+
+{% endblock %}

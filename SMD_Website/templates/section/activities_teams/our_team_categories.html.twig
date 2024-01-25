@@ -10,7 +10,7 @@
     <ul>
         {% if teamCategories is defined %}
             {% for teamCategory in section.teamCategories %}
-                <li><a href="{{ path('our_teams_section', {'slugSection': section.slug, 'slugNavBarDdLink': teamCategory.slug}) }}">{{ teamCategory.title }}</a></li>
+                <li><a href="{{ path('our_teams_section', {'slugSection': section.slug, 'slugNavBarSubMenu': teamCategory.slug}) }}">{{ teamCategory.label }}</a></li>
 
             {% endfor %}
         {% else %}

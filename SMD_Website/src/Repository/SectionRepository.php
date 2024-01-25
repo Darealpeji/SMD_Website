@@ -41,6 +41,51 @@ class SectionRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findOneByWithHistoricalDates(array $criteria)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->select('s', 'nbm', 'nbsm', 'hd');
+        $queryBuilder->leftJoin('s.historicalDates', 'hd');
+        $queryBuilder->leftJoin('s.navBarMenus', 'nbm');
+        $queryBuilder->leftJoin('nbm.navBarSubMenus', 'nbsm');
+
+        foreach ($criteria as $field => $value) {
+            $queryBuilder->andWhere('s.' . $field . ' = :' . $field);
+            $queryBuilder->setParameter($field, $value);
+        }
+        $queryBuilder->addOrderBy('nbm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('nbsm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('hd.year', 'ASC');
+
+        return $queryBuilder
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByWithPostCategories(array $criteria)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->select('s', 'nbm', 'nbsm', 'pcc', 'p', 'm');
+        $queryBuilder->leftJoin('s.navBarMenus', 'nbm');
+        $queryBuilder->leftJoin('nbm.navBarSubMenus', 'nbsm');
+        $queryBuilder->leftJoin('s.postChartCategories', 'pcc');
+        $queryBuilder->leftJoin('pcc.posts', 'p');
+        $queryBuilder->leftJoin('p.members', 'm');
+
+        foreach ($criteria as $field => $value) {
+            $queryBuilder->andWhere('s.' . $field . ' = :' . $field);
+            $queryBuilder->setParameter($field, $value);
+        }
+        $queryBuilder->addOrderBy('nbm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('nbsm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('pcc.ranking', 'ASC');
+        $queryBuilder->addOrderBy('p.ranking', 'ASC');
+
+        return $queryBuilder
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function getTeamsBySection(Section $section)
     {
         return $this->createQueryBuilder('s')

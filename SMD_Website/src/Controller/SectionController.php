@@ -6,6 +6,7 @@ use App\Service\NavBarService;
 use App\Repository\ArticleRepository;
 use App\Repository\SectionRepository;
 use App\Repository\ActivityRepository;
+use App\Repository\HistoricalDateRepository;
 use App\Repository\TeamCategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -67,20 +68,63 @@ class SectionController extends AbstractController
         ]);
     }
 
-    #[Route('/{slugSection}/informations-pratiques', name: 'useful_informations_section')]
-    public function usefulInformationSection(
+    #[Route('/{slugSection}/le-club', name: 'the_club_section')]
+    public function theClubSection(
         string $slugSection,
         SectionRepository $sectionRepository,
         NavBarService $navBarService
     ): Response {
         $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
-        $activityPlaces = $section->getActivityPlaces();
 
-        return $this->render('section/useful_informations/useful_informations.html.twig', [
+        return $this->render('section/presentation/presentation.html.twig', [
             'section' => $section,
             'subMenusLoggedInMember' => $subMenusLoggedInMember,
-            'activityPlaces' => $activityPlaces,
+        ]);
+    }
+
+    #[Route('/{slugSection}/presentation', name: 'presentation_section')]
+    public function presentationSection(
+        string $slugSection,
+        SectionRepository $sectionRepository,
+        NavBarService $navBarService
+    ): Response {
+        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+
+        return $this->render('section/presentation/presentation.html.twig', [
+            'section' => $section,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+        ]);
+    }
+
+    #[Route('/{slugSection}/le-club/notre-histoire', name: 'club_historical_section')]
+    public function historicalSection(
+        string $slugSection,
+        SectionRepository $sectionRepository,
+        NavBarService $navBarService,
+    ): Response {
+        $section = $sectionRepository->findOneByWithHistoricalDates(['slug' => $slugSection]);
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+
+        return $this->render('section/presentation/our_history.html.twig', [
+            'section' => $section,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+        ]);
+    }
+
+    #[Route('/{slugSection}/le-club/l-organigramme', name: 'organization_chart_section')]
+    public function organizationChartSection(
+        string $slugSection,
+        SectionRepository $sectionRepository,
+        NavBarService $navBarService,
+    ): Response {
+        $section = $sectionRepository->findOneByWithPostCategories(['slug' => $slugSection]);
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+
+        return $this->render('section/presentation/organization_chart.html.twig', [
+            'section' => $section,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
         ]);
     }
 
@@ -135,6 +179,23 @@ class SectionController extends AbstractController
             'section' => $section,
             'subMenusLoggedInMember' => $subMenusLoggedInMember,
             'activities' => $activities,
+        ]);
+    }
+
+    #[Route('/{slugSection}/informations-pratiques', name: 'useful_informations_section')]
+    public function usefulInformationSection(
+        string $slugSection,
+        SectionRepository $sectionRepository,
+        NavBarService $navBarService
+    ): Response {
+        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+        $activityPlaces = $section->getActivityPlaces();
+
+        return $this->render('section/useful_informations/useful_informations.html.twig', [
+            'section' => $section,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+            'activityPlaces' => $activityPlaces,
         ]);
     }
 }

@@ -10,14 +10,35 @@
    <ul>
         {% if teamCategory is defined and teamCategory is not empty %}
             {% for team in teamCategory.teams %}
-                <li>{{ team.name }} - Entrainements :
+                <li>{{ team.name }}
                     <ul>
+                        {% if team.posts is defined and team.posts is not empty %}
+                            {% for post in team.posts %}
+                                <li>{{ post.label }}</li>
+                                <ul>
+                                    {% if post.members is defined and post.members is not empty %}
+                                        {% for member in post.members %}
+                                            <li>{{ member.firstName }} {{ member.lastName }}</li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li>Aucun membre affecté à ce poste</li>
+                                    {% endif %}
+                                </ul>
+                            {% endfor %}
+                        {% else %}
+                            <li>Aucun poste disponible pour cette équipe</li>
+                        {% endif %}
+                        {% if team.trainings is defined and team.trainings is not empty %}
+                        <li>Entrainements :</li>
+                        <ul>
                         {% for training in team.trainings %}
                             <li>{{ training.activityPlace.name }} - Le {{ training.day }} 
                             de {{ training.getFormattedStartTimeSlotWithDay()|replace({':': 'h'}) }} 
                             à {{ training.getFormattedEndTimeSlotWithDay()|replace({':': 'h'}) }}
                             </li>
                         {% endfor %}
+                        </ul>
+                        {% endif %}
                     </ul>
                 </li>
             {% endfor %}

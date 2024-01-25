@@ -14,6 +14,7 @@ use App\Entity\TeamCategory;
 use App\Entity\ActivityClass;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
+use App\Entity\HistoricalDate;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\NavBarSubMenuLoggedInMember;
 use App\Entity\Role;
@@ -251,6 +252,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             || $entity instanceof ActivityClass
             || $entity instanceof Post
             || $entity instanceof Role
+            || $entity instanceof HistoricalDate
             || $entity instanceof Member;
     }
 

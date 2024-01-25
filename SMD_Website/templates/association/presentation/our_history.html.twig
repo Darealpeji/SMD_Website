@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association Notre Histoire{% endblock %}
+
+{% block body %}
+    <h1>{{association.name}} - Notre Histoire</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+    <ul>
+        {% if association.historicalDates is defined %}
+            {% for historicalDate in association.historicalDates %}
+                <li><h5>{{ historicalDate.year }}</h5>
+                <p>{{ historicalDate.description|raw }}</p></li>
+            {% endfor %}
+        {% else %}
+            <li>Aucun Historique disponible</li>
+        {% endif %}
+    </ul>
+
+{% endblock %}

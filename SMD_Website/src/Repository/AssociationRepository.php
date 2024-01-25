@@ -40,4 +40,39 @@ class AssociationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getAssociationWithHistoricalDates()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'nbm', 'nbsm', 'hd')
+            ->leftJoin('a.historicalDates', 'hd')
+            ->leftJoin('a.navBarMenus', 'nbm')
+            ->leftJoin('nbm.navBarSubMenus', 'nbsm')
+            ->where('a.name = :associationName')
+            ->setParameter('associationName', "ASC Saint Médard de Doulon - Nantes")
+            ->addOrderBy('nbm.ranking', 'ASC')
+            ->addOrderBy('nbsm.ranking', 'ASC')
+            ->addOrderBy('hd.year', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getAssociationWithPostCategories()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'nbm', 'nbsm', 'pcc', 'p', 'm')
+            ->leftJoin('a.navBarMenus', 'nbm')
+            ->leftJoin('nbm.navBarSubMenus', 'nbsm')
+            ->leftJoin('a.postChartCategories', 'pcc')
+            ->leftJoin('pcc.posts', 'p')
+            ->leftJoin('p.members', 'm')
+            ->where('a.name = :associationName')
+            ->setParameter('associationName', "ASC Saint Médard de Doulon - Nantes")
+            ->addOrderBy('nbm.ranking', 'ASC')
+            ->addOrderBy('nbsm.ranking', 'ASC')
+            ->addOrderBy('pcc.ranking', 'ASC')
+            ->addOrderBy('p.ranking', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

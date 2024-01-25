@@ -16,9 +16,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ArrayFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -117,16 +117,7 @@ class MemberCrudController extends AbstractCrudController
             ->add('association')
             ->add('firstName')
             ->add('lastName')
-            ->add(
-                ArrayFilter::new('roles')
-                    ->setChoices([
-                        'Super Administrateur' => 'ROLE_SUPER_ADMIN',
-                        'Administrateur' => 'ROLE_ADMIN',
-                        "Éditeur d'Actualités" => 'ROLE_EDITOR',
-                        'Licencié' => 'ROLE_LICENSEE',
-                    ])
-                    ->canSelectMultiple(true)
-            );
+            ->add('roles');
     }
 
 
@@ -180,19 +171,10 @@ class MemberCrudController extends AbstractCrudController
                 ->onlyOnForms()
                 ->setColumns(6),
 
-            ChoiceField::new('roles', 'Role')
-                ->setFormTypeOptions([
-                    'multiple' => true,
-                    'choices' => array_flip([ // Inverser les clés et les valeurs
-                        'ROLE_SUPER_ADMIN' => 'Super Administrateur',
-                        'ROLE_ADMIN' => 'Administrateur',
-                        'ROLE_EDITOR' => "Éditeur d'Actualités",
-                        'ROLE_LICENSEE' => 'Licencié',
-                    ]),
-                ])->onlyOnForms()->setColumns(6),
-            FormField::addRow(),
+            CollectionField::new('roles', 'Roles :')->setColumns(6)->hideOnIndex(),
             $sectionField->onlyOnForms()->setColumns(6),
             $associationField->onlyOnForms()->setColumns(6),
+            CollectionField::new('posts', 'Postes :')->setColumns(6)->hideOnIndex(),
         ];
     }
 

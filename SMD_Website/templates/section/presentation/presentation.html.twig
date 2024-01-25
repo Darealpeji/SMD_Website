@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Section Présentation{% endblock %}
+
+{% block body %}
+    <h1>Présentation {{section.name}}</h1>
+
+    {% include('section/navbar.html.twig') %}
+
+    {% if section.presentation is defined %}
+            <p>{{ section.presentation }}</p>
+    {% else %}
+        <li>Aucune Présentation disponible</li>
+    {% endif %}
+
+{% endblock %}

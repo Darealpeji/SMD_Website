@@ -35,7 +35,6 @@ class NavBarService
 
         // Récupérer les rôles de l'utilisateur
         $userRoles = $user ? $user->getRoles() : [];
-        dump($userRoles);
 
         // Récupérer les sections de l'utilisateur
         $userSections = $user instanceof Member ? $user->getSections()->toArray() : [];

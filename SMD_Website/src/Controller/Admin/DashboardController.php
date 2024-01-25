@@ -2,20 +2,19 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Post;
+use App\Entity\Role;
 use App\Entity\Member;
 use App\Entity\Article;
 use App\Entity\Section;
 use App\Entity\Activity;
 use App\Entity\Training;
-use App\Entity\NavBarLink;
 use App\Entity\NavBarMenu;
 use App\Entity\Association;
-use App\Entity\NavBarDdLink;
 use App\Entity\TeamCategory;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
 use App\Entity\NavBarSubMenuLoggedInMember;
-use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -57,10 +56,8 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Tableau de Bord', 'fa fa-home');
 
-        yield MenuItem::section("Gestion de l'Association");
+        yield MenuItem::section("Gestion des Organisations");
         yield MenuItem::linkToCrud('Association', 'fas fa-landmark', Association::class);
-
-        yield MenuItem::section("Gestion des Sections");
         yield MenuItem::linkToCrud('Sections', 'fas fa-building', Section::class);
 
         yield MenuItem::section('Gestion des Equipes');
@@ -80,6 +77,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section("Paramétrage");
         yield MenuItem::linkToCrud("Lieux d'Activités", 'fas fa-map-location-dot', ActivityPlace::class);
         yield MenuItem::linkToCrud("Postes", 'fas fa-briefcase', Post::class);
+        yield MenuItem::linkToCrud("Rôles", 'fas fa-briefcase', Role::class);
 
         yield MenuItem::section("Gestion des Barres de Navigation");
         yield MenuItem::linkToCrud("Menus Classique", 'fas fa-bars', NavBarMenu::class);

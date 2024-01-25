@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Section Organigramme{% endblock %}
+
+{% block body %}
+    <h1>{{section.name}} - Organigramme</h1>
+
+    {% include('section/navbar.html.twig') %}
+
+    {% if section.postChartCategories is defined %}
+
+        <ul>
+            {% for postChartCategory in section.postChartCategories %}
+
+                <h4>{{ postChartCategory.label }}</h4>
+
+                {% if postChartCategory.label in ['Bureau', 'Staff Technique'] %}
+
+                    {% if postChartCategory.posts is defined and postChartCategory.posts is not empty %}
+
+                        <ul>
+                            {% for post in postChartCategory.posts %}
+
+                                {% if post.members is defined and post.members is not empty %}
+
+                                    {% set memberNames = post.members|map(member => member.firstName ~ ' ' ~ member.lastName)|join(', ') %}
+
+                                    <li>{{ post.label }} : {{ memberNames }}</li>
+
+                                {% else %}
+
+                                    <li>{{ post.label }} : Pas de personne affectée</li>
+
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Aucun Poste disponible</p>
+                    {% endif %}
+                {% elseif postChartCategory.label is same as('Salarié(s)') %}
+                    {% if postChartCategory.posts is defined and postChartCategory.posts is not empty %}
+
+                        <ul>
+                            {% for post in postChartCategory.posts %}
+
+                                {% if post.members is defined and post.members is not empty %}
+
+                                    {% for member in post.members %}
+
+                                    <li>{{ post.label }} : {{ member.firstName }} {{ member.lastName }}</li>
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <li>{{ post.label }} : Pas de personne affectée</li>
+
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Aucun Poste disponible</p>
+                    {% endif %}
+                {% else %}
+                    {% if postChartCategory.posts is defined and postChartCategory.posts is not empty %}
+
+                        <ul>
+                            {% for post in postChartCategory.posts %}
+
+                                {% if post.members is defined and post.members is not empty %}
+
+                                    {% for member in post.members %}
+
+                                    <li>{{ member.firstName }} {{ member.lastName }}</li>
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <li>Pas de personne affectée</li>
+
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Aucun Poste disponible</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun Organigramme disponible</p>
+    {% endif %}
+{% endblock %}

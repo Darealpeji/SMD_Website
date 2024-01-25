@@ -40,12 +40,6 @@ class Post
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'posts', cascade: ['persist'])]
-    private ?Section $section = null;
-
-    #[ORM\ManyToOne(inversedBy: 'posts', cascade: ['persist'])]
-    private ?Association $association = null;
-
     #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'posts')]
     private Collection $members;
 
@@ -54,6 +48,12 @@ class Post
 
     #[ORM\ManyToMany(targetEntity: ActivityClass::class, inversedBy: 'posts')]
     private Collection $activityClasses;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?PostChartCategory $postChartCategory = null;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?PostTeamCategory $postTeamCategory = null;
 
     public function __construct()
     {
@@ -167,30 +167,6 @@ class Post
         return $this->name;
     }
 
-    public function getSection(): ?Section
-    {
-        return $this->section;
-    }
-
-    public function setSection(?Section $section): static
-    {
-        $this->section = $section;
-
-        return $this;
-    }
-
-    public function getAssociation(): ?Association
-    {
-        return $this->association;
-    }
-
-    public function setAssociation(?Association $association): static
-    {
-        $this->association = $association;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Member>
      */
@@ -259,6 +235,30 @@ class Post
     public function removeActivityClass(ActivityClass $activityClass): static
     {
         $this->activityClasses->removeElement($activityClass);
+
+        return $this;
+    }
+
+    public function getPostChartCategory(): ?PostChartCategory
+    {
+        return $this->postChartCategory;
+    }
+
+    public function setPostChartCategory(?PostChartCategory $postChartCategory): static
+    {
+        $this->postChartCategory = $postChartCategory;
+
+        return $this;
+    }
+
+    public function getPostTeamCategory(): ?PostTeamCategory
+    {
+        return $this->postTeamCategory;
+    }
+
+    public function setPostTeamCategory(?PostTeamCategory $postTeamCategory): static
+    {
+        $this->postTeamCategory = $postTeamCategory;
 
         return $this;
     }

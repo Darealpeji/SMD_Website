@@ -77,6 +77,8 @@ class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
             ->setCity($data['city'])
             ->setPhone($data['phone'])
             ->setMail($data['mail'])
+            ->setPresentation($data['presentation'])
+            ->setHistorical($data['historical'])
             ->setCreatedAtValue();
 
         return $association;
@@ -96,6 +98,8 @@ class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
             ->setSlug($this->slugify->slugify($section->getName()))
             ->setScoreNCoCode("")
             ->setManageConvocation($data['manageConvocation'])
+            ->setPresentation($data['presentation'])
+            ->setHistorical($data['historical'])
             ->setAssociation($this->getReference(OrganizationsConstants::ASSOCIATION))
             ->setCreatedAtValue();
 

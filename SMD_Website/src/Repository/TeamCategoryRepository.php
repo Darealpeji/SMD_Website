@@ -25,10 +25,12 @@ class TeamCategoryRepository extends ServiceEntityRepository
     public function findOneByWithTeamsData(array $criteria)
     {
         $queryBuilder = $this->createQueryBuilder('ct');
-        $queryBuilder->select('ct', 'te', 'tr', 'ap');
+        $queryBuilder->select('ct', 'te', 'tr', 'ap', 'p', 'm');
         $queryBuilder->leftJoin('ct.teams', 'te');
         $queryBuilder->leftJoin('te.trainings', 'tr');
         $queryBuilder->leftJoin('tr.activityPlace', 'ap');
+        $queryBuilder->leftJoin('te.posts', 'p');
+        $queryBuilder->leftJoin('p.members', 'm');
 
         foreach ($criteria as $field => $value) {
             $queryBuilder->andWhere('ct.' . $field . ' = :' . $field);
