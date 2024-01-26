@@ -3,6 +3,8 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Post;
+use App\Entity\PostTeamCategory;
+use App\Entity\Sponsor;
 use App\Entity\Team;
 use App\Entity\Member;
 use App\Entity\Article;
@@ -15,8 +17,10 @@ use App\Entity\ActivityClass;
 use App\Entity\ActivityPlace;
 use App\Entity\ArticleCategory;
 use App\Entity\HistoricalDate;
+use App\Entity\InstitutionalPartner;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\NavBarSubMenuLoggedInMember;
+use App\Entity\PostChartCategory;
 use App\Entity\Role;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
@@ -253,6 +257,10 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             || $entity instanceof Post
             || $entity instanceof Role
             || $entity instanceof HistoricalDate
+            || $entity instanceof PostChartCategory
+            || $entity instanceof PostTeamCategory
+            || $entity instanceof Sponsor
+            || $entity instanceof InstitutionalPartner
             || $entity instanceof Member;
     }
 

@@ -75,4 +75,21 @@ class AssociationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getAssociationWithPartners()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'nbm', 'nbsm', 'sp', 'ip')
+            ->leftJoin('a.navBarMenus', 'nbm')
+            ->leftJoin('nbm.navBarSubMenus', 'nbsm')
+            ->leftJoin('a.sponsors', 'sp')
+            ->leftJoin('a.institutionalPartners', 'ip')
+            ->where('a.name = :associationName')
+            ->setParameter('associationName', "ASC Saint Médard de Doulon - Nantes")
+            ->addOrderBy('nbm.ranking', 'ASC')
+            ->addOrderBy('nbsm.ranking', 'ASC')
+            ->addOrderBy('sp.name', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

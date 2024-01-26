@@ -84,7 +84,7 @@ class TeamsFixtures extends Fixture implements DependentFixtureInterface
         $teamCategory->setCreatedAtValue();
         $manager->persist($teamCategory);
 
-        $this->addReference($teamCategory->getName(), $teamCategory);
+        $this->setReference($teamCategory->getName(), $teamCategory);
 
         return $teamCategory;
     }

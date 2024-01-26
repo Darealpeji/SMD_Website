@@ -86,6 +86,28 @@ class SectionRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findOneByWithPartners(array $criteria)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->select('s', 'nbm', 'nbsm', 'sp', 'ip');
+        $queryBuilder->leftJoin('s.navBarMenus', 'nbm');
+        $queryBuilder->leftJoin('nbm.navBarSubMenus', 'nbsm');
+        $queryBuilder->leftJoin('s.sponsors', 'sp');
+        $queryBuilder->leftJoin('s.institutionalPartners', 'ip');
+
+        foreach ($criteria as $field => $value) {
+            $queryBuilder->andWhere('s.' . $field . ' = :' . $field);
+            $queryBuilder->setParameter($field, $value);
+        }
+        $queryBuilder->addOrderBy('nbm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('nbsm.ranking', 'ASC');
+        $queryBuilder->addOrderBy('sp.name', 'ASC');
+
+        return $queryBuilder
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function getTeamsBySection(Section $section)
     {
         return $this->createQueryBuilder('s')

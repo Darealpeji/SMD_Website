@@ -110,6 +110,15 @@ class Section
     #[ORM\ManyToMany(targetEntity: PostTeamCategory::class, mappedBy: 'sections')]
     private Collection $postTeamCategories;
 
+    #[ORM\ManyToMany(targetEntity: Sponsor::class, mappedBy: 'sections')]
+    private Collection $sponsors;
+
+    #[ORM\ManyToMany(targetEntity: InstitutionalPartner::class, mappedBy: 'sections')]
+    private Collection $institutionalPartners;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: StaticPage::class)]
+    private Collection $staticPages;
+
     public function __construct()
     {
         $this->navBarMenus = new ArrayCollection();
@@ -122,6 +131,9 @@ class Section
         $this->historicalDates = new ArrayCollection();
         $this->postChartCategories = new ArrayCollection();
         $this->postTeamCategories = new ArrayCollection();
+        $this->sponsors = new ArrayCollection();
+        $this->institutionalPartners = new ArrayCollection();
+        $this->staticPages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -593,6 +605,90 @@ class Section
     {
         if ($this->postTeamCategories->removeElement($postTeamCategory)) {
             $postTeamCategory->removeSection($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sponsor>
+     */
+    public function getSponsors(): Collection
+    {
+        return $this->sponsors;
+    }
+
+    public function addSponsor(Sponsor $sponsor): static
+    {
+        if (!$this->sponsors->contains($sponsor)) {
+            $this->sponsors->add($sponsor);
+            $sponsor->addSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSponsor(Sponsor $sponsor): static
+    {
+        if ($this->sponsors->removeElement($sponsor)) {
+            $sponsor->removeSection($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, InstitutionalPartner>
+     */
+    public function getInstitutionalPartners(): Collection
+    {
+        return $this->institutionalPartners;
+    }
+
+    public function addInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
+    {
+        if (!$this->institutionalPartners->contains($institutionalPartner)) {
+            $this->institutionalPartners->add($institutionalPartner);
+            $institutionalPartner->addSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
+    {
+        if ($this->institutionalPartners->removeElement($institutionalPartner)) {
+            $institutionalPartner->removeSection($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StaticPage>
+     */
+    public function getStaticPages(): Collection
+    {
+        return $this->staticPages;
+    }
+
+    public function addStaticPage(StaticPage $staticPage): static
+    {
+        if (!$this->staticPages->contains($staticPage)) {
+            $this->staticPages->add($staticPage);
+            $staticPage->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStaticPage(StaticPage $staticPage): static
+    {
+        if ($this->staticPages->removeElement($staticPage)) {
+            // set the owning side to null (unless already changed)
+            if ($staticPage->getSection() === $this) {
+                $staticPage->setSection(null);
+            }
         }
 
         return $this;

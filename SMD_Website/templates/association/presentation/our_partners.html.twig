@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association Nos Partenaires{% endblock %}
+
+{% block body %}
+    <h1>Nos Partenaires -  {{association.name}}</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+        {% if association.institutionalPartners is defined and association.institutionalPartners is not empty %}
+
+            <h4>Nos Partenaires Institutionnels</h4>
+
+            <ul>
+                {% for partner in association.institutionalPartners %}
+                    {% if partner.path is defined and partner.path is not empty %}
+                    <li>
+                    <div>{{partner.name}} - <a href="{{partner.path}}" target="_blank">Lien</a></div>
+                    {% if partner.description is defined and partner.description is not empty %}
+                        <div>{{partner.description|raw }}</div>
+                    {% endif %}
+                    </li>
+                    {% else %}
+                         <li><div>{{partner.name}}</div>
+                         {% if partner.description is defined and partner.description is not empty %}
+                            <div>{{partner.description|raw }}</div>
+                        {% endif %}
+                         </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li>Aucune partenaire institutionnel disponible</li>
+        {% endif %}
+
+        {% if association.sponsors is defined and association.sponsors is not empty %}
+
+            <h4>Nos Partenaires</h4>
+
+            <ul>
+                {% for sponsor in association.sponsors %}
+                    {% if sponsor.path is defined and sponsor.path is not empty %}
+                    <li>
+                    <div>{{sponsor.name}} - <a href="{{sponsor.path}}" target="_blank">Lien</a></div>
+                    {% if sponsor.description is defined and sponsor.description is not empty %}
+                        <div>{{sponsor.description|raw }}</div>
+                    {% endif %}
+                    </li>
+                    {% else %}
+                         <li><div>{{sponsor.name}}</div>
+                         {% if sponsor.description is defined and sponsor.description is not empty %}
+                            <div>{{sponsor.description|raw }}</div>
+                        {% endif %}
+                         </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li>Aucune partenaire disponible</li>
+        {% endif %}
+
+{% endblock %}

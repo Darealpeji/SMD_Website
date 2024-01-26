@@ -26,8 +26,8 @@ class NavBarConstants
                     'navBarSubMenus' => [
                         ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'historical_association', 'ranking' => 1],
                         ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_association', 'ranking' => 2],
-                        ['label' => 'Documents', 'slug' => 'documents', 'routeName' => '', 'ranking' => 3],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 4]
+                        ['label' => 'Documents', 'slug' => 'documents', 'routeName' => 'static_page_association', 'ranking' => 3],
+                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_association', 'ranking' => 4]
                     ]
                 ],
                 [
@@ -64,9 +64,7 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1],
-                        ['label' => 'La Vie du Club', 'slug' => 'la-vie-du-club', 'routeName' => '', 'ranking' => 2],
-                        ['label' => 'Les Stages', 'slug' => 'les-stages', 'routeName' => '', 'ranking' => 3]
+                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
                     ]
                 ],
                 [
@@ -76,7 +74,7 @@ class NavBarConstants
                     'ranking' => 2,
                     'navBarSubMenus' => [
                         ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 1],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 2]
+                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_section', 'ranking' => 2]
                     ]
                 ],
                 [
@@ -91,7 +89,7 @@ class NavBarConstants
                         ['label' => 'U13', 'slug' => 'u13', 'routeName' => 'our_teams_section', 'ranking' => 4],
                         ['label' => 'U11', 'slug' => 'u11', 'routeName' => 'our_teams_section', 'ranking' => 5],
                         ['label' => 'U9', 'slug' => 'u9', 'routeName' => 'our_teams_section', 'ranking' => 6],
-                        ['label' => "L'Ecole d'Arbitrage", 'slug' => 'l-ecole-d-arbitrage', 'routeName' => '', 'ranking' => 7]
+                        ['label' => "L'Ecole d'Arbitrage", 'slug' => 'l-ecole-d-arbitrage', 'routeName' => 'static_page_section', 'ranking' => 7]
                     ]
                 ],
                 [
@@ -120,9 +118,7 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1],
-                        ['label' => 'Répertoire', 'slug' => 'repertoire', 'routeName' => '', 'ranking' => 1],
-                        ['label' => "Modalités de Travail", 'slug' => 'modalite-de-travail', 'routeName' => '', 'ranking' => 2]
+                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
                     ]
                 ],
                 [
@@ -131,7 +127,8 @@ class NavBarConstants
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
+                        ['label' => 'Répertoire', 'slug' => 'repertoire', 'routeName' => 'static_page_section', 'ranking' => 1],
+                        ['label' => "Modalités de Travail", 'slug' => 'modalite-de-travail', 'routeName' => 'static_page_section', 'ranking' => 2]
                     ]
                 ],
                 [
@@ -178,17 +175,10 @@ class NavBarConstants
                     'navBarSubMenus' => []
                 ],
                 [
-                    'label' => 'Boutique',
-                    'slug' => 'boutique',
-                    'routeName' => '',
-                    'ranking' => 4,
-                    'navBarSubMenus' => []
-                ],
-                [
                     'label' => 'Infos Pratiques',
                     'slug' => 'infos-pratiques',
                     'routeName' => 'useful_informations_section',
-                    'ranking' => 5,
+                    'ranking' => 4,
                     'navBarSubMenus' => [
                         ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
                     ]
@@ -215,9 +205,10 @@ class NavBarConstants
                     'navBarSubMenus' => [
                         ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'club_historical_section', 'ranking' => 1],
                         ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 2],
-                        ['label' => 'P.E.F.', 'slug' => 'p-e-f', 'routeName' => '', 'ranking' => 3],
-                        ['label' => "Règlement et Charte", 'slug' => 'reglement-et-charte', 'routeName' => '', 'ranking' => 4],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 5]
+                        ['label' => 'P.E.F.', 'slug' => 'p-e-f', 'routeName' => 'static_page_section', 'ranking' => 3],
+                        ['label' => 'Plan Cité Foot', 'slug' => 'plan-cite-foot', 'routeName' => 'static_page_section', 'ranking' => 4],
+                        ['label' => "Règlement et Charte", 'slug' => 'reglement-et-charte', 'routeName' => 'static_page_section', 'ranking' => 5],
+                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_section', 'ranking' => 6]
                     ]
                 ],
                 [
@@ -234,10 +225,10 @@ class NavBarConstants
                         ['label' => 'U11', 'slug' => 'u11', 'routeName' => 'our_teams_section', 'ranking' => 6],
                         ['label' => 'U9', 'slug' => 'u9', 'routeName' => 'our_teams_section', 'ranking' => 7],
                         ['label' => 'U7', 'slug' => 'u7', 'routeName' => 'our_teams_section', 'ranking' => 8],
-                        ['label' => 'Groupement Féminin', 'slug' => 'groupement-feminin', 'routeName' => '', 'ranking' => 9],
+                        ['label' => 'Groupement Féminin', 'slug' => 'groupement-feminin', 'routeName' => 'static_page_section', 'ranking' => 9],
                         ['label' => 'Vétérans', 'slug' => 'veterans', 'routeName' => 'our_teams_section', 'ranking' => 10],
                         ['label' => 'Loisirs', 'slug' => 'loisirs', 'routeName' => 'our_teams_section', 'ranking' => 11],
-                        ['label' => "Arbitres", 'slug' => 'l-ecole-d-arbitrage', 'routeName' => '', 'ranking' => 12]
+                        ['label' => "Arbitres", 'slug' => 'arbitres', 'routeName' => 'static_page_section', 'ranking' => 12]
                     ]
                 ],
                 [
@@ -414,7 +405,7 @@ class NavBarConstants
                     'navBarSubMenus' => [
                         ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'club_historical_section', 'ranking' => 1],
                         ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 2],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => '', 'ranking' => 3]
+                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_section', 'ranking' => 3]
                     ]
                 ],
                 [

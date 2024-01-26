@@ -19,6 +19,8 @@
                                     {% set parameters = {'slugSection': section.slug} %}
                                     {% if navBarSubMenu.routeName == 'our_teams_section' %}
                                         {% set parameters = parameters|merge({'slugNavBarSubMenu': navBarSubMenu.slug}) %}
+                                    {% elseif navBarSubMenu.routeName == 'static_page_section' %}
+                                        {% set parameters = parameters|merge({'slugNavBarMenu': navBarMenu.slug}, {'slugNavBarSubMenu': navBarSubMenu.slug}) %}
                                     {% endif %}
                                     {{ helper.generateLink(navBarSubMenu.name, parameters, navBarSubMenu.routeName) }}
                                 {% endif %}

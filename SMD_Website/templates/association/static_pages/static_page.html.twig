@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association Static Page{% endblock %}
+
+{% block body %}
+    <h1>{{association.name}} - {{staticPage.name}}</h1>
+
+    {% include('association/navbar.html.twig') %}
+
+    {% if staticPage.staticPageContents is defined and staticPage.staticPageContents is not empty %}
+
+        {% for staticPageContent in staticPage.staticPageContents %}
+
+            <h4>{{ staticPageContent.title }}</h4>
+            <div>{{ staticPageContent.content|raw }}</div>
+
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

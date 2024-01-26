@@ -18,6 +18,8 @@
                                     {% set parameters = {} %}
                                     {% if navBarSubMenu.routeName == 'home_section' %}
                                         {% set parameters = parameters|merge({'slugSection': navBarSubMenu.slug}) %}
+                                    {% elseif navBarSubMenu.routeName == 'static_page_association' %}
+                                        {% set parameters = parameters|merge({'slugNavBarMenu': navBarMenu.slug}, {'slugNavBarSubMenu': navBarSubMenu.slug}) %}
                                     {% endif %}
                                     {{ helper.generateLink(navBarSubMenu.name, parameters, navBarSubMenu.routeName) }}
                                 {% endif %}

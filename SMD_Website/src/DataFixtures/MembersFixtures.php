@@ -63,6 +63,7 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
         $membersData = MembersConstants::MEMBERS;
         $membersCount = count($membersData);
 
+        $this->io->newLine();
         $this->io->title("Création des Membres");
         $this->io->progressStart($membersCount);
 

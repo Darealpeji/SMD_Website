@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\SponsorRepository;
+use App\Repository\InstitutionalPartnerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SponsorRepository::class)]
-class Sponsor
+#[ORM\Entity(repositoryClass: InstitutionalPartnerRepository::class)]
+class InstitutionalPartner
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,10 +31,10 @@ class Sponsor
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sponsors')]
+    #[ORM\ManyToOne(inversedBy: 'institutionalPartners')]
     private ?Association $association = null;
 
-    #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'sponsors')]
+    #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'institutionalPartners')]
     private Collection $sections;
 
     public function __construct()

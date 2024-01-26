@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Service\NavBarService;
 use App\Repository\ArticleRepository;
+use App\Repository\StaticPageRepository;
 use App\Repository\AssociationRepository;
 use App\Repository\ActivityPlaceRepository;
 use App\Repository\HistoricalDateRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\StaticPageContentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AssociationController extends AbstractController
@@ -77,7 +79,7 @@ class AssociationController extends AbstractController
         ]);
     }
 
-    #[Route('l-association//notre-histoire', name: 'historical_association')]
+    #[Route('/l-association//notre-histoire', name: 'historical_association')]
     public function historicalAssociation(
         AssociationRepository $associationRepository,
         NavBarService $navBarService,
@@ -91,7 +93,7 @@ class AssociationController extends AbstractController
         ]);
     }
 
-    #[Route('l-association//l-organigramme', name: 'organization_chart_association')]
+    #[Route('/l-association/l-organigramme', name: 'organization_chart_association')]
     public function organizationChartAssociation(
         AssociationRepository $associationRepository,
         NavBarService $navBarService,
@@ -100,6 +102,20 @@ class AssociationController extends AbstractController
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('association/presentation/organization_chart.html.twig', [
+            'association' => $association,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+        ]);
+    }
+
+    #[Route('/l-association/nos-partenaires', name: 'our_partners_association')]
+    public function ourPartnersAssociation(
+        AssociationRepository $associationRepository,
+        NavBarService $navBarService,
+    ): Response {
+        $association = $associationRepository->getAssociationWithPartners();
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+
+        return $this->render('association/presentation/our_partners.html.twig', [
             'association' => $association,
             'subMenusLoggedInMember' => $subMenusLoggedInMember,
         ]);
@@ -119,6 +135,24 @@ class AssociationController extends AbstractController
             'association' => $association,
             'subMenusLoggedInMember' => $subMenusLoggedInMember,
             'activityPlaces' => $activityPlaces,
+        ]);
+    }
+
+    #[Route('{slugNavBarMenu}/{slugNavBarSubMenu}', name: 'static_page_association')]
+    public function staticPageAssociation(
+        string $slugNavBarSubMenu,
+        AssociationRepository $associationRepository,
+        NavBarService $navBarService,
+        StaticPageRepository $staticPageRepository
+    ): Response {
+        $association = $associationRepository->getAssociationWithNavBarMenus();
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+        $staticPage = $staticPageRepository->findOneByWithContents(['slug' => $slugNavBarSubMenu]);
+
+        return $this->render('association/static_pages/static_page.html.twig', [
+            'association' => $association,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+            'staticPage' => $staticPage,
         ]);
     }
 }

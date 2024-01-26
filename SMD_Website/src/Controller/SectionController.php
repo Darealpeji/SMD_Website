@@ -6,8 +6,10 @@ use App\Service\NavBarService;
 use App\Repository\ArticleRepository;
 use App\Repository\SectionRepository;
 use App\Repository\ActivityRepository;
-use App\Repository\HistoricalDateRepository;
+use App\Repository\NavBarMenuRepository;
+use App\Repository\StaticPageRepository;
 use App\Repository\TeamCategoryRepository;
+use App\Repository\HistoricalDateRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +33,7 @@ class SectionController extends AbstractController
 
 
     #[Route('/{slugSection}/actualites', name: 'news_section')]
-    public function listArticleAssociation(
+    public function listArticleSection(
         string $slugSection,
         SectionRepository $sectionRepository,
         NavBarService $navBarService,
@@ -128,6 +130,21 @@ class SectionController extends AbstractController
         ]);
     }
 
+    #[Route('/{slugSection}/le-club/nos-partenaires', name: 'our_partners_section')]
+    public function ourPartnersSection(
+        string $slugSection,
+        SectionRepository $sectionRepository,
+        NavBarService $navBarService,
+    ): Response {
+        $section = $sectionRepository->findOneByWithPartners(['slug' => $slugSection]);
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+
+        return $this->render('section/presentation/our_partners.html.twig', [
+            'section' => $section,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+        ]);
+    }
+
     #[Route('/{slugSection}/nos_equipes', name: 'our_team_categories_section')]
     public function ourTeamCategoriesSection(
         string $slugSection,
@@ -196,6 +213,25 @@ class SectionController extends AbstractController
             'section' => $section,
             'subMenusLoggedInMember' => $subMenusLoggedInMember,
             'activityPlaces' => $activityPlaces,
+        ]);
+    }
+
+    #[Route("/{slugSection}/{slugNavBarMenu}/{slugNavBarSubMenu}", name: 'static_page_section')]
+    public function staticPageSection(
+        string $slugSection,
+        string $slugNavBarSubMenu,
+        SectionRepository $sectionRepository,
+        NavBarService $navBarService,
+        StaticPageRepository $staticPageRepository
+    ): Response {
+        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
+        $staticPage = $staticPageRepository->findOneByWithContents(['slug' => $slugNavBarSubMenu]);
+
+        return $this->render('section/static_pages/static_pages.html.twig', [
+            'section' => $section,
+            'subMenusLoggedInMember' => $subMenusLoggedInMember,
+            'staticPage' => $staticPage,
         ]);
     }
 }

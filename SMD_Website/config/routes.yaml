@@ -1,5 +1,125 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+
+# Routes de l'Association
+
+home_association:
+  path: "/"
+  controller: 'App\Controller\AssociationController::home'
+  methods: ["GET"]
+
+news_association:
+  path: "/actualites"
+  controller: 'App\Controller\AssociationController::listArticleAssociation'
+  methods: ["GET"]
+
+detail_news_association:
+  path: "/actualites/{idArticle}-{slugArticle}"
+  controller: 'App\Controller\AssociationController::detailArticleAssociation'
+  methods: ["GET"]
+  requirements:
+    idArticle: '\d+'
+
+presentation_association:
+  path: "/l-association"
+  controller: 'App\Controller\AssociationController::presentationAssociation'
+  methods: ["GET"]
+
+historical_association:
+  path: "/l-association/notre-histoire"
+  controller: 'App\Controller\AssociationController::historicalAssociation'
+  methods: ["GET"]
+
+organization_chart_association:
+  path: "/l-association/l-organigramme"
+  controller: 'App\Controller\AssociationController::organizationChartAssociation'
+  methods: ["GET"]
+
+our_partners_association:
+  path: "/l-association/nos-partenaires"
+  controller: 'App\Controller\AssociationController::ourPartnersAssociation'
+  methods: ["GET"]
+
+useful_informations_association:
+  path: "/informations-pratiques"
+  controller: 'App\Controller\AssociationController::usefulInformationAssociation'
+  methods: ["GET"]
+
+# Routes des Sections
+
+home_section:
+  path: "/{slugSection}"
+  controller: 'App\Controller\SectionController::home'
+  methods: ["GET"]
+
+news_section:
+  path: "/{slugSection}/actualites"
+  controller: 'App\Controller\SectionController::listArticleSection'
+  methods: ["GET"]
+
+detail_news_section:
+  path: "/{slugSection}/actualites/{idArticle}-{slugArticle}"
+  controller: 'App\Controller\SectionController::detailArticleSection'
+  methods: ["GET"]
+  requirements:
+    idArticle: '\d+'
+
+the_club_section:
+  path: "/{slugSection}/le-club"
+  controller: 'App\Controller\SectionController::theClubSection'
+  methods: ["GET"]
+
+presentation_section:
+  path: "/{slugSection}/presentation"
+  controller: 'App\Controller\SectionController::presentationSection'
+  methods: ["GET"]
+
+club_historical_section:
+  path: "/{slugSection}/le-club/notre-histoire"
+  controller: 'App\Controller\SectionController::historicalSection'
+  methods: ["GET"]
+
+organization_chart_section:
+  path: "/{slugSection}/le-club/l-organigramme"
+  controller: 'App\Controller\SectionController::organizationChartSection'
+  methods: ["GET"]
+
+our_partners_section:
+  path: "/{slugSection}/le-club/nos-partenaires"
+  controller: 'App\Controller\SectionController::ourPartnersSection'
+  methods: ["GET"]
+
+our_team_categories_section:
+  path: "/{slugSection}/nos_equipes"
+  controller: 'App\Controller\SectionController::ourTeamCategoriesSection'
+  methods: ["GET"]
+
+our_teams_section:
+  path: "/{slugSection}/nos_equipes/{slugNavBarSubMenu}"
+  controller: 'App\Controller\SectionController::ourTeamsSection'
+  methods: ["GET"]
+
+our_activities_section:
+  path: "/{slugSection}/nos_activites"
+  controller: 'App\Controller\SectionController::ourActivitiesSection'
+  methods: ["GET"]
+
+useful_informations_section:
+  path: "/{slugSection}/informations-pratiques"
+  controller: 'App\Controller\SectionController::usefulInformationSection'
+  methods: ["GET"]
+
+# Routes des Pages Statiques
+
+static_page_section:
+  path: "/{slugSection}/{slugNavBarMenu}/{slugNavBarSubMenu}"
+  controller: 'App\Controller\SectionController::staticPageSection'
+  methods: ["GET"]
+
+static_page_association:
+  path: "/{slugNavBarMenu}/{slugNavBarSubMenu}"
+  controller: 'App\Controller\AssociationController::staticPageAssociation'
+  methods: ["GET"]
