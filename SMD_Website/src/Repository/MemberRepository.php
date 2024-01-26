@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Member;
-use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -32,7 +31,7 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        if (!$user instanceof Member) {
+        if (! $user instanceof Member) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
 

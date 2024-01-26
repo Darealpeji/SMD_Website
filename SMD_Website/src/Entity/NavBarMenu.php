@@ -178,7 +178,7 @@ class NavBarMenu
 
     public function addNavBarSubMenu(NavBarSubMenu $navBarSubMenu): static
     {
-        if (!$this->navBarSubMenus->contains($navBarSubMenu)) {
+        if (! $this->navBarSubMenus->contains($navBarSubMenu)) {
             $this->navBarSubMenus->add($navBarSubMenu);
             $navBarSubMenu->setNavBarMenu($this);
         }
@@ -188,11 +188,9 @@ class NavBarMenu
 
     public function removeNavBarSubMenu(NavBarSubMenu $navBarSubMenu): static
     {
-        if ($this->navBarSubMenus->removeElement($navBarSubMenu)) {
-            // set the owning side to null (unless already changed)
-            if ($navBarSubMenu->getNavBarMenu() === $this) {
-                $navBarSubMenu->setNavBarMenu(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->navBarSubMenus->removeElement($navBarSubMenu) && $navBarSubMenu->getNavBarMenu() === $this) {
+            $navBarSubMenu->setNavBarMenu(null);
         }
 
         return $this;

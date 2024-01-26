@@ -177,7 +177,7 @@ class Post
 
     public function addMember(Member $member): static
     {
-        if (!$this->members->contains($member)) {
+        if (! $this->members->contains($member)) {
             $this->members->add($member);
         }
 
@@ -201,7 +201,7 @@ class Post
 
     public function addTeam(Team $team): static
     {
-        if (!$this->teams->contains($team)) {
+        if (! $this->teams->contains($team)) {
             $this->teams->add($team);
         }
 
@@ -225,7 +225,7 @@ class Post
 
     public function addActivityClass(ActivityClass $activityClass): static
     {
-        if (!$this->activityClasses->contains($activityClass)) {
+        if (! $this->activityClasses->contains($activityClass)) {
             $this->activityClasses->add($activityClass);
         }
 

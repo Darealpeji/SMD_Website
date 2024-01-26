@@ -8,13 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\NavBarSubMenuLoggedInMember;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\NavBarSubMenuLoggedInMemberRepository;
-use Symfony\Component\VarDumper\VarDumper;
 
 class NavBarService
 {
-    private $security;
-    private $entityManager;
-    private $navBarSubMenuLoggedInMemberRepository;
+    private \Symfony\Bundle\SecurityBundle\Security $security;
+
+    private \Doctrine\ORM\EntityManagerInterface $entityManager;
+
+    private \App\Repository\NavBarSubMenuLoggedInMemberRepository $navBarSubMenuLoggedInMemberRepository;
 
     public function __construct(
         Security $security,
@@ -26,7 +27,7 @@ class NavBarService
         $this->navBarSubMenuLoggedInMemberRepository = $navBarSubMenuLoggedInMemberRepository;
     }
 
-    public function generateNavBarSubMenusLoggedInMember()
+    public function generateNavBarSubMenusLoggedInMember(): array
     {
         $menu = [];
 
@@ -34,7 +35,7 @@ class NavBarService
         $user = $this->security->getUser();
 
         // Récupérer les rôles de l'utilisateur
-        $userRoles = $user ? $user->getRoles() : [];
+        $userRoles = $user !== null ? $user->getRoles() : [];
 
         // Récupérer les sections de l'utilisateur
         $userSections = $user instanceof Member ? $user->getSections()->toArray() : [];
@@ -110,7 +111,6 @@ class NavBarService
 
         return false;
     }
-
 
     private function hasSectionWithConvocation(array $userSections): bool
     {

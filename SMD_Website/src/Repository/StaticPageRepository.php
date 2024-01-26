@@ -2,9 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Section;
 use App\Entity\StaticPage;
-use App\Entity\Association;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 

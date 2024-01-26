@@ -3,12 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\Post;
-use App\Entity\Member;
 use App\Entity\Section;
 use App\Entity\Association;
 use App\Entity\PostTeamCategory;
 use App\Entity\PostChartCategory;
-use App\DataFixtures\MembersFixtures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Constants\PostsConstants;
@@ -18,12 +16,13 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class PostsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $io;
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(SymfonyStyle $io)
     {
         $this->io = $io;
     }
+
     public function load(ObjectManager $manager)
     {
         foreach (PostCategoriesConstants::ORGANIZATION_CHART as $postChartCategoryReference => $data) {
@@ -54,7 +53,6 @@ class PostsFixtures extends Fixture implements DependentFixtureInterface
 
         foreach (PostsConstants::ORGANIZATIONS_ORGANIZATION_CHART as $organizationReference => $postChartCategories) {
             $organization = $this->getReference($organizationReference);
-
 
             foreach ($postChartCategories as $postChartCategoryReference => $postsData) {
                 $chartCategory = $this->getReference($postChartCategoryReference);
@@ -139,7 +137,7 @@ class PostsFixtures extends Fixture implements DependentFixtureInterface
     {
         if ($category instanceof PostChartCategory) {
             $post->setPostChartCategory($category);
-        } else if ($category instanceof PostTeamCategory) {
+        } elseif ($category instanceof PostTeamCategory) {
             $post->setPostTeamCategory($category);
         }
 
@@ -180,7 +178,7 @@ class PostsFixtures extends Fixture implements DependentFixtureInterface
                 $postCount = $result['postsCount'];
                 $membersCount = $result['membersCount'];
 
-                if (!empty($postChartCategoryName)) {
+                if (! empty($postChartCategoryName)) {
                     $io->text("- $postChartCategoryName : " . $postCount . " postes créé(s) : " . $membersCount . " membre(s) affecté(s)");
                 }
             }
@@ -193,7 +191,7 @@ class PostsFixtures extends Fixture implements DependentFixtureInterface
                     $postCount = $result['postsCount'];
                     $membersCount = $result['membersCount'];
 
-                    if (!empty($postTeamCategoryName)) {
+                    if (! empty($postTeamCategoryName)) {
                         $io->text("- $postTeamCategoryName : " . $postCount . " postes créé(s) : " . $membersCount . " membre(s) affecté(s)");
                     }
                 }

@@ -5,15 +5,25 @@ namespace App\DataFixtures\Constants;
 class TimeSlotsConstants
 {
     public const SALLE_ETIENNE_LANDAIS_TRAINING_TIME_SLOTS = 'salle_etienne_landais_training_time_slots';
+
     public const SALLE_HENRI_LOIRET_TRAINING_TIME_SLOTS = 'salle_henri_loiret_training_time_slots';
+
     public const SALLE_DANSE_TRAINING_TIME_SLOTS = 'salle_danse_training_time_slots';
+
     public const SALLE_ROGER_CORBARD_TRAINING_TIME_SLOTS = 'salle_roger_corbard_training_time_slots';
+
     public const PLAINE_JEUX_AUDUBON_TRAINING_TIME_SLOTS = 'plaine_jeux_audubon_training_time_slots';
+
     public const GYMNASE_DOULON_TRAINING_TIME_SLOTS = 'gymnase_doulon_training_time_slots';
+
     public const GYMNASE_COLINIERE_TRAINING_TIME_SLOTS = 'gymnase_coliniere_training_time_slots';
+
     public const GYMNASE_RAPHAEL_LEBEL_TRAINING_TIME_SLOTS = 'gymnase_raphael_lebel_training_time_slots';
+
     public const GYMNASE_CIFAM_TRAINING_TIME_SLOTS = 'gymnase_cifam_training_time_slots';
+
     public const GYMNASE_TOUTES_AIDES_TRAINING_TIME_SLOTS = 'gymnase_toutes_aides_training_time_slots';
+
     public const TERRAIN_LOUETTRIE_TRAINING_TIME_SLOTS = 'terrain_louettrie_training_time_slots';
 
     public const TRAINING_TIME_SLOTS = [
@@ -143,7 +153,7 @@ class TimeSlotsConstants
                     'Vendredi' => [
                         'startTimeSlot' => ['18:00', '19:30'],
                         'endTimeSlot' => ['19:15', '21:00'],
-                    ]
+                    ],
                 ],
             ],
         ],

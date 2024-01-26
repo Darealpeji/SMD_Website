@@ -107,7 +107,7 @@ class ActivityClass
 
     public function addTraining(Training $training): static
     {
-        if (!$this->trainings->contains($training)) {
+        if (! $this->trainings->contains($training)) {
             $this->trainings->add($training);
         }
 
@@ -131,7 +131,7 @@ class ActivityClass
 
     public function addPost(Post $post): static
     {
-        if (!$this->posts->contains($post)) {
+        if (! $this->posts->contains($post)) {
             $this->posts->add($post);
             $post->addActivityClass($this);
         }

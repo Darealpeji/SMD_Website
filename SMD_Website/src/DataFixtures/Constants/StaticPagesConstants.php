@@ -2,8 +2,6 @@
 
 namespace App\DataFixtures\Constants;
 
-use App\DataFixtures\Constants\MembersConstants;
-
 class StaticPagesConstants
 {
     public const ORGANIZATIONS = [
@@ -18,10 +16,10 @@ class StaticPagesConstants
                         '<h4>DOCUMENTS A TÉLÉCHARGER</h4><br>
                         Les statuts de l\'association : <br>
                         Le réglement intérieur : <br>
-                        Le projet sportf :'
-                    ]
-                ]
-            ]
+                        Le projet sportf :',
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::BASKET => [
             [
@@ -33,10 +31,10 @@ class StaticPagesConstants
                         'content' =>
                         "Alice Corgnet :<br>
                         06 67 10 55 80<br>
-                        alice.devise@gmail.com"
-                    ]
-                ]
-            ]
+                        alice.devise@gmail.com",
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::CHORALE => [
             [
@@ -61,9 +59,9 @@ class StaticPagesConstants
                         <li>Le Turbot de Pornic</li>
                         <li>​Tombé du ciel</li>
                         <li>Amazing Grace</li>
-                        </ul>"
-                    ]
-                ]
+                        </ul>",
+                    ],
+                ],
             ],
             [
                 'name' => 'Section Chorale - Modalités de Travail',
@@ -93,7 +91,7 @@ class StaticPagesConstants
                         <li>La mise en place: C'est la phase d'assemblage du travail de chaque pupitre qui permet au chef de choeur de corriger ou d'ajuster certains passages moins bien maîtrisés et petit à petit d'intégrer les nuances de chaque pupitre ou globales du choeur. Ce sont ces trois phases de travail qui permettent :</li>
                         <li>Le chant: La fin de la répétition (de 15 à 30 minutes selon les séances) est consacrée à chanter en choeur. Soit la dernière oeuvre travaillée si elle est suffisamment avancée, soit des morceaux mieux maîtrisés et c'est l'occasion de repréciser les nuances ou de corriger de petites approximations. D'une manière générale, chaque répétition s'achève par un chant bien connu de façon à finir quoiqu'il arrive sur une 'bonne note'.</li>
                         </ul><br>
-                        Car, il est alors 22 H 15 et les voix commencent à fatiguer, la séance ayant été bien remplie; c'est donc le moment de se séparer jusqu'à la semaine prochaine, ou parfois jusqu'au mardi suivant. En effet, lorsqu'un jeudi est férié, la répétition est avancée au mardi pour ne pas perdre le rythme d'apprentissage ou bien, à l'approche d'un concert, il peut s'avérer nécessaire d'ajouter une répétition pour assurer les chants et diminuer la charge de travail de la répétition du jeudi."
+                        Car, il est alors 22 H 15 et les voix commencent à fatiguer, la séance ayant été bien remplie; c'est donc le moment de se séparer jusqu'à la semaine prochaine, ou parfois jusqu'au mardi suivant. En effet, lorsqu'un jeudi est férié, la répétition est avancée au mardi pour ne pas perdre le rythme d'apprentissage ou bien, à l'approche d'un concert, il peut s'avérer nécessaire d'ajouter une répétition pour assurer les chants et diminuer la charge de travail de la répétition du jeudi.",
                     ],
                     [
                         'title' => 'Le Travail Individuel',
@@ -110,10 +108,10 @@ class StaticPagesConstants
                         <br>
                         Toutefois, par souci d'offrir à tous une base de travail commune, chaque choriste recevra le plus tôt possible un lien vers des fichiers MP3 (dit 'de travail', car le chef n'a peur de rien) sur lequel il trouvera pour chacun des chants mis au programme la mélodie de son pupitre chantée avec les paroles par une voix de synthèse ainsi que pour les mêmes chants la mélodie du pupitre accompagnée en fond sonore par les autres voix de façon à trouver les repères avec les autres pupitres.<br>
                         <br>
-                        L'espace de ce site réservé aux choristes comprend également des fichiers permettant de travailler les chants au format mp3 de façon à varier les possibilités de révision des chants (au volant, dans le jardin, en vacances ou en déplacement par exemple)."
-                    ]
-                ]
-            ]
+                        L'espace de ce site réservé aux choristes comprend également des fichiers permettant de travailler les chants au format mp3 de façon à varier les possibilités de révision des chants (au volant, dans le jardin, en vacances ou en déplacement par exemple).",
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::FOOTBALL => [
             [
@@ -141,19 +139,19 @@ class StaticPagesConstants
                         <li>Les 'actions en salle' (indoor)</li>
                         <li>Les 'actions de terrain' (outdoor)</li>
                         <li>Les 'actions d'envergures' qui peuvent mombiliser l'ensemble du club, par exemple autour d'une opération solidaire.</li>
-                        </ul>"
+                        </ul>",
                     ],
                     [
                         'title' => 'De  nouveaux quiz associés à l\'animation de ces trois ateliers ont également été ajoutés',
                         'content' =>
-                        ""
+                        "",
                     ],
                     [
                         'title' => 'Le nouveau classeur est disponible en version numérique',
                         'content' =>
-                        '<a href="https://foot44.fff.fr/simple/le-nouveau-classeur-pef-en-version-numerique/" target="_blank">https://foot44.fff.fr/simple/le-nouveau-classeur-pef-en-version-numerique/</a>'
-                    ]
-                ]
+                        '<a href="https://foot44.fff.fr/simple/le-nouveau-classeur-pef-en-version-numerique/" target="_blank">https://foot44.fff.fr/simple/le-nouveau-classeur-pef-en-version-numerique/</a>',
+                    ],
+                ],
             ],
             [
                 'name' => 'Section Football - Plan Cité Foot',
@@ -170,16 +168,16 @@ class StaticPagesConstants
                         <br>
                         Pour permettre à tous ces pratiquants et aux nombreux autres amateurs de faire du foot dans de bonnes conditions, la Ville de Nantes se dote de terrains synthétiques.<br>
                         <br>
-                        Mise en œuvre dans tous les quartiers de la ville, la construction de ces terrains s’inscrit dans le plan Cité Foot."
+                        Mise en œuvre dans tous les quartiers de la ville, la construction de ces terrains s’inscrit dans le plan Cité Foot.",
                     ],
                     [
                         'title' => 'LE STADE MARCEL-SAUPIN EST LE THÉÂTRE DU TOURNOI AMICAL CITÉ FOOT',
                         'content' =>
                         "C’est devenu l’un des temps forts du calendrier sportif nantais : Cité Foot, dédié aux U10/U11 ans des clubs nantais, prend possession du stade Marcel Saupin.<br>
                         <br>
-                        Pour une grande journée de football «basée sur les valeurs positives du sport : tolérance, intégration, respect des différences, sport sans violence et citoyen» précise la Ville, organisatrice de cet événement, en partenariat avec le District de football de Loire-Atlantique. Et en collaboration étroite avec les clubs de la Saint-Yves et de La Mellinet."
-                    ]
-                ]
+                        Pour une grande journée de football «basée sur les valeurs positives du sport : tolérance, intégration, respect des différences, sport sans violence et citoyen» précise la Ville, organisatrice de cet événement, en partenariat avec le District de football de Loire-Atlantique. Et en collaboration étroite avec les clubs de la Saint-Yves et de La Mellinet.",
+                    ],
+                ],
             ],
             [
                 'name' => 'Section Football - Réglement et Charte',
@@ -188,9 +186,9 @@ class StaticPagesConstants
                     [
                         'title' => '',
                         'content' =>
-                        "Photo de la charte"
-                    ]
-                ]
+                        "Photo de la charte",
+                    ],
+                ],
             ],
             [
                 'name' => 'Section Football - Groupement Féminin',
@@ -205,9 +203,9 @@ class StaticPagesConstants
                         <br>
                         Liens internet du Groupement Féminin Nantes Est :<br>
                         <a href="https://gfne.fr/" target="_blank">Site Internet</a><br>
-                        <a href="https://www.facebook.com/GFNantesEstOfficiel" target="_blank">Page Officielle Facebook</a>'
-                    ]
-                ]
+                        <a href="https://www.facebook.com/GFNantesEstOfficiel" target="_blank">Page Officielle Facebook</a>',
+                    ],
+                ],
             ],
             [
                 'name' => 'Section Football - Arbitres',
@@ -217,12 +215,12 @@ class StaticPagesConstants
                         'title' => 'NOS ARBITRES BÉNÉVOLES',
                         'content' =>
                         "Philippe Hervé au club depuis 2013<br>
-                        Joan Saladie au club depuis 2015"
+                        Joan Saladie au club depuis 2015",
                     ],
                     [
                         'title' => 'VOUS SOUHAITEZ REJOINDRE NOTRE ÉQUIPE D’ARBITRES ?',
                         'content' =>
-                        "CONTACTEZ-NOUS : SMD.ARBITRAGE@GMAIL.COM"
+                        "CONTACTEZ-NOUS : SMD.ARBITRAGE@GMAIL.COM",
                     ],
                     [
                         'title' => '',
@@ -243,10 +241,10 @@ class StaticPagesConstants
                         <br>
                         <a href="https://foot44.fff.fr/simple/devenez-arbitre-officiel-derniere-date-pour-la-formation-initiale" target="_blank">https://foot44.fff.fr/simple/devenez-arbitre-officiel-derniere-date-pour-la-formation-initiale</a><br>
                         Les coûts de formation et de restauration sont pris en charge par ton club.<br>
-                        Tel : 07 71 11 51 00'
-                    ]
-                ]
-            ]
-        ]
+                        Tel : 07 71 11 51 00',
+                    ],
+                ],
+            ],
+        ],
     ];
 }

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role as SymfonyRole;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
-class Role extends  SymfonyRole
+class Role extends SymfonyRole
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -43,9 +43,6 @@ class Role extends  SymfonyRole
         $this->sections = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getRole(): string
     {
         return $this->name;
@@ -130,7 +127,7 @@ class Role extends  SymfonyRole
 
     public function addSections(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -154,7 +151,7 @@ class Role extends  SymfonyRole
 
     public function addMember(Member $member): static
     {
-        if (!$this->members->contains($member)) {
+        if (! $this->members->contains($member)) {
             $this->members->add($member);
         }
 

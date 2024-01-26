@@ -20,7 +20,7 @@ class LoginController extends AbstractController
         // Vérifiez si l'URI est déjà stockée dans la session
         $referer = $session->get('referer');
 
-        if (!$referer) {
+        if (! $referer) {
             // Si l'URI n'est pas déjà stockée, enregistrez l'URI de la page actuelle dans la session
             $referer = $request->headers->get('referer');
             $loginRoute = $this->generateUrl('app_login');
@@ -56,7 +56,7 @@ class LoginController extends AbstractController
         $referer = $session->get('referer');
 
         // Si l'URI n'est pas dans la session, essayez de récupérer _target_path de la requête
-        if (!$referer) {
+        if (! $referer) {
             $referer = $request->get('_target_path');
         }
 

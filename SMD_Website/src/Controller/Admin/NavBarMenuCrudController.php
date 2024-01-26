@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-
 use App\Entity\NavBarMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -10,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use App\Controller\Admin\NavBarSubMenuCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -33,7 +31,9 @@ class NavBarMenuCrudController extends AbstractCrudController
             ->setPageTitle('new', "Création d'un %entity_label_singular%")
             ->setPageTitle('detail', "Détail du %entity_label_singular%")
             ->setPageTitle('edit', "Modification du %entity_label_singular%")
-            ->setDefaultSort(['name' => 'ASC'])
+            ->setDefaultSort([
+                'name' => 'ASC',
+            ])
             ->showEntityActionsInlined()
             ->hideNullValues()
             ->renderContentMaximized();
@@ -50,46 +50,46 @@ class NavBarMenuCrudController extends AbstractCrudController
             ->update(
                 Crud::PAGE_INDEX,
                 Action::NEW,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
-                fn (Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
-                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
             )
 
             // Page "EDIT"
             ->update(
                 Crud::PAGE_EDIT,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
 
             // Page "NEW"
             ->update(
                 Crud::PAGE_NEW,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_ADD_ANOTHER,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             );
     }
 

@@ -14,8 +14,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\ArrayFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -33,7 +31,8 @@ class MemberCrudController extends AbstractCrudController
         return Member::class;
     }
 
-    private $security;
+    private \Symfony\Bundle\SecurityBundle\Security $security;
+
     public function __construct(
         Security $security,
         public UserPasswordHasherInterface $userPasswordHasher
@@ -50,7 +49,9 @@ class MemberCrudController extends AbstractCrudController
             ->setPageTitle('new', "Création d'un %entity_label_singular%")
             ->setPageTitle('detail', "Détail de l'%entity_label_singular%")
             ->setPageTitle('edit', "Modification de l'%entity_label_singular%")
-            ->setDefaultSort(['id' => 'ASC'])
+            ->setDefaultSort([
+                'id' => 'ASC',
+            ])
             ->showEntityActionsInlined()
             ->hideNullValues()
             ->renderContentMaximized();
@@ -67,46 +68,46 @@ class MemberCrudController extends AbstractCrudController
             ->update(
                 Crud::PAGE_INDEX,
                 Action::NEW,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
-                fn (Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
-                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
             )
 
             // Page "EDIT"
             ->update(
                 Crud::PAGE_EDIT,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
 
             // Page "NEW"
             ->update(
                 Crud::PAGE_NEW,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_ADD_ANOTHER,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             );
     }
 
@@ -119,7 +120,6 @@ class MemberCrudController extends AbstractCrudController
             ->add('lastName')
             ->add('roles');
     }
-
 
     public function configureFields(string $pageName): iterable
     {
@@ -142,7 +142,7 @@ class MemberCrudController extends AbstractCrudController
                 $sectionField->hideOnForm();
             };
 
-            if ($user->getAssociation()) {
+            if ($user->getAssociation() instanceof \App\Entity\Association) {
                 $associationField->setFormTypeOption('query_builder', function ($associationRepository) use ($memberAssociation) {
                     return $associationRepository->createQueryBuilder('s')
                         ->andWhere('s IN (:memberAssociation)')
@@ -163,8 +163,12 @@ class MemberCrudController extends AbstractCrudController
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions([
                     'type' => PasswordType::class,
-                    'first_options' => ['label' => 'Mot de Passe :'],
-                    'second_options' => ['label' => 'Confirmation du Mot de Passe :'],
+                    'first_options' => [
+                        'label' => 'Mot de Passe :',
+                    ],
+                    'second_options' => [
+                        'label' => 'Confirmation du Mot de Passe :',
+                    ],
                     'mapped' => false,
                 ])
                 ->setRequired($pageName === Crud::PAGE_NEW)
@@ -199,7 +203,7 @@ class MemberCrudController extends AbstractCrudController
     {
         return function ($event) {
             $form = $event->getForm();
-            if (!$form->isValid()) {
+            if (! $form->isValid()) {
                 return;
             }
             $user = $this->getUser();

@@ -5,9 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Section;
 use App\Entity\Activity;
 use App\Entity\Training;
-use Cocur\Slugify\Slugify;
 use App\Entity\ActivityClass;
-use App\DataFixtures\PostsFixtures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,13 +15,13 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ActivityClassesFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $slugify;
-    private $entityManager;
-    private $io;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(Slugify $slugify, EntityManagerInterface $entityManager, SymfonyStyle $io)
+    private SymfonyStyle $io;
+
+    public function __construct(EntityManagerInterface $entityManager, SymfonyStyle $io)
     {
-        $this->slugify = $slugify;
+
         $this->entityManager = $entityManager;
         $this->io = $io;
     }
@@ -40,7 +38,7 @@ class ActivityClassesFixtures extends Fixture implements DependentFixtureInterfa
         $this->dumpSummaryFixtures($manager);
     }
 
-    private function loadClassesForSection(ObjectManager $manager, $section, array $sectionData): void
+    private function loadClassesForSection(ObjectManager $manager, Section $section, array $sectionData): void
     {
         foreach ($sectionData['activities'] as $activity => $activityData) {
 
@@ -69,7 +67,7 @@ class ActivityClassesFixtures extends Fixture implements DependentFixtureInterfa
         }
     }
 
-    private function createActivity(ObjectManager $manager, $section, array $data): Activity
+    private function createActivity(ObjectManager $manager, Section $section, array $data): Activity
     {
         $label = $data['label'];
         $competition = $data['competition'];
@@ -101,11 +99,13 @@ class ActivityClassesFixtures extends Fixture implements DependentFixtureInterfa
         return $activityClass;
     }
 
-    private function findTrainingSlot($trainingName)
+    private function findTrainingSlot(string $trainingName): ?Training
     {
         $trainingRepository = $this->entityManager->getRepository(Training::class);
 
-        $trainingSlot = $trainingRepository->findOneBy(['name' => $trainingName]);
+        $trainingSlot = $trainingRepository->findOneBy([
+            'name' => $trainingName,
+        ]);
 
         if ($trainingSlot !== null) {
             return $trainingSlot;
@@ -114,7 +114,7 @@ class ActivityClassesFixtures extends Fixture implements DependentFixtureInterfa
         throw new \Exception("Créneau de Cours introuvable pour : $trainingName");
     }
 
-    private function dumpSummaryFixtures(ObjectManager $manager)
+    private function dumpSummaryFixtures(ObjectManager $manager): void
     {
         $sectionRepository = $manager->getRepository(Section::class);
         $activityRepository = $manager->getRepository(Activity::class);
@@ -166,7 +166,7 @@ class ActivityClassesFixtures extends Fixture implements DependentFixtureInterfa
         return [
             OrganizationsFixtures::class,
             TimeSlotsFixtures::class,
-            PostsFixtures::class
+            PostsFixtures::class,
         ];
     }
 }

@@ -106,7 +106,7 @@ class Training
 
     private function formatTimeToString(DateTimeInterface $dateTime): ?string
     {
-        if (!$dateTime) {
+        if (! $dateTime) {
             return null;
         }
 
@@ -115,12 +115,12 @@ class Training
 
     public function getFormattedStartTimeSlotWithDay(): ?string
     {
-        return $this->formatTimeToString($this->startTimeSlot, true);
+        return $this->formatTimeToString($this->startTimeSlot);
     }
 
     public function getFormattedEndTimeSlotWithDay(): ?string
     {
-        return $this->formatTimeToString($this->endTimeSlot, true);
+        return $this->formatTimeToString($this->endTimeSlot);
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -173,7 +173,7 @@ class Training
 
     public function addTeam(Team $team): static
     {
-        if (!$this->teams->contains($team)) {
+        if (! $this->teams->contains($team)) {
             $this->teams->add($team);
             $team->addTraining($this);
         }
@@ -200,7 +200,7 @@ class Training
 
     public function addActivityClass(ActivityClass $activityClass): static
     {
-        if (!$this->activityClasses->contains($activityClass)) {
+        if (! $this->activityClasses->contains($activityClass)) {
             $this->activityClasses->add($activityClass);
             $activityClass->addTraining($this);
         }

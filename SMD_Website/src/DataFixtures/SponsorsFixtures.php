@@ -7,7 +7,6 @@ use App\Entity\Sponsor;
 use App\Entity\Association;
 use App\Entity\InstitutionalPartner;
 use Doctrine\Persistence\ObjectManager;
-use App\DataFixtures\OrganizationsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Constants\SponsorsConstants;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -15,7 +14,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class SponsorsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $io;
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(SymfonyStyle $io)
     {
@@ -81,7 +80,6 @@ class SponsorsFixtures extends Fixture implements DependentFixtureInterface
     private function addToOrganization($partner, $organizations)
     {
         foreach ($organizations as $organization) {
-
             $organizationReference = $this->getReference($organization);
 
             if ($organizationReference instanceof Association) {
@@ -119,6 +117,7 @@ class SponsorsFixtures extends Fixture implements DependentFixtureInterface
             }
         }
     }
+
     public function getDependencies()
     {
         return [

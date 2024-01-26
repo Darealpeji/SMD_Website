@@ -2,8 +2,6 @@
 
 namespace App\DataFixtures\Constants;
 
-use App\DataFixtures\Constants\OrganizationsConstants;
-
 class NavBarConstants
 {
     public const NAVBAR = [
@@ -15,8 +13,13 @@ class NavBarConstants
                     'routeName' => 'home_association',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_association', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_association',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => "L'Association",
@@ -24,11 +27,31 @@ class NavBarConstants
                     'routeName' => 'presentation_association',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'historical_association', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_association', 'ranking' => 2],
-                        ['label' => 'Documents', 'slug' => 'documents', 'routeName' => 'static_page_association', 'ranking' => 3],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_association', 'ranking' => 4]
-                    ]
+                        [
+                            'label' => 'Notre Histoire',
+                            'slug' => 'notre-histoire',
+                            'routeName' => 'historical_association',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => "L'Organigramme",
+                            'slug' => 'l-organigramme',
+                            'routeName' => 'organization_chart_association',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'Documents',
+                            'slug' => 'documents',
+                            'routeName' => 'static_page_association',
+                            'ranking' => 3,
+                        ],
+                        [
+                            'label' => 'Nos Partenaires',
+                            'slug' => 'nos-partenaires',
+                            'routeName' => 'our_partners_association',
+                            'ranking' => 4,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Sections',
@@ -36,25 +59,70 @@ class NavBarConstants
                     'routeName' => '',
                     'ranking' => 3,
                     'navBarSubMenus' => [
-                        ['label' => 'Basket', 'slug' => 'section-basket', 'routeName' => 'home_section', 'ranking' => 1],
-                        ['label' => 'Chorale', 'slug' => 'section-chorale', 'routeName' => 'home_section', 'ranking' => 2],
-                        ['label' => 'Danse', 'slug' => 'section-danse', 'routeName' => 'home_section', 'ranking' => 3],
-                        ['label' => 'Football', 'slug' => 'section-football', 'routeName' => 'home_section', 'ranking' => 4],
-                        ['label' => 'Gym Sportive', 'slug' => 'section-gym-sportive', 'routeName' => 'home_section', 'ranking' => 5],
-                        ['label' => 'Gym Tonique, Pilates, Yoga', 'slug' => 'section-gym-tonique-pilates-yoga', 'routeName' => 'home_section', 'ranking' => 6],
-                        ['label' => 'Loisirs', 'slug' => 'section-loisirs', 'routeName' => 'home_section', 'ranking' => 7],
-                        ['label' => 'Pétanque', 'slug' => 'section-petanque', 'routeName' => 'home_section', 'ranking' => 8],
-                        ['label' => 'Tennis de Table', 'slug' => 'section-tennis-de-table', 'routeName' => 'home_section', 'ranking' => 9]
-                    ]
+                        [
+                            'label' => 'Basket',
+                            'slug' => 'section-basket',
+                            'routeName' => 'home_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'Chorale',
+                            'slug' => 'section-chorale',
+                            'routeName' => 'home_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'Danse',
+                            'slug' => 'section-danse',
+                            'routeName' => 'home_section',
+                            'ranking' => 3,
+                        ],
+                        [
+                            'label' => 'Football',
+                            'slug' => 'section-football',
+                            'routeName' => 'home_section',
+                            'ranking' => 4,
+                        ],
+                        [
+                            'label' => 'Gym Sportive',
+                            'slug' => 'section-gym-sportive',
+                            'routeName' => 'home_section',
+                            'ranking' => 5,
+                        ],
+                        [
+                            'label' => 'Gym Tonique, Pilates, Yoga',
+                            'slug' => 'section-gym-tonique-pilates-yoga',
+                            'routeName' => 'home_section',
+                            'ranking' => 6,
+                        ],
+                        [
+                            'label' => 'Loisirs',
+                            'slug' => 'section-loisirs',
+                            'routeName' => 'home_section',
+                            'ranking' => 7,
+                        ],
+                        [
+                            'label' => 'Pétanque',
+                            'slug' => 'section-petanque',
+                            'routeName' => 'home_section',
+                            'ranking' => 8,
+                        ],
+                        [
+                            'label' => 'Tennis de Table',
+                            'slug' => 'section-tennis-de-table',
+                            'routeName' => 'home_section',
+                            'ranking' => 9,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Infos Pratiques',
                     'slug' => 'infos-pratiques',
                     'routeName' => 'useful_informations_association',
                     'ranking' => 4,
-                    'navBarSubMenus' => []
-                ]
-            ]
+                    'navBarSubMenus' => [],
+                ],
+            ],
         ],
         OrganizationsConstants::BASKET => [
             'navBarMenusData' => [
@@ -64,8 +132,13 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Le Club',
@@ -73,9 +146,19 @@ class NavBarConstants
                     'routeName' => 'the_club_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 1],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_section', 'ranking' => 2]
-                    ]
+                        [
+                            'label' => "L'Organigramme",
+                            'slug' => 'l-organigramme',
+                            'routeName' => 'organization_chart_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'Nos Partenaires',
+                            'slug' => 'nos-partenaires',
+                            'routeName' => 'our_partners_section',
+                            'ranking' => 2,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Equipes',
@@ -83,21 +166,56 @@ class NavBarConstants
                     'routeName' => 'our_team_categories_section',
                     'ranking' => 3,
                     'navBarSubMenus' => [
-                        ['label' => 'Séniors', 'slug' => 'seniors', 'routeName' => 'our_teams_section', 'ranking' => 1],
-                        ['label' => 'U18', 'slug' => 'u18', 'routeName' => 'our_teams_section', 'ranking' => 2],
-                        ['label' => 'U15', 'slug' => 'u15', 'routeName' => 'our_teams_section', 'ranking' => 3],
-                        ['label' => 'U13', 'slug' => 'u13', 'routeName' => 'our_teams_section', 'ranking' => 4],
-                        ['label' => 'U11', 'slug' => 'u11', 'routeName' => 'our_teams_section', 'ranking' => 5],
-                        ['label' => 'U9', 'slug' => 'u9', 'routeName' => 'our_teams_section', 'ranking' => 6],
-                        ['label' => "L'Ecole d'Arbitrage", 'slug' => 'l-ecole-d-arbitrage', 'routeName' => 'static_page_section', 'ranking' => 7]
-                    ]
+                        [
+                            'label' => 'Séniors',
+                            'slug' => 'seniors',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'U18',
+                            'slug' => 'u18',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'U15',
+                            'slug' => 'u15',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 3,
+                        ],
+                        [
+                            'label' => 'U13',
+                            'slug' => 'u13',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 4,
+                        ],
+                        [
+                            'label' => 'U11',
+                            'slug' => 'u11',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 5,
+                        ],
+                        [
+                            'label' => 'U9',
+                            'slug' => 'u9',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 6,
+                        ],
+                        [
+                            'label' => "L'Ecole d'Arbitrage",
+                            'slug' => 'l-ecole-d-arbitrage',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 7,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Boutique',
                     'slug' => 'boutique',
                     'routeName' => '',
                     'ranking' => 4,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -105,10 +223,15 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 5,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
-                ]
-            ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::CHORALE => [
             'navBarMenusData' => [
@@ -118,8 +241,13 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Présentation',
@@ -127,16 +255,26 @@ class NavBarConstants
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Répertoire', 'slug' => 'repertoire', 'routeName' => 'static_page_section', 'ranking' => 1],
-                        ['label' => "Modalités de Travail", 'slug' => 'modalite-de-travail', 'routeName' => 'static_page_section', 'ranking' => 2]
-                    ]
+                        [
+                            'label' => 'Répertoire',
+                            'slug' => 'repertoire',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => "Modalités de Travail",
+                            'slug' => 'modalite-de-travail',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 2,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Concerts',
                     'slug' => 'nos-concerts',
                     'routeName' => '',
                     'ranking' => 3,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -144,10 +282,15 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 4,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
-                ]
-            ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::DANSE => [
             'navBarMenusData' => [
@@ -157,22 +300,27 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Nos Activités',
                     'slug' => 'nos-activites',
                     'routeName' => 'our_activities_section',
                     'ranking' => 3,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -180,10 +328,15 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 4,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
-                ]
-            ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::FOOTBALL => [
             'navBarMenusData' => [
@@ -193,9 +346,19 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1],
-                        ['label' => 'TV SMD', 'slug' => 'tv-smd', 'routeName' => '', 'ranking' => 2]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'TV SMD',
+                            'slug' => 'tv-smd',
+                            'routeName' => '',
+                            'ranking' => 2,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Le Club',
@@ -203,13 +366,43 @@ class NavBarConstants
                     'routeName' => 'the_club_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'club_historical_section', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 2],
-                        ['label' => 'P.E.F.', 'slug' => 'p-e-f', 'routeName' => 'static_page_section', 'ranking' => 3],
-                        ['label' => 'Plan Cité Foot', 'slug' => 'plan-cite-foot', 'routeName' => 'static_page_section', 'ranking' => 4],
-                        ['label' => "Règlement et Charte", 'slug' => 'reglement-et-charte', 'routeName' => 'static_page_section', 'ranking' => 5],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_section', 'ranking' => 6]
-                    ]
+                        [
+                            'label' => 'Notre Histoire',
+                            'slug' => 'notre-histoire',
+                            'routeName' => 'club_historical_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => "L'Organigramme",
+                            'slug' => 'l-organigramme',
+                            'routeName' => 'organization_chart_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'P.E.F.',
+                            'slug' => 'p-e-f',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 3,
+                        ],
+                        [
+                            'label' => 'Plan Cité Foot',
+                            'slug' => 'plan-cite-foot',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 4,
+                        ],
+                        [
+                            'label' => "Règlement et Charte",
+                            'slug' => 'reglement-et-charte',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 5,
+                        ],
+                        [
+                            'label' => 'Nos Partenaires',
+                            'slug' => 'nos-partenaires',
+                            'routeName' => 'our_partners_section',
+                            'ranking' => 6,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Equipes',
@@ -217,26 +410,86 @@ class NavBarConstants
                     'routeName' => 'our_team_categories_section',
                     'ranking' => 3,
                     'navBarSubMenus' => [
-                        ['label' => 'Séniors', 'slug' => 'seniors', 'routeName' => 'our_teams_section', 'ranking' => 1],
-                        ['label' => 'U19', 'slug' => 'u19', 'routeName' => 'our_teams_section', 'ranking' => 2],
-                        ['label' => 'U17', 'slug' => 'u17', 'routeName' => 'our_teams_section', 'ranking' => 3],
-                        ['label' => 'U15', 'slug' => 'u15', 'routeName' => 'our_teams_section', 'ranking' => 4],
-                        ['label' => 'U13', 'slug' => 'u13', 'routeName' => 'our_teams_section', 'ranking' => 5],
-                        ['label' => 'U11', 'slug' => 'u11', 'routeName' => 'our_teams_section', 'ranking' => 6],
-                        ['label' => 'U9', 'slug' => 'u9', 'routeName' => 'our_teams_section', 'ranking' => 7],
-                        ['label' => 'U7', 'slug' => 'u7', 'routeName' => 'our_teams_section', 'ranking' => 8],
-                        ['label' => 'Groupement Féminin', 'slug' => 'groupement-feminin', 'routeName' => 'static_page_section', 'ranking' => 9],
-                        ['label' => 'Vétérans', 'slug' => 'veterans', 'routeName' => 'our_teams_section', 'ranking' => 10],
-                        ['label' => 'Loisirs', 'slug' => 'loisirs', 'routeName' => 'our_teams_section', 'ranking' => 11],
-                        ['label' => "Arbitres", 'slug' => 'arbitres', 'routeName' => 'static_page_section', 'ranking' => 12]
-                    ]
+                        [
+                            'label' => 'Séniors',
+                            'slug' => 'seniors',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'U19',
+                            'slug' => 'u19',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'U17',
+                            'slug' => 'u17',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 3,
+                        ],
+                        [
+                            'label' => 'U15',
+                            'slug' => 'u15',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 4,
+                        ],
+                        [
+                            'label' => 'U13',
+                            'slug' => 'u13',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 5,
+                        ],
+                        [
+                            'label' => 'U11',
+                            'slug' => 'u11',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 6,
+                        ],
+                        [
+                            'label' => 'U9',
+                            'slug' => 'u9',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 7,
+                        ],
+                        [
+                            'label' => 'U7',
+                            'slug' => 'u7',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 8,
+                        ],
+                        [
+                            'label' => 'Groupement Féminin',
+                            'slug' => 'groupement-feminin',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 9,
+                        ],
+                        [
+                            'label' => 'Vétérans',
+                            'slug' => 'veterans',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 10,
+                        ],
+                        [
+                            'label' => 'Loisirs',
+                            'slug' => 'loisirs',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 11,
+                        ],
+                        [
+                            'label' => "Arbitres",
+                            'slug' => 'arbitres',
+                            'routeName' => 'static_page_section',
+                            'ranking' => 12,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Boutique',
                     'slug' => 'boutique',
                     'routeName' => '',
                     'ranking' => 4,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -244,10 +497,15 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 5,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
-                ]
-            ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::GYM_SPORTIVE => [
             'navBarMenusData' => [
@@ -257,15 +515,20 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Nos Equipes',
@@ -273,17 +536,32 @@ class NavBarConstants
                     'routeName' => 'our_team_categories_section',
                     'ranking' => 3,
                     'navBarSubMenus' => [
-                        ['label' => 'Poussines', 'slug' => 'poussines', 'routeName' => 'our_teams_section', 'ranking' => 1],
-                        ['label' => 'Jeunesses', 'slug' => 'jeunesses', 'routeName' => 'our_teams_section', 'ranking' => 2],
-                        ['label' => 'Ainées', 'slug' => 'ainees', 'routeName' => 'our_teams_section', 'ranking' => 3]
-                    ]
+                        [
+                            'label' => 'Poussines',
+                            'slug' => 'poussines',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'Jeunesses',
+                            'slug' => 'jeunesses',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'Ainées',
+                            'slug' => 'ainees',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 3,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Activités',
                     'slug' => 'nos-activites',
                     'routeName' => 'our_activities_section',
                     'ranking' => 4,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -291,10 +569,15 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 5,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
-            ]
+            ],
         ],
         OrganizationsConstants::GYM_TONIQUE => [
             'navBarMenusData' => [
@@ -304,22 +587,27 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Nos Activités',
                     'slug' => 'nos-activites',
                     'routeName' => 'our_activities_section',
                     'ranking' => 3,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -327,10 +615,15 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 4,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
-                ]
-            ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
+                ],
+            ],
         ],
         OrganizationsConstants::LOISIRS => [
             'navBarMenusData' => [
@@ -340,24 +633,29 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
                     'slug' => 'infos-pratiques',
                     'routeName' => 'useful_informations_section',
                     'ranking' => 3,
-                    'navBarSubMenus' => []
-                ]
-            ]
+                    'navBarSubMenus' => [],
+                ],
+            ],
         ],
         OrganizationsConstants::PETANQUE => [
             'navBarMenusData' => [
@@ -367,24 +665,30 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1, 'navBarMenu' => 'Accueil']
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                            'navBarMenu' => 'Accueil',
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Présentation',
                     'slug' => 'presentation',
                     'routeName' => 'presentation_section',
                     'ranking' => 2,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
                     'slug' => 'infos-pratiques',
                     'routeName' => 'useful_informations_section',
                     'ranking' => 3,
-                    'navBarSubMenus' => []
-                ]
-            ]
+                    'navBarSubMenus' => [],
+                ],
+            ],
         ],
         OrganizationsConstants::TENNIS_DE_TABLE => [
             'navBarMenusData' => [
@@ -394,8 +698,13 @@ class NavBarConstants
                     'routeName' => 'home_section',
                     'ranking' => 1,
                     'navBarSubMenus' => [
-                        ['label' => 'Actualités', 'slug' => 'actualites', 'routeName' => 'news_section', 'ranking' => 1]
-                    ]
+                        [
+                            'label' => 'Actualités',
+                            'slug' => 'actualites',
+                            'routeName' => 'news_section',
+                            'ranking' => 1,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Le Club',
@@ -403,10 +712,25 @@ class NavBarConstants
                     'routeName' => 'the_club_section',
                     'ranking' => 2,
                     'navBarSubMenus' => [
-                        ['label' => 'Notre Histoire', 'slug' => 'notre-histoire', 'routeName' => 'club_historical_section', 'ranking' => 1],
-                        ['label' => "L'Organigramme", 'slug' => 'l-organigramme', 'routeName' => 'organization_chart_section', 'ranking' => 2],
-                        ['label' => 'Nos Partenaires', 'slug' => 'nos-partenaires', 'routeName' => 'our_partners_section', 'ranking' => 3]
-                    ]
+                        [
+                            'label' => 'Notre Histoire',
+                            'slug' => 'notre-histoire',
+                            'routeName' => 'club_historical_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => "L'Organigramme",
+                            'slug' => 'l-organigramme',
+                            'routeName' => 'organization_chart_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'Nos Partenaires',
+                            'slug' => 'nos-partenaires',
+                            'routeName' => 'our_partners_section',
+                            'ranking' => 3,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Equipes',
@@ -414,18 +738,38 @@ class NavBarConstants
                     'routeName' => 'our_team_categories_section',
                     'ranking' => 3,
                     'navBarSubMenus' => [
-                        ['label' => 'Nationale', 'slug' => 'nationale', 'routeName' => 'our_teams_section', 'ranking' => 1],
-                        ['label' => 'Régionale', 'slug' => 'regionale', 'routeName' => 'our_teams_section', 'ranking' => 2],
-                        ['label' => 'Départementale', 'slug' => 'departementale', 'routeName' => 'our_teams_section', 'ranking' => 3],
-                        ['label' => 'Jeunes', 'slug' => 'jeunes', 'routeName' => 'our_teams_section', 'ranking' => 4]
-                    ]
+                        [
+                            'label' => 'Nationale',
+                            'slug' => 'nationale',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 1,
+                        ],
+                        [
+                            'label' => 'Régionale',
+                            'slug' => 'regionale',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 2,
+                        ],
+                        [
+                            'label' => 'Départementale',
+                            'slug' => 'departementale',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 3,
+                        ],
+                        [
+                            'label' => 'Jeunes',
+                            'slug' => 'jeunes',
+                            'routeName' => 'our_teams_section',
+                            'ranking' => 4,
+                        ],
+                    ],
                 ],
                 [
                     'label' => 'Nos Activités',
                     'slug' => 'nos-activites',
                     'routeName' => 'our_activities_section',
                     'ranking' => 4,
-                    'navBarSubMenus' => []
+                    'navBarSubMenus' => [],
                 ],
                 [
                     'label' => 'Infos Pratiques',
@@ -433,25 +777,80 @@ class NavBarConstants
                     'routeName' => 'useful_informations_section',
                     'ranking' => 5,
                     'navBarSubMenus' => [
-                        ['label' => 'Inscriptions', 'slug' => 'inscriptions', 'routeName' => '', 'ranking' => 1]
-                    ]
-                ]
+                        [
+                            'label' => 'Inscriptions',
+                            'slug' => 'inscriptions',
+                            'routeName' => '',
+                            'ranking' => 1,
+                        ],
+                    ],
+                ],
             ],
-        ]
+        ],
     ];
 
     public const NAVBAR_LOGGED_IN = [
         'navBarSubMenusData' => [
-            ['label' => 'Mon Compte', 'slug' => 'mon-compte', 'routeName' => '', 'ranking' => 1],
-            ['label' => 'Convocation', 'slug' => 'convocation', 'routeName' => '', 'ranking' => 2],
-            ['label' => 'Echo Raleur', 'slug' => 'echo-raleur', 'routeName' => '', 'ranking' => 3],
-            ['label' => 'Lire une Partition', 'slug' => 'lire-une-partition', 'routeName' => '', 'ranking' => 4],
-            ['label' => 'Fichiers MP3', 'slug' => 'fichiers-mp3', 'routeName' => '', 'ranking' => 5],
-            ['label' => 'PV Bureau', 'slug' => 'pv-bureau', 'routeName' => '', 'ranking' => 6],
-            ['label' => 'Espace Administrateur', 'slug' => 'espace-administrateur', 'routeName' => 'admin', 'ranking' => 7],
-            ['label' => 'Gestion des Articles', 'slug' => 'gestion-des-articles', 'routeName' => 'admin', 'ranking' => 8],
-            ['label' => 'Gestion des Convocations', 'slug' => 'gestion-des-convocations', 'routeName' => 'admin', 'ranking' => 9],
-            ['label' => 'Se Déconnecter', 'slug' => 'se-deconnecter', 'routeName' => 'app_logout', 'ranking' => 10],
-        ]
+            [
+                'label' => 'Mon Compte',
+                'slug' => 'mon-compte',
+                'routeName' => '',
+                'ranking' => 1,
+            ],
+            [
+                'label' => 'Convocation',
+                'slug' => 'convocation',
+                'routeName' => '',
+                'ranking' => 2,
+            ],
+            [
+                'label' => 'Echo Raleur',
+                'slug' => 'echo-raleur',
+                'routeName' => '',
+                'ranking' => 3,
+            ],
+            [
+                'label' => 'Lire une Partition',
+                'slug' => 'lire-une-partition',
+                'routeName' => '',
+                'ranking' => 4,
+            ],
+            [
+                'label' => 'Fichiers MP3',
+                'slug' => 'fichiers-mp3',
+                'routeName' => '',
+                'ranking' => 5,
+            ],
+            [
+                'label' => 'PV Bureau',
+                'slug' => 'pv-bureau',
+                'routeName' => '',
+                'ranking' => 6,
+            ],
+            [
+                'label' => 'Espace Administrateur',
+                'slug' => 'espace-administrateur',
+                'routeName' => 'admin',
+                'ranking' => 7,
+            ],
+            [
+                'label' => 'Gestion des Articles',
+                'slug' => 'gestion-des-articles',
+                'routeName' => 'admin',
+                'ranking' => 8,
+            ],
+            [
+                'label' => 'Gestion des Convocations',
+                'slug' => 'gestion-des-convocations',
+                'routeName' => 'admin',
+                'ranking' => 9,
+            ],
+            [
+                'label' => 'Se Déconnecter',
+                'slug' => 'se-deconnecter',
+                'routeName' => 'app_logout',
+                'ranking' => 10,
+            ],
+        ],
     ];
 }

@@ -5,16 +5,27 @@ namespace App\DataFixtures\Constants;
 class ActivityPlacesConstants
 {
     public const STADE_RENE_CHEVALIER = 'Stade_Rene_Chevalier';
+
     public const PLAINE_JEUX_AUDUBON = 'Plaine_Jeux_Audubon';
+
     public const GYMNASE_DOULON = 'Gymnase_Doulon';
+
     public const TERRAIN_LOUETTRIE = 'Terrain_Louettrie';
+
     public const SALLE_ROGER_CORBARD = 'Salle_Roger_Corbard';
+
     public const SALLE_ETIENNE_LANDAIS = 'Salle_Etienne_Landais';
+
     public const SALLE_HENRI_LOIRET = 'Salle_Henri_Loiret';
+
     public const SALLE_DANSE = 'Salle_Danse';
+
     public const GYMNASE_TOUTES_AIDES = 'Gymnase_Toutes_Aides';
+
     public const GYMNASE_COLINIERE = 'Gymnase_Coliniere';
+
     public const GYMNASE_RAPHAEL_LEBEL = 'Gymnase_Raphael_Lebel';
+
     public const GYMNASE_CIFAM = 'Gymnase_CIFAM';
 
     public const ACTIVITY_PLACES = [

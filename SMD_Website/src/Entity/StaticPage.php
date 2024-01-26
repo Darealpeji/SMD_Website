@@ -108,7 +108,7 @@ class StaticPage
 
     public function addContentStaticPage(StaticPageContent $staticPageContent): static
     {
-        if (!$this->staticPageContents->contains($staticPageContent)) {
+        if (! $this->staticPageContents->contains($staticPageContent)) {
             $this->staticPageContents->add($staticPageContent);
             $staticPageContent->setStaticPage($this);
         }
@@ -118,11 +118,9 @@ class StaticPage
 
     public function removeContentStaticPage(StaticPageContent $staticPageContent): static
     {
-        if ($this->staticPageContents->removeElement($staticPageContent)) {
-            // set the owning side to null (unless already changed)
-            if ($staticPageContent->getStaticPage() === $this) {
-                $staticPageContent->setStaticPage(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->staticPageContents->removeElement($staticPageContent) && $staticPageContent->getStaticPage() === $this) {
+            $staticPageContent->setStaticPage(null);
         }
 
         return $this;

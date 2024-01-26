@@ -13,7 +13,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class HistoricalDatesFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $io;
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(SymfonyStyle $io)
     {
@@ -72,7 +72,6 @@ class HistoricalDatesFixtures extends Fixture implements DependentFixtureInterfa
         $organizations = $organizationsRepository->findAll();
 
         foreach ($organizations as $organization) {
-
             $count = $organization->getHistoricalDates()->count();
 
             if ($count > 0) {

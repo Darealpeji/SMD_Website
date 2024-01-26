@@ -6,14 +6,13 @@ use DateTime;
 use App\Entity\Training;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use App\DataFixtures\ActivityPlacesFixtures;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\DataFixtures\Constants\TimeSlotsConstants;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TimeSlotsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $io;
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(SymfonyStyle $io)
     {

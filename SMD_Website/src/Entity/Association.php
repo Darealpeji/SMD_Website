@@ -261,7 +261,7 @@ class Association
 
     public function addSection(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
             $section->setAssociation($this);
         }
@@ -271,11 +271,9 @@ class Association
 
     public function removeSection(Section $section): static
     {
-        if ($this->sections->removeElement($section)) {
-            // set the owning side to null (unless already changed)
-            if ($section->getAssociation() === $this) {
-                $section->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->sections->removeElement($section) && $section->getAssociation() === $this) {
+            $section->setAssociation(null);
         }
 
         return $this;
@@ -291,7 +289,7 @@ class Association
 
     public function addNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if (!$this->navBarMenus->contains($navBarMenu)) {
+        if (! $this->navBarMenus->contains($navBarMenu)) {
             $this->navBarMenus->add($navBarMenu);
             $navBarMenu->setAssociation($this);
         }
@@ -301,11 +299,9 @@ class Association
 
     public function removeNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if ($this->navBarMenus->removeElement($navBarMenu)) {
-            // set the owning side to null (unless already changed)
-            if ($navBarMenu->getAssociation() === $this) {
-                $navBarMenu->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->navBarMenus->removeElement($navBarMenu) && $navBarMenu->getAssociation() === $this) {
+            $navBarMenu->setAssociation(null);
         }
 
         return $this;
@@ -326,7 +322,7 @@ class Association
 
     public function addArticle(Article $article): static
     {
-        if (!$this->articles->contains($article)) {
+        if (! $this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setAssociation($this);
         }
@@ -336,11 +332,9 @@ class Association
 
     public function removeArticle(Article $article): static
     {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getAssociation() === $this) {
-                $article->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->articles->removeElement($article) && $article->getAssociation() === $this) {
+            $article->setAssociation(null);
         }
 
         return $this;
@@ -356,7 +350,7 @@ class Association
 
     public function addActivityPlace(ActivityPlace $activityPlace): static
     {
-        if (!$this->activityPlaces->contains($activityPlace)) {
+        if (! $this->activityPlaces->contains($activityPlace)) {
             $this->activityPlaces->add($activityPlace);
             $activityPlace->setAssociation($this);
         }
@@ -366,11 +360,9 @@ class Association
 
     public function removeActivityPlace(ActivityPlace $activityPlace): static
     {
-        if ($this->activityPlaces->removeElement($activityPlace)) {
-            // set the owning side to null (unless already changed)
-            if ($activityPlace->getAssociation() === $this) {
-                $activityPlace->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->activityPlaces->removeElement($activityPlace) && $activityPlace->getAssociation() === $this) {
+            $activityPlace->setAssociation(null);
         }
 
         return $this;
@@ -386,7 +378,7 @@ class Association
 
     public function addMember(Member $member): static
     {
-        if (!$this->members->contains($member)) {
+        if (! $this->members->contains($member)) {
             $this->members->add($member);
             $member->setAssociation($this);
         }
@@ -396,11 +388,9 @@ class Association
 
     public function removeMember(Member $member): static
     {
-        if ($this->members->removeElement($member)) {
-            // set the owning side to null (unless already changed)
-            if ($member->getAssociation() === $this) {
-                $member->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->members->removeElement($member) && $member->getAssociation() === $this) {
+            $member->setAssociation(null);
         }
 
         return $this;
@@ -416,7 +406,7 @@ class Association
 
     public function addRole(Role $role): static
     {
-        if (!$this->roles->contains($role)) {
+        if (! $this->roles->contains($role)) {
             $this->roles->add($role);
             $role->setAssociation($this);
         }
@@ -426,11 +416,9 @@ class Association
 
     public function removeRole(Role $role): static
     {
-        if ($this->roles->removeElement($role)) {
-            // set the owning side to null (unless already changed)
-            if ($role->getAssociation() === $this) {
-                $role->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->roles->removeElement($role) && $role->getAssociation() === $this) {
+            $role->setAssociation(null);
         }
 
         return $this;
@@ -446,7 +434,7 @@ class Association
 
     public function addHistoricalDate(HistoricalDate $historicalDate): static
     {
-        if (!$this->historicalDates->contains($historicalDate)) {
+        if (! $this->historicalDates->contains($historicalDate)) {
             $this->historicalDates->add($historicalDate);
             $historicalDate->setAssociation($this);
         }
@@ -456,11 +444,9 @@ class Association
 
     public function removeHistoricalDate(HistoricalDate $historicalDate): static
     {
-        if ($this->historicalDates->removeElement($historicalDate)) {
-            // set the owning side to null (unless already changed)
-            if ($historicalDate->getAssociation() === $this) {
-                $historicalDate->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->historicalDates->removeElement($historicalDate) && $historicalDate->getAssociation() === $this) {
+            $historicalDate->setAssociation(null);
         }
 
         return $this;
@@ -476,7 +462,7 @@ class Association
 
     public function addPostChartCategory(PostChartCategory $postChartCategory): static
     {
-        if (!$this->postChartCategories->contains($postChartCategory)) {
+        if (! $this->postChartCategories->contains($postChartCategory)) {
             $this->postChartCategories->add($postChartCategory);
             $postChartCategory->setAssociation($this);
         }
@@ -486,11 +472,9 @@ class Association
 
     public function removeOrganizationChart(PostChartCategory $postChartCategory): static
     {
-        if ($this->postChartCategories->removeElement($postChartCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($postChartCategory->getAssociation() === $this) {
-                $postChartCategory->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->postChartCategories->removeElement($postChartCategory) && $postChartCategory->getAssociation() === $this) {
+            $postChartCategory->setAssociation(null);
         }
 
         return $this;
@@ -506,7 +490,7 @@ class Association
 
     public function addSponsor(Sponsor $sponsor): static
     {
-        if (!$this->sponsors->contains($sponsor)) {
+        if (! $this->sponsors->contains($sponsor)) {
             $this->sponsors->add($sponsor);
             $sponsor->setAssociation($this);
         }
@@ -516,11 +500,9 @@ class Association
 
     public function removeSponsor(Sponsor $sponsor): static
     {
-        if ($this->sponsors->removeElement($sponsor)) {
-            // set the owning side to null (unless already changed)
-            if ($sponsor->getAssociation() === $this) {
-                $sponsor->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->sponsors->removeElement($sponsor) && $sponsor->getAssociation() === $this) {
+            $sponsor->setAssociation(null);
         }
 
         return $this;
@@ -536,7 +518,7 @@ class Association
 
     public function addInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
     {
-        if (!$this->institutionalPartners->contains($institutionalPartner)) {
+        if (! $this->institutionalPartners->contains($institutionalPartner)) {
             $this->institutionalPartners->add($institutionalPartner);
             $institutionalPartner->setAssociation($this);
         }
@@ -546,11 +528,9 @@ class Association
 
     public function removeInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
     {
-        if ($this->institutionalPartners->removeElement($institutionalPartner)) {
-            // set the owning side to null (unless already changed)
-            if ($institutionalPartner->getAssociation() === $this) {
-                $institutionalPartner->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->institutionalPartners->removeElement($institutionalPartner) && $institutionalPartner->getAssociation() === $this) {
+            $institutionalPartner->setAssociation(null);
         }
 
         return $this;
@@ -566,7 +546,7 @@ class Association
 
     public function addStaticPage(StaticPage $staticPage): static
     {
-        if (!$this->staticPages->contains($staticPage)) {
+        if (! $this->staticPages->contains($staticPage)) {
             $this->staticPages->add($staticPage);
             $staticPage->setAssociation($this);
         }
@@ -576,11 +556,9 @@ class Association
 
     public function removeStaticPage(StaticPage $staticPage): static
     {
-        if ($this->staticPages->removeElement($staticPage)) {
-            // set the owning side to null (unless already changed)
-            if ($staticPage->getAssociation() === $this) {
-                $staticPage->setAssociation(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->staticPages->removeElement($staticPage) && $staticPage->getAssociation() === $this) {
+            $staticPage->setAssociation(null);
         }
 
         return $this;

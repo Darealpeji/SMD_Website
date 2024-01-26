@@ -335,7 +335,7 @@ class Section
 
     public function addNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if (!$this->navBarMenus->contains($navBarMenu)) {
+        if (! $this->navBarMenus->contains($navBarMenu)) {
             $this->navBarMenus->add($navBarMenu);
             $navBarMenu->setSection($this);
         }
@@ -345,11 +345,9 @@ class Section
 
     public function removeNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if ($this->navBarMenus->removeElement($navBarMenu)) {
-            // set the owning side to null (unless already changed)
-            if ($navBarMenu->getSection() === $this) {
-                $navBarMenu->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->navBarMenus->removeElement($navBarMenu) && $navBarMenu->getSection() === $this) {
+            $navBarMenu->setSection(null);
         }
 
         return $this;
@@ -365,7 +363,7 @@ class Section
 
     public function addArticle(Article $article): static
     {
-        if (!$this->articles->contains($article)) {
+        if (! $this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setSection($this);
         }
@@ -375,11 +373,9 @@ class Section
 
     public function removeArticle(Article $article): static
     {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getSection() === $this) {
-                $article->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->articles->removeElement($article) && $article->getSection() === $this) {
+            $article->setSection(null);
         }
 
         return $this;
@@ -395,7 +391,7 @@ class Section
 
     public function addActivityPlace(ActivityPlace $activityPlace): static
     {
-        if (!$this->activityPlaces->contains($activityPlace)) {
+        if (! $this->activityPlaces->contains($activityPlace)) {
             $this->activityPlaces->add($activityPlace);
             $activityPlace->addSection($this);
         }
@@ -422,7 +418,7 @@ class Section
 
     public function addTeamCategory(TeamCategory $teamCategory): static
     {
-        if (!$this->teamCategories->contains($teamCategory)) {
+        if (! $this->teamCategories->contains($teamCategory)) {
             $this->teamCategories->add($teamCategory);
             $teamCategory->setSection($this);
         }
@@ -432,11 +428,9 @@ class Section
 
     public function removeTeamCategory(TeamCategory $teamCategory): static
     {
-        if ($this->teamCategories->removeElement($teamCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($teamCategory->getSection() === $this) {
-                $teamCategory->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->teamCategories->removeElement($teamCategory) && $teamCategory->getSection() === $this) {
+            $teamCategory->setSection(null);
         }
 
         return $this;
@@ -452,7 +446,7 @@ class Section
 
     public function addMember(Member $member): static
     {
-        if (!$this->members->contains($member)) {
+        if (! $this->members->contains($member)) {
             $this->members->add($member);
             $member->addSections($this);
         }
@@ -479,7 +473,7 @@ class Section
 
     public function addActivity(Activity $activity): static
     {
-        if (!$this->activities->contains($activity)) {
+        if (! $this->activities->contains($activity)) {
             $this->activities->add($activity);
             $activity->setSection($this);
         }
@@ -489,11 +483,9 @@ class Section
 
     public function removeActivity(Activity $activity): static
     {
-        if ($this->activities->removeElement($activity)) {
-            // set the owning side to null (unless already changed)
-            if ($activity->getSection() === $this) {
-                $activity->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->activities->removeElement($activity) && $activity->getSection() === $this) {
+            $activity->setSection(null);
         }
 
         return $this;
@@ -509,7 +501,7 @@ class Section
 
     public function addRole(Role $role): static
     {
-        if (!$this->roles->contains($role)) {
+        if (! $this->roles->contains($role)) {
             $this->roles->add($role);
             $role->addSections($this);
         }
@@ -536,7 +528,7 @@ class Section
 
     public function addHistoricalDate(HistoricalDate $historicalDate): static
     {
-        if (!$this->historicalDates->contains($historicalDate)) {
+        if (! $this->historicalDates->contains($historicalDate)) {
             $this->historicalDates->add($historicalDate);
             $historicalDate->setSection($this);
         }
@@ -546,11 +538,9 @@ class Section
 
     public function removeHistoricalDate(HistoricalDate $historicalDate): static
     {
-        if ($this->historicalDates->removeElement($historicalDate)) {
-            // set the owning side to null (unless already changed)
-            if ($historicalDate->getSection() === $this) {
-                $historicalDate->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->historicalDates->removeElement($historicalDate) && $historicalDate->getSection() === $this) {
+            $historicalDate->setSection(null);
         }
 
         return $this;
@@ -566,7 +556,7 @@ class Section
 
     public function addPostChartCategory(PostChartCategory $postChartCategory): static
     {
-        if (!$this->postChartCategories->contains($postChartCategory)) {
+        if (! $this->postChartCategories->contains($postChartCategory)) {
             $this->postChartCategories->add($postChartCategory);
             $postChartCategory->addSection($this);
         }
@@ -593,7 +583,7 @@ class Section
 
     public function addPostTeamCategory(PostTeamCategory $postTeamCategory): static
     {
-        if (!$this->postTeamCategories->contains($postTeamCategory)) {
+        if (! $this->postTeamCategories->contains($postTeamCategory)) {
             $this->postTeamCategories->add($postTeamCategory);
             $postTeamCategory->addSection($this);
         }
@@ -620,7 +610,7 @@ class Section
 
     public function addSponsor(Sponsor $sponsor): static
     {
-        if (!$this->sponsors->contains($sponsor)) {
+        if (! $this->sponsors->contains($sponsor)) {
             $this->sponsors->add($sponsor);
             $sponsor->addSection($this);
         }
@@ -647,7 +637,7 @@ class Section
 
     public function addInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
     {
-        if (!$this->institutionalPartners->contains($institutionalPartner)) {
+        if (! $this->institutionalPartners->contains($institutionalPartner)) {
             $this->institutionalPartners->add($institutionalPartner);
             $institutionalPartner->addSection($this);
         }
@@ -674,7 +664,7 @@ class Section
 
     public function addStaticPage(StaticPage $staticPage): static
     {
-        if (!$this->staticPages->contains($staticPage)) {
+        if (! $this->staticPages->contains($staticPage)) {
             $this->staticPages->add($staticPage);
             $staticPage->setSection($this);
         }
@@ -684,11 +674,9 @@ class Section
 
     public function removeStaticPage(StaticPage $staticPage): static
     {
-        if ($this->staticPages->removeElement($staticPage)) {
-            // set the owning side to null (unless already changed)
-            if ($staticPage->getSection() === $this) {
-                $staticPage->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->staticPages->removeElement($staticPage) && $staticPage->getSection() === $this) {
+            $staticPage->setSection(null);
         }
 
         return $this;

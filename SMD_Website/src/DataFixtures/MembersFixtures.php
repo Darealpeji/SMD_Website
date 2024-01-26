@@ -20,7 +20,7 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
 {
     private UserPasswordHasherInterface $passwordHasher;
 
-    private $io;
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher, SymfonyStyle $io)
     {
@@ -99,7 +99,6 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
         $this->io->progressStart(90);
 
         foreach ($organizations as $organization) {
-
             for ($i = 0; $i < 10; $i++) {
                 $firstName = $faker->firstName;
                 $lastName = $faker->lastName;
@@ -162,7 +161,6 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
     private function addMemberToOrganization(Member $member, array $organizations)
     {
         foreach ($organizations as $organization) {
-
             $organizationReference = $this->getReference($organization);
 
             if ($organization === OrganizationsConstants::ASSOCIATION) {
@@ -176,7 +174,6 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
     private function addRoleToOrganization(Role $role, array $organizations)
     {
         foreach ($organizations as $organization) {
-
             $organizationReference = $this->getReference($organization);
 
             if ($organization === OrganizationsConstants::ASSOCIATION) {
@@ -193,7 +190,6 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
         $sectionRepository = $manager->getRepository(Section::class);
         $roleRepository = $manager->getRepository(Role::class);
 
-
         $this->io->newLine();
         $this->io->title("Nombre d'Utilisateurs pour l'");
         $this->dumpMembersByOrganizations($this->io, $associationRepository);
@@ -209,7 +205,6 @@ class MembersFixtures extends Fixture implements DependentFixtureInterface
         $organizations = $organizationRepository->findAll();
 
         foreach ($organizations as $organization) {
-
             $organizationName = $organization->getName();
             $membersCount = $organization->getMembers()->count();
 

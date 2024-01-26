@@ -90,7 +90,7 @@ class ArticleCategory
 
     public function addArticle(Article $article): static
     {
-        if (!$this->articles->contains($article)) {
+        if (! $this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setArticleCategory($this);
         }
@@ -100,11 +100,9 @@ class ArticleCategory
 
     public function removeArticle(Article $article): static
     {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getArticleCategory() === $this) {
-                $article->setArticleCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->articles->removeElement($article) && $article->getArticleCategory() === $this) {
+            $article->setArticleCategory(null);
         }
 
         return $this;

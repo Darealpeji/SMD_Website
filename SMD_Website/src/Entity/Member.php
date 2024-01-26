@@ -103,7 +103,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRolesAsArray(): array
     {
-        return $this->roles->map(fn (Role $role) => $role->getRole())->toArray();
+        return $this->roles->map(fn(Role $role) => $role->getRole())->toArray();
     }
 
     /**
@@ -117,7 +117,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addRoles(Role $roles): static
     {
-        if (!$this->roles->contains($roles)) {
+        if (! $this->roles->contains($roles)) {
             $this->roles->add($roles);
             $roles->addMember($this);
         }
@@ -206,7 +206,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addSections(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -242,7 +242,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addPost(Post $post): static
     {
-        if (!$this->posts->contains($post)) {
+        if (! $this->posts->contains($post)) {
             $this->posts->add($post);
             $post->addMember($this);
         }

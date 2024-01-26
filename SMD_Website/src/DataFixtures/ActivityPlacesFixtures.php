@@ -10,12 +10,13 @@ use App\DataFixtures\Constants\ActivityPlacesConstants;
 
 class ActivityPlacesFixtures extends Fixture
 {
-    private $io;
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(SymfonyStyle $io)
     {
         $this->io = $io;
     }
+
     public function load(ObjectManager $manager): void
     {
         foreach (ActivityPlacesConstants::ACTIVITY_PLACES as $reference => $activityPlaceData) {

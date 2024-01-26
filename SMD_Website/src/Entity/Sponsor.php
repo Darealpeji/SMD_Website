@@ -133,7 +133,7 @@ class Sponsor
 
     public function addSection(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
         }
 

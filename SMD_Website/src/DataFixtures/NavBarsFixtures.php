@@ -6,10 +6,8 @@ use App\Entity\Section;
 use App\Entity\NavBarMenu;
 use App\Entity\Association;
 use App\Entity\NavBarSubMenu;
-use App\Repository\SectionRepository;
 use Doctrine\Persistence\ObjectManager;
 use App\Repository\NavBarMenuRepository;
-use App\Repository\AssociationRepository;
 use App\Entity\NavBarSubMenuLoggedInMember;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Constants\NavBarConstants;
@@ -19,8 +17,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class NavBarsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $navBarMenuRepository;
-    private $io;
+    private \App\Repository\NavBarMenuRepository $navBarMenuRepository;
+
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(NavBarMenuRepository $navBarMenuRepository, SymfonyStyle $io)
     {
@@ -30,7 +29,6 @@ class NavBarsFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-
         $this->loadNavBarData($manager);
         $this->loadNavBarLoggedInData($manager);
         $this->dumpSummaryFixtures($manager);
@@ -41,7 +39,6 @@ class NavBarsFixtures extends Fixture implements DependentFixtureInterface
         $navBarData = NavBarConstants::NAVBAR;
 
         foreach ($navBarData as $organization => $organizationData) {
-
             foreach ($organizationData['navBarMenusData'] as $navBarMenuData) {
                 $navBarMenu = $this->createNavBarMenu($manager, $organization, $navBarMenuData);
 

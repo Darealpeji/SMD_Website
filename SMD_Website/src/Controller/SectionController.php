@@ -6,10 +6,8 @@ use App\Service\NavBarService;
 use App\Repository\ArticleRepository;
 use App\Repository\SectionRepository;
 use App\Repository\ActivityRepository;
-use App\Repository\NavBarMenuRepository;
 use App\Repository\StaticPageRepository;
 use App\Repository\TeamCategoryRepository;
-use App\Repository\HistoricalDateRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +20,9 @@ class SectionController extends AbstractController
         SectionRepository $sectionRepository,
         NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('section/home.html.twig', [
@@ -31,7 +31,6 @@ class SectionController extends AbstractController
         ]);
     }
 
-
     #[Route('/{slugSection}/actualites', name: 'news_section')]
     public function listArticleSection(
         string $slugSection,
@@ -39,7 +38,9 @@ class SectionController extends AbstractController
         NavBarService $navBarService,
         ArticleRepository $articleRepository
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
         $articles = $articleRepository->getArticlesBySection($section);
 
@@ -59,9 +60,14 @@ class SectionController extends AbstractController
         NavBarService $navBarService,
         ArticleRepository $articleRepository
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
-        $article = $articleRepository->findOneBy(['id' => $idArticle, 'slug' => $slugArticle]);
+        $article = $articleRepository->findOneBy([
+            'id' => $idArticle,
+            'slug' => $slugArticle,
+        ]);
 
         return $this->render('section/news/news_detail.html.twig', [
             'section' => $section,
@@ -76,7 +82,9 @@ class SectionController extends AbstractController
         SectionRepository $sectionRepository,
         NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('section/presentation/presentation.html.twig', [
@@ -91,7 +99,9 @@ class SectionController extends AbstractController
         SectionRepository $sectionRepository,
         NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('section/presentation/presentation.html.twig', [
@@ -104,9 +114,11 @@ class SectionController extends AbstractController
     public function historicalSection(
         string $slugSection,
         SectionRepository $sectionRepository,
-        NavBarService $navBarService,
+        NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithHistoricalDates(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithHistoricalDates([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('section/presentation/our_history.html.twig', [
@@ -119,9 +131,11 @@ class SectionController extends AbstractController
     public function organizationChartSection(
         string $slugSection,
         SectionRepository $sectionRepository,
-        NavBarService $navBarService,
+        NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithPostCategories(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithPostCategories([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('section/presentation/organization_chart.html.twig', [
@@ -134,9 +148,11 @@ class SectionController extends AbstractController
     public function ourPartnersSection(
         string $slugSection,
         SectionRepository $sectionRepository,
-        NavBarService $navBarService,
+        NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithPartners(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithPartners([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
 
         return $this->render('section/presentation/our_partners.html.twig', [
@@ -151,7 +167,9 @@ class SectionController extends AbstractController
         SectionRepository $sectionRepository,
         NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
         $teamCategories = $section->getTeamCategories();
 
@@ -170,9 +188,14 @@ class SectionController extends AbstractController
         NavBarService $navBarService,
         TeamCategoryRepository $teamCategoryRepository
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
-        $teamCategory = $teamCategoryRepository->findOneByWithTeamsData(['slug' => $slugNavBarSubMenu, 'section' => $section]);
+        $teamCategory = $teamCategoryRepository->findOneByWithTeamsData([
+            'slug' => $slugNavBarSubMenu,
+            'section' => $section,
+        ]);
 
         return $this->render('section/activities_teams/our_teams.html.twig', [
             'section' => $section,
@@ -188,9 +211,13 @@ class SectionController extends AbstractController
         NavBarService $navBarService,
         ActivityRepository $activityRepository
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
-        $activities = $activityRepository->findByWithClassesData(['section' => $section]);
+        $activities = $activityRepository->findByWithClassesData([
+            'section' => $section,
+        ]);
 
         return $this->render('section/activities_teams/our_activities.html.twig', [
             'section' => $section,
@@ -205,7 +232,9 @@ class SectionController extends AbstractController
         SectionRepository $sectionRepository,
         NavBarService $navBarService
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
         $activityPlaces = $section->getActivityPlaces();
 
@@ -224,9 +253,13 @@ class SectionController extends AbstractController
         NavBarService $navBarService,
         StaticPageRepository $staticPageRepository
     ): Response {
-        $section = $sectionRepository->findOneByWithNavBarMenus(['slug' => $slugSection]);
+        $section = $sectionRepository->findOneByWithNavBarMenus([
+            'slug' => $slugSection,
+        ]);
         $subMenusLoggedInMember = $navBarService->generateNavBarSubMenusLoggedInMember();
-        $staticPage = $staticPageRepository->findOneByWithContents(['slug' => $slugNavBarSubMenu]);
+        $staticPage = $staticPageRepository->findOneByWithContents([
+            'slug' => $slugNavBarSubMenu,
+        ]);
 
         return $this->render('section/static_pages/static_pages.html.twig', [
             'section' => $section,

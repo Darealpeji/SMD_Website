@@ -47,18 +47,16 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $entityInstance = $event->getEntityInstance();
 
-        if (!$this->supportsEntity($entityInstance)) {
+        if (! $this->supportsEntity($entityInstance)) {
             return;
         }
 
         $entityInstance->setCreatedAtValue();
 
         if (method_exists($entityInstance, 'getNavBarMenus')) {
-
             $navBarMenus = $entityInstance->getNavBarMenus();
 
             foreach ($navBarMenus as $navBarMenu) {
-
                 $navBarSubMenus = $navBarMenu->getNavBarSubMenus();
 
                 if ($navBarMenu->getCreatedAt() === null) {
@@ -66,7 +64,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 }
 
                 foreach ($navBarSubMenus as $navBarSubMenu) {
-
                     if ($navBarSubMenu->getCreatedAt() === null) {
                         $navBarSubMenu->setCreatedAtValue();
                     }
@@ -75,11 +72,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         if (method_exists($entityInstance, 'getTeams')) {
-
             $teams = $entityInstance->getTeams();
 
             foreach ($teams as $team) {
-
                 if ($team->getCreatedAt() === null) {
                     $team->setCreatedAtValue();
                 }
@@ -87,11 +82,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         if (method_exists($entityInstance, 'getActivityClasses')) {
-
             $activityClasses = $entityInstance->getActivityClasses();
 
             foreach ($activityClasses as $activityClass) {
-
                 if ($activityClass->getCreatedAt() === null) {
                     $activityClass->setCreatedAtValue();
                 }
@@ -103,7 +96,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $entityInstance = $event->getEntityInstance();
 
-        if (!$this->supportsEntity($entityInstance)) {
+        if (! $this->supportsEntity($entityInstance)) {
             return;
         }
 
@@ -114,11 +107,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         if (method_exists($entityInstance, 'getNavBarMenus')) {
-
             $navBarMenus = $entityInstance->getNavBarMenus();
 
             foreach ($navBarMenus as $navBarMenu) {
-
                 $section = $navBarMenu->getSection();
                 $association = $navBarMenu->getAssociation();
                 $navBarSubMenus = $navBarMenu->getNavBarSubMenus();
@@ -150,7 +141,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 }
 
                 foreach ($navBarSubMenus as $navBarSubMenu) {
-
                     if ($navBarSubMenu->getCreatedAt() === null) {
                         $navBarSubMenu->setCreatedAtValue();
 
@@ -185,11 +175,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         if (method_exists($entityInstance, 'getTeams')) {
-
             $teams = $entityInstance->getTeams();
 
             foreach ($teams as $team) {
-
                 $teamCategory = $team->getTeamCategory();
 
                 if ($team->getCreatedAt() === null) {
@@ -213,11 +201,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         if (method_exists($entityInstance, 'getActivityClasses')) {
-
             $activityClasses = $entityInstance->getActivityClasses();
 
             foreach ($activityClasses as $activityClass) {
-
                 $activity = $activityClass->getActivity();
 
                 if ($activityClass->getCreatedAt() === null) {

@@ -8,14 +8,14 @@ use App\Entity\Association;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use App\DataFixtures\ActivityPlacesFixtures;
 use App\DataFixtures\Constants\OrganizationsConstants;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $slugify;
-    private $io;
+    private \Cocur\Slugify\Slugify $slugify;
+
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(Slugify $slugify, SymfonyStyle $io)
     {

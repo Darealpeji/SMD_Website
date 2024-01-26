@@ -28,7 +28,9 @@ class NavBarSubMenuCrudController extends AbstractCrudController
             ->setPageTitle('new', "Création d'un %entity_label_singular%")
             ->setPageTitle('detail', "Détail du %entity_label_singular%")
             ->setPageTitle('edit', "Modification du %entity_label_singular%")
-            ->setDefaultSort(['name' => 'ASC'])
+            ->setDefaultSort([
+                'name' => 'ASC',
+            ])
             ->showEntityActionsInlined()
             ->hideNullValues()
             ->renderContentMaximized();

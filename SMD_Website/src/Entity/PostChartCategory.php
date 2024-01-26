@@ -137,7 +137,7 @@ class PostChartCategory
 
     public function addSection(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -161,7 +161,7 @@ class PostChartCategory
 
     public function addPost(Post $post): static
     {
-        if (!$this->posts->contains($post)) {
+        if (! $this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setPostChartCategory($this);
         }
@@ -171,11 +171,9 @@ class PostChartCategory
 
     public function removePost(Post $post): static
     {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getPostChartCategory() === $this) {
-                $post->setPostChartCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->posts->removeElement($post) && $post->getPostChartCategory() === $this) {
+            $post->setPostChartCategory(null);
         }
 
         return $this;

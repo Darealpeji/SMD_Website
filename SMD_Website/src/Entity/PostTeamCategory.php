@@ -121,7 +121,7 @@ class PostTeamCategory
 
     public function addSection(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -145,7 +145,7 @@ class PostTeamCategory
 
     public function addPost(Post $post): static
     {
-        if (!$this->posts->contains($post)) {
+        if (! $this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setPostTeamCategory($this);
         }
@@ -155,11 +155,9 @@ class PostTeamCategory
 
     public function removePost(Post $post): static
     {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getPostTeamCategory() === $this) {
-                $post->setPostTeamCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->posts->removeElement($post) && $post->getPostTeamCategory() === $this) {
+            $post->setPostTeamCategory(null);
         }
 
         return $this;

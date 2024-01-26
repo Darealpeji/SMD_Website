@@ -136,7 +136,7 @@ class TeamCategory
 
     public function addTeam(Team $team): static
     {
-        if (!$this->teams->contains($team)) {
+        if (! $this->teams->contains($team)) {
             $this->teams->add($team);
             $team->setTeamCategory($this);
         }
@@ -146,11 +146,9 @@ class TeamCategory
 
     public function removeTeam(Team $team): static
     {
-        if ($this->teams->removeElement($team)) {
-            // set the owning side to null (unless already changed)
-            if ($team->getTeamCategory() === $this) {
-                $team->setTeamCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->teams->removeElement($team) && $team->getTeamCategory() === $this) {
+            $team->setTeamCategory(null);
         }
 
         return $this;

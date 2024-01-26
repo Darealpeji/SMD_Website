@@ -2,13 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Post;
 use App\Entity\Team;
 use App\Entity\Section;
 use App\Entity\Training;
 use Cocur\Slugify\Slugify;
 use App\Entity\TeamCategory;
-use App\DataFixtures\PostsFixtures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,9 +16,11 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TeamsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $slugify;
-    private $entityManager;
-    private $io;
+    private \Cocur\Slugify\Slugify $slugify;
+
+    private \Doctrine\ORM\EntityManagerInterface $entityManager;
+
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(Slugify $slugify, EntityManagerInterface $entityManager, SymfonyStyle $io)
     {
@@ -44,7 +44,6 @@ class TeamsFixtures extends Fixture implements DependentFixtureInterface
     private function loadTeamsForSection(ObjectManager $manager, $section, array $sectionData): void
     {
         foreach ($sectionData['categories'] as $category => $categoryData) {
-
             $teamCategory = $this->createTeamCategory($manager, $section, $categoryData);
 
             foreach ($categoryData['teams'] as $team => $teamData) {
@@ -107,7 +106,9 @@ class TeamsFixtures extends Fixture implements DependentFixtureInterface
     {
         $trainingRepository = $this->entityManager->getRepository(Training::class);
 
-        $trainingSlot = $trainingRepository->findOneBy(['name' => $trainingName]);
+        $trainingSlot = $trainingRepository->findOneBy([
+            'name' => $trainingName,
+        ]);
 
         if ($trainingSlot !== null) {
             return $trainingSlot;
@@ -124,11 +125,9 @@ class TeamsFixtures extends Fixture implements DependentFixtureInterface
         $sections = $sectionRepository->findAll();
 
         foreach ($sections as $section) {
-
             $teamCategories = $teamCategorieRepository->getTeamCategoriesBySection($section);
 
-            if (!empty($teamCategories)) {
-
+            if (! empty($teamCategories)) {
                 $sectionName = $section->getName();
                 $this->io->title("$sectionName :");
 
@@ -138,7 +137,6 @@ class TeamsFixtures extends Fixture implements DependentFixtureInterface
                 $teamCategoriesCount = count($teamCategories);
 
                 foreach ($teamCategories as $teamCategory) {
-
                     $teamCategoryName = $teamCategory->getLabel();
                     $this->io->text("- Catégorie $teamCategoryName - Equipes :");
 
@@ -168,7 +166,7 @@ class TeamsFixtures extends Fixture implements DependentFixtureInterface
         return [
             OrganizationsFixtures::class,
             TimeSlotsFixtures::class,
-            PostsFixtures::class
+            PostsFixtures::class,
         ];
     }
 }

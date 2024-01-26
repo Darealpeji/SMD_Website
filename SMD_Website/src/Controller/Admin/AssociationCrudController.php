@@ -7,7 +7,6 @@ use App\Entity\Association;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use App\Controller\Admin\NavBarMenuCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -23,7 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AssociationCrudController extends AbstractCrudController
 {
-    private $security;
+    private \Symfony\Bundle\SecurityBundle\Security $security;
 
     public function __construct(Security $security)
     {
@@ -44,7 +43,9 @@ class AssociationCrudController extends AbstractCrudController
             ->setPageTitle('new', "Création d'une %entity_label_singular%")
             ->setPageTitle('detail', "Détail de l'%entity_label_singular%")
             ->setPageTitle('edit', "Modification de l'%entity_label_singular%")
-            ->setDefaultSort(['name' => 'ASC'])
+            ->setDefaultSort([
+                'name' => 'ASC',
+            ])
             ->showEntityActionsInlined()
             ->hideNullValues()
             ->renderContentMaximized();
@@ -61,49 +62,48 @@ class AssociationCrudController extends AbstractCrudController
             ->update(
                 Crud::PAGE_INDEX,
                 Action::NEW,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
-                fn (Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
-                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
             )
 
             // Page "EDIT"
             ->update(
                 Crud::PAGE_EDIT,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
 
             // Page "NEW"
             ->update(
                 Crud::PAGE_NEW,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_ADD_ANOTHER,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             );
     }
-
 
     public function configureFields(string $pageName): iterable
     {

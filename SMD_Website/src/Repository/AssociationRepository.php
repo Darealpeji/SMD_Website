@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\Query;
 use App\Entity\Association;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

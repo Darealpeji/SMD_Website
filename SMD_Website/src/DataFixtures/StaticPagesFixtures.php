@@ -8,7 +8,6 @@ use App\Entity\Association;
 use App\Entity\StaticPageContent;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
-use App\DataFixtures\OrganizationsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\DataFixtures\Constants\StaticPagesConstants;
@@ -16,8 +15,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class StaticPagesFixtures extends Fixture implements DependentFixtureInterface
 {
-    private $entityManager;
-    private $io;
+    private \Doctrine\ORM\EntityManagerInterface $entityManager;
+
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(EntityManagerInterface $entityManager, SymfonyStyle $io)
     {
@@ -28,9 +28,7 @@ class StaticPagesFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         foreach (StaticPagesConstants::ORGANIZATIONS as $organizations => $staticPagesData) {
-
             foreach ($staticPagesData as $staticPageData => $data) {
-
                 $staticPage = new StaticPage();
                 $staticPage
                     ->setName($data['name'])

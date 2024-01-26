@@ -31,7 +31,9 @@ class ArticleCrudController extends AbstractCrudController
             ->setPageTitle('new', "Création d'une %entity_label_singular%")
             ->setPageTitle('detail', "Détail de l'%entity_label_singular%")
             ->setPageTitle('edit', "Modification de l'%entity_label_singular%")
-            ->setDefaultSort(['id' => 'ASC'])
+            ->setDefaultSort([
+                'id' => 'ASC',
+            ])
             ->showEntityActionsInlined()
             ->hideNullValues()
             ->renderContentMaximized();
@@ -48,46 +50,46 @@ class ArticleCrudController extends AbstractCrudController
             ->update(
                 Crud::PAGE_INDEX,
                 Action::NEW,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
-                fn (Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
-                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
             )
 
             // Page "EDIT"
             ->update(
                 Crud::PAGE_EDIT,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
 
             // Page "NEW"
             ->update(
                 Crud::PAGE_NEW,
                 Action::INDEX,
-                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_ADD_ANOTHER,
-                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             );
     }
 
@@ -107,9 +109,10 @@ class ArticleCrudController extends AbstractCrudController
             TextEditorField::new('content', "Contenu de l'Article :")->setColumns(12)->hideOnIndex(),
 
             SlugField::new('slug', "Nom dans l'url :")->setTargetFieldName('title')->setColumns(6)->hideOnIndex()
-            ->setUnlockConfirmationMessage(
-                "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"),
-            
+                ->setUnlockConfirmationMessage(
+                    "Il est fortement recommandé d'utiliser les slugs automatiques, mais vous pouvez les personnaliser"
+                ),
+
             DateTimeField::new('createdAt', 'Date de Création :')->onlyOnIndex(),
             DateTimeField::new('updatedAt', 'Date de Mise à Jour :')->onlyOnIndex(),
         ];

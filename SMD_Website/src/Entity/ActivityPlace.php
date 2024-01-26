@@ -191,7 +191,7 @@ class ActivityPlace
 
     public function addSection(Section $section): static
     {
-        if (!$this->sections->contains($section)) {
+        if (! $this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -215,7 +215,7 @@ class ActivityPlace
 
     public function addTraining(Training $training): static
     {
-        if (!$this->trainings->contains($training)) {
+        if (! $this->trainings->contains($training)) {
             $this->trainings->add($training);
             $training->setActivityPlace($this);
         }
@@ -225,11 +225,9 @@ class ActivityPlace
 
     public function removeTraining(Training $training): static
     {
-        if ($this->trainings->removeElement($training)) {
-            // set the owning side to null (unless already changed)
-            if ($training->getActivityPlace() === $this) {
-                $training->setActivityPlace(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->trainings->removeElement($training) && $training->getActivityPlace() === $this) {
+            $training->setActivityPlace(null);
         }
 
         return $this;

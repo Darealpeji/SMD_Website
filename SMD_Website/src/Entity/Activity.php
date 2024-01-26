@@ -133,7 +133,7 @@ class Activity
 
     public function addActivityClass(ActivityClass $activityClass): static
     {
-        if (!$this->activityClasses->contains($activityClass)) {
+        if (! $this->activityClasses->contains($activityClass)) {
             $this->activityClasses->add($activityClass);
             $activityClass->setActivity($this);
         }
@@ -143,11 +143,9 @@ class Activity
 
     public function removeActivityClass(ActivityClass $activityClass): static
     {
-        if ($this->activityClasses->removeElement($activityClass)) {
-            // set the owning side to null (unless already changed)
-            if ($activityClass->getActivity() === $this) {
-                $activityClass->setActivity(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->activityClasses->removeElement($activityClass) && $activityClass->getActivity() === $this) {
+            $activityClass->setActivity(null);
         }
 
         return $this;

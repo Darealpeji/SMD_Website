@@ -26,10 +26,11 @@ class NewsFixtures extends Fixture implements DependentFixtureInterface
 
     private const ARTICLE_COUNT_RANGE = [15, 20];
 
-    private $slugify;
-    private $articleCategories;
+    private \Cocur\Slugify\Slugify $slugify;
 
-    private $io;
+    private \App\Repository\ArticleCategoryRepository $articleCategories;
+
+    private \Symfony\Component\Console\Style\SymfonyStyle $io;
 
     public function __construct(Slugify $slugify, ArticleCategoryRepository $articleCategories, SymfonyStyle $io)
     {
