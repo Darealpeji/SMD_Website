@@ -34,9 +34,15 @@ class PostChartCategory
     #[ORM\ManyToOne(inversedBy: 'postChartCategories')]
     private ?Association $association = null;
 
+    /**
+     * @var Collection<int, Section>
+     */
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'postChartCategories')]
     private Collection $sections;
 
+    /**
+     * @var Collection<int, Post>
+     */
     #[ORM\OneToMany(mappedBy: 'postChartCategory', targetEntity: Post::class)]
     private Collection $posts;
 
@@ -112,7 +118,7 @@ class PostChartCategory
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getAssociation(): ?Association
@@ -137,7 +143,7 @@ class PostChartCategory
 
     public function addSection(Section $section): static
     {
-        if (! $this->sections->contains($section)) {
+        if (!$this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -161,7 +167,7 @@ class PostChartCategory
 
     public function addPost(Post $post): static
     {
-        if (! $this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setPostChartCategory($this);
         }

@@ -34,6 +34,9 @@ class Activity
     #[ORM\JoinColumn(nullable: false)]
     private ?Section $section = null;
 
+    /**
+     * @var Collection<int, ActivityClass>
+     */
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityClass::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $activityClasses;
 
@@ -108,7 +111,7 @@ class Activity
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getSection(): ?Section
@@ -133,7 +136,7 @@ class Activity
 
     public function addActivityClass(ActivityClass $activityClass): static
     {
-        if (! $this->activityClasses->contains($activityClass)) {
+        if (!$this->activityClasses->contains($activityClass)) {
             $this->activityClasses->add($activityClass);
             $activityClass->setActivity($this);
         }

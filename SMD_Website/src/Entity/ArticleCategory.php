@@ -27,6 +27,9 @@ class ArticleCategory
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Article>
+     */
     #[ORM\OneToMany(mappedBy: 'articleCategory', targetEntity: Article::class)]
     private Collection $articles;
 
@@ -77,7 +80,7 @@ class ArticleCategory
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -90,7 +93,7 @@ class ArticleCategory
 
     public function addArticle(Article $article): static
     {
-        if (! $this->articles->contains($article)) {
+        if (!$this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setArticleCategory($this);
         }

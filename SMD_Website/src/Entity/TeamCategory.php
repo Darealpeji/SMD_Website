@@ -33,6 +33,9 @@ class TeamCategory
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Team>
+     */
     #[ORM\OneToMany(mappedBy: 'teamCategory', targetEntity: Team::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $teams;
 
@@ -123,7 +126,7 @@ class TeamCategory
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -136,7 +139,7 @@ class TeamCategory
 
     public function addTeam(Team $team): static
     {
-        if (! $this->teams->contains($team)) {
+        if (!$this->teams->contains($team)) {
             $this->teams->add($team);
             $team->setTeamCategory($this);
         }

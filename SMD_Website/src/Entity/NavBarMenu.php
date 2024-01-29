@@ -43,6 +43,9 @@ class NavBarMenu
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, NavBarSubMenu>
+     */
     #[ORM\OneToMany(mappedBy: 'navBarMenu', targetEntity: NavBarSubMenu::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $navBarSubMenus;
 
@@ -165,7 +168,7 @@ class NavBarMenu
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -178,7 +181,7 @@ class NavBarMenu
 
     public function addNavBarSubMenu(NavBarSubMenu $navBarSubMenu): static
     {
-        if (! $this->navBarSubMenus->contains($navBarSubMenu)) {
+        if (!$this->navBarSubMenus->contains($navBarSubMenu)) {
             $this->navBarSubMenus->add($navBarSubMenu);
             $navBarSubMenu->setNavBarMenu($this);
         }

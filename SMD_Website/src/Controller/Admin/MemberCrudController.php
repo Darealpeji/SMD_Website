@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Member;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Bundle\SecurityBundle\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -68,46 +69,46 @@ class MemberCrudController extends AbstractCrudController
             ->update(
                 Crud::PAGE_INDEX,
                 Action::NEW,
-                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
-                fn(Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-pen')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
-                fn(Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
             )
 
             // Page "EDIT"
             ->update(
                 Crud::PAGE_EDIT,
                 Action::INDEX,
-                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_RETURN,
-                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
 
             // Page "NEW"
             ->update(
                 Crud::PAGE_NEW,
                 Action::INDEX,
-                fn(Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-left-long')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_RETURN,
-                fn(Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-floppy-disk')->setLabel(false)
             )
             ->update(
                 Crud::PAGE_NEW,
                 Action::SAVE_AND_ADD_ANOTHER,
-                fn(Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
+                fn (Action $action) => $action->setIcon('fa fa-plus')->setLabel(false)
             );
     }
 
@@ -199,11 +200,11 @@ class MemberCrudController extends AbstractCrudController
         return $formBuilder->addEventListener(FormEvents::POST_SUBMIT, $this->hashPassword());
     }
 
-    private function hashPassword()
+    private function hashPassword(): callable
     {
         return function ($event) {
             $form = $event->getForm();
-            if (! $form->isValid()) {
+            if (!$form->isValid()) {
                 return;
             }
             $user = $this->getUser();

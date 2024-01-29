@@ -39,9 +39,15 @@ class Training
     #[ORM\ManyToOne(inversedBy: 'trainings')]
     private ?ActivityPlace $activityPlace = null;
 
+    /**
+     * @var Collection<int, Team>
+     */
     #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'trainings')]
     private Collection $teams;
 
+    /**
+     * @var Collection<int, ActivityClass>
+     */
     #[ORM\ManyToMany(targetEntity: ActivityClass::class, mappedBy: 'trainings')]
     private Collection $activityClasses;
 
@@ -104,9 +110,9 @@ class Training
         return $this;
     }
 
-    private function formatTimeToString(DateTimeInterface $dateTime): ?string
+    private function formatTimeToString(?DateTimeInterface $dateTime): ?string
     {
-        if (! $dateTime) {
+        if ($dateTime === null) {
             return null;
         }
 
@@ -148,7 +154,7 @@ class Training
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getActivityPlace(): ?ActivityPlace
@@ -173,7 +179,7 @@ class Training
 
     public function addTeam(Team $team): static
     {
-        if (! $this->teams->contains($team)) {
+        if (!$this->teams->contains($team)) {
             $this->teams->add($team);
             $team->addTraining($this);
         }
@@ -200,7 +206,7 @@ class Training
 
     public function addActivityClass(ActivityClass $activityClass): static
     {
-        if (! $this->activityClasses->contains($activityClass)) {
+        if (!$this->activityClasses->contains($activityClass)) {
             $this->activityClasses->add($activityClass);
             $activityClass->addTraining($this);
         }

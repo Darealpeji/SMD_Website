@@ -30,9 +30,15 @@ class PostTeamCategory
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Section>
+     */
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'postTeamCategories')]
     private Collection $sections;
 
+    /**
+     * @var Collection<int, Post>
+     */
     #[ORM\OneToMany(mappedBy: 'postTeamCategory', targetEntity: Post::class)]
     private Collection $posts;
 
@@ -108,7 +114,7 @@ class PostTeamCategory
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -121,7 +127,7 @@ class PostTeamCategory
 
     public function addSection(Section $section): static
     {
-        if (! $this->sections->contains($section)) {
+        if (!$this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -145,7 +151,7 @@ class PostTeamCategory
 
     public function addPost(Post $post): static
     {
-        if (! $this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setPostTeamCategory($this);
         }

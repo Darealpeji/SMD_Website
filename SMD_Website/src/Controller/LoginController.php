@@ -20,7 +20,7 @@ class LoginController extends AbstractController
         // Vérifiez si l'URI est déjà stockée dans la session
         $referer = $session->get('referer');
 
-        if (! $referer) {
+        if (!$referer) {
             // Si l'URI n'est pas déjà stockée, enregistrez l'URI de la page actuelle dans la session
             $referer = $request->headers->get('referer');
             $loginRoute = $this->generateUrl('app_login');
@@ -50,13 +50,13 @@ class LoginController extends AbstractController
     }
 
     #[Route('/url_after_login', name: 'url_after_login')]
-    public function loginAction(SessionInterface $session, Request $request)
+    public function loginAction(SessionInterface $session, Request $request): Response
     {
         // Récupérez l'URI stockée dans la session
         $referer = $session->get('referer');
 
         // Si l'URI n'est pas dans la session, essayez de récupérer _target_path de la requête
-        if (! $referer) {
+        if (!$referer) {
             $referer = $request->get('_target_path');
         }
 
@@ -84,7 +84,7 @@ class LoginController extends AbstractController
         // Réinitialisez le nombre de tentatives échouées après une connexion réussie
         $session->set('login_attempts', 0);
 
-        if ($referer) {
+        if ($referer && is_string($referer)) {
             // Redirigez l'utilisateur vers l'URI stockée ou _target_path
             return $this->redirect($referer);
         }

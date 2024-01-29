@@ -67,36 +67,69 @@ class Association
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Section>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Section::class, orphanRemoval: true)]
     private Collection $sections;
 
+    /**
+     * @var Collection<int, NavBarMenu>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: NavBarMenu::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private $navBarMenus;
 
+    /**
+     * @var Collection<int, Article>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $articles;
 
+    /**
+     * @var Collection<int, ActivityPlace>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: ActivityPlace::class)]
     private Collection $activityPlaces;
 
+    /**
+     * @var Collection<int, Member>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Member::class)]
     private Collection $members;
 
+    /**
+     * @var Collection<int, Role>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Role::class)]
     private Collection $roles;
 
+    /**
+     * @var Collection<int, HistoricalDate>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: HistoricalDate::class)]
     private Collection $historicalDates;
 
+    /**
+     * @var Collection<int, PostChartCategory>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: PostChartCategory::class)]
     private Collection $postChartCategories;
 
+    /**
+     * @var Collection<int, Sponsor>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: Sponsor::class)]
     private Collection $sponsors;
 
+    /**
+     * @var Collection<int, InstitutionalPartner>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: InstitutionalPartner::class)]
     private Collection $institutionalPartners;
 
+    /**
+     * @var Collection<int, StaticPage>
+     */
     #[ORM\OneToMany(mappedBy: 'association', targetEntity: StaticPage::class)]
     private Collection $staticPages;
 
@@ -261,7 +294,7 @@ class Association
 
     public function addSection(Section $section): static
     {
-        if (! $this->sections->contains($section)) {
+        if (!$this->sections->contains($section)) {
             $this->sections->add($section);
             $section->setAssociation($this);
         }
@@ -289,7 +322,7 @@ class Association
 
     public function addNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if (! $this->navBarMenus->contains($navBarMenu)) {
+        if (!$this->navBarMenus->contains($navBarMenu)) {
             $this->navBarMenus->add($navBarMenu);
             $navBarMenu->setAssociation($this);
         }
@@ -309,7 +342,7 @@ class Association
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -322,7 +355,7 @@ class Association
 
     public function addArticle(Article $article): static
     {
-        if (! $this->articles->contains($article)) {
+        if (!$this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setAssociation($this);
         }
@@ -350,7 +383,7 @@ class Association
 
     public function addActivityPlace(ActivityPlace $activityPlace): static
     {
-        if (! $this->activityPlaces->contains($activityPlace)) {
+        if (!$this->activityPlaces->contains($activityPlace)) {
             $this->activityPlaces->add($activityPlace);
             $activityPlace->setAssociation($this);
         }
@@ -378,7 +411,7 @@ class Association
 
     public function addMember(Member $member): static
     {
-        if (! $this->members->contains($member)) {
+        if (!$this->members->contains($member)) {
             $this->members->add($member);
             $member->setAssociation($this);
         }
@@ -406,7 +439,7 @@ class Association
 
     public function addRole(Role $role): static
     {
-        if (! $this->roles->contains($role)) {
+        if (!$this->roles->contains($role)) {
             $this->roles->add($role);
             $role->setAssociation($this);
         }
@@ -434,7 +467,7 @@ class Association
 
     public function addHistoricalDate(HistoricalDate $historicalDate): static
     {
-        if (! $this->historicalDates->contains($historicalDate)) {
+        if (!$this->historicalDates->contains($historicalDate)) {
             $this->historicalDates->add($historicalDate);
             $historicalDate->setAssociation($this);
         }
@@ -462,7 +495,7 @@ class Association
 
     public function addPostChartCategory(PostChartCategory $postChartCategory): static
     {
-        if (! $this->postChartCategories->contains($postChartCategory)) {
+        if (!$this->postChartCategories->contains($postChartCategory)) {
             $this->postChartCategories->add($postChartCategory);
             $postChartCategory->setAssociation($this);
         }
@@ -490,7 +523,7 @@ class Association
 
     public function addSponsor(Sponsor $sponsor): static
     {
-        if (! $this->sponsors->contains($sponsor)) {
+        if (!$this->sponsors->contains($sponsor)) {
             $this->sponsors->add($sponsor);
             $sponsor->setAssociation($this);
         }
@@ -518,7 +551,7 @@ class Association
 
     public function addInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
     {
-        if (! $this->institutionalPartners->contains($institutionalPartner)) {
+        if (!$this->institutionalPartners->contains($institutionalPartner)) {
             $this->institutionalPartners->add($institutionalPartner);
             $institutionalPartner->setAssociation($this);
         }
@@ -546,7 +579,7 @@ class Association
 
     public function addStaticPage(StaticPage $staticPage): static
     {
-        if (! $this->staticPages->contains($staticPage)) {
+        if (!$this->staticPages->contains($staticPage)) {
             $this->staticPages->add($staticPage);
             $staticPage->setAssociation($this);
         }

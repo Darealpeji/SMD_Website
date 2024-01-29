@@ -80,42 +80,81 @@ class Section
     #[ORM\JoinColumn(nullable: false)]
     private ?Association $association = null;
 
+    /**
+     * @var Collection<int, NavBarMenu>
+     */
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: NavBarMenu::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private $navBarMenus;
+    private Collection $navBarMenus;
 
+    /**
+     * @var Collection<int, Article>
+     */
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Article::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $articles;
 
+    /**
+     * @var Collection<int, ActivityPlace>
+     */
     #[ORM\ManyToMany(targetEntity: ActivityPlace::class, mappedBy: 'sections')]
     private Collection $activityPlaces;
 
+    /**
+     * @var Collection<int, TeamCategory>
+     */
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: TeamCategory::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $teamCategories;
 
+    /**
+     * @var Collection<int, Member>
+     */
     #[ORM\ManyToMany(targetEntity: Member::class, mappedBy: 'sections')]
     private Collection $members;
 
+    /**
+     * @var Collection<int, Activity>
+     */
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Activity::class, orphanRemoval: true)]
     private Collection $activities;
 
+    /**
+     * @var Collection<int, Role>
+     */
     #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'sections')]
     private Collection $roles;
 
+    /**
+     * @var Collection<int, HistoricalDate>
+     */
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: HistoricalDate::class)]
     private Collection $historicalDates;
 
+    /**
+     * @var Collection<int, PostChartCategory>
+     */
     #[ORM\ManyToMany(targetEntity: PostChartCategory::class, mappedBy: 'sections')]
     private Collection $postChartCategories;
 
+    /**
+     * @var Collection<int, PostTeamCategory>
+     */
     #[ORM\ManyToMany(targetEntity: PostTeamCategory::class, mappedBy: 'sections')]
     private Collection $postTeamCategories;
 
+    /**
+     * @var Collection<int, Sponsor>
+     */
     #[ORM\ManyToMany(targetEntity: Sponsor::class, mappedBy: 'sections')]
     private Collection $sponsors;
 
+    /**
+     * @var Collection<int, InstitutionalPartner>
+     */
     #[ORM\ManyToMany(targetEntity: InstitutionalPartner::class, mappedBy: 'sections')]
     private Collection $institutionalPartners;
 
+    /**
+     * @var Collection<int, StaticPage>
+     */
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: StaticPage::class)]
     private Collection $staticPages;
 
@@ -310,7 +349,7 @@ class Section
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getAssociation(): ?Association
@@ -335,7 +374,7 @@ class Section
 
     public function addNavBarMenu(NavBarMenu $navBarMenu): static
     {
-        if (! $this->navBarMenus->contains($navBarMenu)) {
+        if (!$this->navBarMenus->contains($navBarMenu)) {
             $this->navBarMenus->add($navBarMenu);
             $navBarMenu->setSection($this);
         }
@@ -363,7 +402,7 @@ class Section
 
     public function addArticle(Article $article): static
     {
-        if (! $this->articles->contains($article)) {
+        if (!$this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setSection($this);
         }
@@ -391,7 +430,7 @@ class Section
 
     public function addActivityPlace(ActivityPlace $activityPlace): static
     {
-        if (! $this->activityPlaces->contains($activityPlace)) {
+        if (!$this->activityPlaces->contains($activityPlace)) {
             $this->activityPlaces->add($activityPlace);
             $activityPlace->addSection($this);
         }
@@ -418,7 +457,7 @@ class Section
 
     public function addTeamCategory(TeamCategory $teamCategory): static
     {
-        if (! $this->teamCategories->contains($teamCategory)) {
+        if (!$this->teamCategories->contains($teamCategory)) {
             $this->teamCategories->add($teamCategory);
             $teamCategory->setSection($this);
         }
@@ -446,7 +485,7 @@ class Section
 
     public function addMember(Member $member): static
     {
-        if (! $this->members->contains($member)) {
+        if (!$this->members->contains($member)) {
             $this->members->add($member);
             $member->addSections($this);
         }
@@ -473,7 +512,7 @@ class Section
 
     public function addActivity(Activity $activity): static
     {
-        if (! $this->activities->contains($activity)) {
+        if (!$this->activities->contains($activity)) {
             $this->activities->add($activity);
             $activity->setSection($this);
         }
@@ -501,7 +540,7 @@ class Section
 
     public function addRole(Role $role): static
     {
-        if (! $this->roles->contains($role)) {
+        if (!$this->roles->contains($role)) {
             $this->roles->add($role);
             $role->addSections($this);
         }
@@ -528,7 +567,7 @@ class Section
 
     public function addHistoricalDate(HistoricalDate $historicalDate): static
     {
-        if (! $this->historicalDates->contains($historicalDate)) {
+        if (!$this->historicalDates->contains($historicalDate)) {
             $this->historicalDates->add($historicalDate);
             $historicalDate->setSection($this);
         }
@@ -556,7 +595,7 @@ class Section
 
     public function addPostChartCategory(PostChartCategory $postChartCategory): static
     {
-        if (! $this->postChartCategories->contains($postChartCategory)) {
+        if (!$this->postChartCategories->contains($postChartCategory)) {
             $this->postChartCategories->add($postChartCategory);
             $postChartCategory->addSection($this);
         }
@@ -583,7 +622,7 @@ class Section
 
     public function addPostTeamCategory(PostTeamCategory $postTeamCategory): static
     {
-        if (! $this->postTeamCategories->contains($postTeamCategory)) {
+        if (!$this->postTeamCategories->contains($postTeamCategory)) {
             $this->postTeamCategories->add($postTeamCategory);
             $postTeamCategory->addSection($this);
         }
@@ -610,7 +649,7 @@ class Section
 
     public function addSponsor(Sponsor $sponsor): static
     {
-        if (! $this->sponsors->contains($sponsor)) {
+        if (!$this->sponsors->contains($sponsor)) {
             $this->sponsors->add($sponsor);
             $sponsor->addSection($this);
         }
@@ -637,7 +676,7 @@ class Section
 
     public function addInstitutionalPartner(InstitutionalPartner $institutionalPartner): static
     {
-        if (! $this->institutionalPartners->contains($institutionalPartner)) {
+        if (!$this->institutionalPartners->contains($institutionalPartner)) {
             $this->institutionalPartners->add($institutionalPartner);
             $institutionalPartner->addSection($this);
         }
@@ -664,7 +703,7 @@ class Section
 
     public function addStaticPage(StaticPage $staticPage): static
     {
-        if (! $this->staticPages->contains($staticPage)) {
+        if (!$this->staticPages->contains($staticPage)) {
             $this->staticPages->add($staticPage);
             $staticPage->setSection($this);
         }

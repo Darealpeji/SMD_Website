@@ -27,6 +27,9 @@ class StaticPage
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, StaticPageContent>
+     */
     #[ORM\OneToMany(mappedBy: 'staticPage', targetEntity: StaticPageContent::class, orphanRemoval: true)]
     private Collection $staticPageContents;
 
@@ -95,7 +98,7 @@ class StaticPage
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -108,7 +111,7 @@ class StaticPage
 
     public function addContentStaticPage(StaticPageContent $staticPageContent): static
     {
-        if (! $this->staticPageContents->contains($staticPageContent)) {
+        if (!$this->staticPageContents->contains($staticPageContent)) {
             $this->staticPageContents->add($staticPageContent);
             $staticPageContent->setStaticPage($this);
         }

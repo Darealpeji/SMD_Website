@@ -13,9 +13,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
 {
-    private \Cocur\Slugify\Slugify $slugify;
+    private Slugify $slugify;
 
-    private \Symfony\Component\Console\Style\SymfonyStyle $io;
+    private SymfonyStyle $io;
 
     public function __construct(Slugify $slugify, SymfonyStyle $io)
     {
@@ -33,18 +33,25 @@ class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
     private function loadAssociation(ObjectManager $manager): void
     {
         $organizationData = OrganizationsConstants::getOrganizationData(OrganizationsConstants::ASSOCIATION);
-        $association = $this->createAssociation($organizationData);
 
-        $activityPlacesForAssociation = OrganizationsConstants::getActivityPlacesForAssociation();
+        $association = null;
 
-        foreach ($activityPlacesForAssociation as $activityPlaceReference) {
-            $association->addActivityPlace($this->getReference($activityPlaceReference));
+        try {
+            $association = $this->createAssociation($organizationData);
+
+            $activityPlacesForAssociation = OrganizationsConstants::getActivityPlacesForAssociation();
+
+            foreach ($activityPlacesForAssociation as $activityPlaceReference) {
+                $association->addActivityPlace($this->getReference($activityPlaceReference));
+            }
+
+            $manager->persist($association);
+            $manager->flush();
+
+            $this->setReference(OrganizationsConstants::ASSOCIATION, $association);
+        } catch (\InvalidArgumentException $e) {
+            echo 'Erreur dans la création de l\'Association: ' . $e->getMessage();
         }
-
-        $manager->persist($association);
-        $manager->flush();
-
-        $this->setReference(OrganizationsConstants::ASSOCIATION, $association);
     }
 
     private function loadSections(ObjectManager $manager): void
@@ -66,8 +73,12 @@ class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    private function createAssociation(array $data): Association
+    private function createAssociation(?array $data): Association
     {
+        if ($data === null) {
+            throw new \InvalidArgumentException('Les données de l\'Association ne peuvent pas être nulles.');
+        }
+
         $association = new Association();
         $association
             ->setName($data['name'])
@@ -84,8 +95,12 @@ class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
         return $association;
     }
 
-    private function createSection(array $data): Section
+    private function createSection(?array $data): Section
     {
+        if ($data === null) {
+            throw new \InvalidArgumentException('Les données de la Section ne peuvent pas être nulles.');
+        }
+
         $section = new Section();
         $section
             ->setName($data['name'])
@@ -106,7 +121,7 @@ class OrganizationsFixtures extends Fixture implements DependentFixtureInterface
         return $section;
     }
 
-    private function dumpSummaryFixtures(ObjectManager $manager)
+    private function dumpSummaryFixtures(ObjectManager $manager): void
     {
         $associationRepository = $manager->getRepository(Association::class);
         $association = $associationRepository->findAll();

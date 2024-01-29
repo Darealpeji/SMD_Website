@@ -52,9 +52,15 @@ class ActivityPlace
     #[ORM\ManyToOne(inversedBy: 'activityPlaces')]
     private ?Association $association = null;
 
+    /**
+     * @var Collection<int, Section>
+     */
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'activityPlaces')]
     private Collection $sections;
 
+    /**
+     * @var Collection<int, Training>
+     */
     #[ORM\OneToMany(mappedBy: 'activityPlace', targetEntity: Training::class)]
     private Collection $trainings;
 
@@ -166,7 +172,7 @@ class ActivityPlace
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getAssociation(): ?Association
@@ -191,7 +197,7 @@ class ActivityPlace
 
     public function addSection(Section $section): static
     {
-        if (! $this->sections->contains($section)) {
+        if (!$this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -215,7 +221,7 @@ class ActivityPlace
 
     public function addTraining(Training $training): static
     {
-        if (! $this->trainings->contains($training)) {
+        if (!$this->trainings->contains($training)) {
             $this->trainings->add($training);
             $training->setActivityPlace($this);
         }

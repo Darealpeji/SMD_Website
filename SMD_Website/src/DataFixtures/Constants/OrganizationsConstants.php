@@ -205,23 +205,36 @@ class OrganizationsConstants
         ],
     ];
 
-    public static function getAllOrganizations()
+    /**
+     * @return array<string>
+     */
+    public static function getAllOrganizations(): array
     {
         return array_keys(self::ORGANIZATIONS);
     }
 
-    public static function getSections()
+    /**
+     * @return array<string>
+     */
+    public static function getSections(): array
     {
         $organizations = array_keys(self::ORGANIZATIONS);
         return array_diff($organizations, [self::ASSOCIATION]);
     }
 
-    public static function getOrganizationData(string $organization)
+    /**
+     * @param string $organization
+     * @return array<string, mixed>|null
+     */
+    public static function getOrganizationData(string $organization): ?array
     {
         return self::ORGANIZATIONS[$organization] ?? null;
     }
 
-    public static function getActivityPlacesForAssociation()
+    /**
+     * @return string[]
+     */
+    public static function getActivityPlacesForAssociation(): array
     {
         return [
             ActivityPlacesConstants::STADE_RENE_CHEVALIER,
@@ -231,7 +244,7 @@ class OrganizationsConstants
         ];
     }
 
-    public static function getSectionConstantByName($sectionName)
+    public static function getSectionConstantByName(string $sectionName): ?string
     {
         switch ($sectionName) {
             case 'basket':
@@ -257,7 +270,10 @@ class OrganizationsConstants
         }
     }
 
-    public static function getActivityPlacesForSection($sectionName)
+    /**
+     * @return string[]
+     */
+    public static function getActivityPlacesForSection(string $sectionName): array
     {
         switch ($sectionName) {
             case "basket":

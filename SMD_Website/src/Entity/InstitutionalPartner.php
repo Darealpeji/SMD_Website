@@ -34,6 +34,9 @@ class InstitutionalPartner
     #[ORM\ManyToOne(inversedBy: 'institutionalPartners')]
     private ?Association $association = null;
 
+    /**
+     * @var Collection<int, Section>
+     */
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'institutionalPartners')]
     private Collection $sections;
 
@@ -108,7 +111,7 @@ class InstitutionalPartner
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getAssociation(): ?Association
@@ -133,7 +136,7 @@ class InstitutionalPartner
 
     public function addSection(Section $section): static
     {
-        if (! $this->sections->contains($section)) {
+        if (!$this->sections->contains($section)) {
             $this->sections->add($section);
         }
 

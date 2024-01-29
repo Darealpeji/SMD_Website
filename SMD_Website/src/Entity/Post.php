@@ -40,12 +40,21 @@ class Post
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Member>
+     */
     #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'posts')]
     private Collection $members;
 
+    /**
+     * @var Collection<int, Team>
+     */
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'posts')]
     private Collection $teams;
 
+    /**
+     * @var Collection<int, ActivityClass>
+     */
     #[ORM\ManyToMany(targetEntity: ActivityClass::class, inversedBy: 'posts')]
     private Collection $activityClasses;
 
@@ -164,7 +173,7 @@ class Post
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     /**
@@ -177,7 +186,7 @@ class Post
 
     public function addMember(Member $member): static
     {
-        if (! $this->members->contains($member)) {
+        if (!$this->members->contains($member)) {
             $this->members->add($member);
         }
 
@@ -201,7 +210,7 @@ class Post
 
     public function addTeam(Team $team): static
     {
-        if (! $this->teams->contains($team)) {
+        if (!$this->teams->contains($team)) {
             $this->teams->add($team);
         }
 
@@ -225,7 +234,7 @@ class Post
 
     public function addActivityClass(ActivityClass $activityClass): static
     {
-        if (! $this->activityClasses->contains($activityClass)) {
+        if (!$this->activityClasses->contains($activityClass)) {
             $this->activityClasses->add($activityClass);
         }
 

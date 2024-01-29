@@ -31,9 +31,15 @@ class Team
     #[ORM\JoinColumn(nullable: false)]
     private ?TeamCategory $teamCategory = null;
 
+    /**
+     * @var Collection<int, Training>
+     */
     #[ORM\ManyToMany(targetEntity: Training::class, inversedBy: 'teams')]
     private Collection $trainings;
 
+    /**
+     * @var Collection<int, Post>
+     */
     #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'teams')]
     private Collection $posts;
 
@@ -97,7 +103,7 @@ class Team
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getTeamCategory(): ?TeamCategory
@@ -122,7 +128,7 @@ class Team
 
     public function addTraining(Training $training): static
     {
-        if (! $this->trainings->contains($training)) {
+        if (!$this->trainings->contains($training)) {
             $this->trainings->add($training);
         }
 
@@ -146,7 +152,7 @@ class Team
 
     public function addPost(Post $post): static
     {
-        if (! $this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->addTeam($this);
         }

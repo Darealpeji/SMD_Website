@@ -125,6 +125,6 @@ class NavBarSubMenuLoggedInMember
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 }

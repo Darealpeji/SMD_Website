@@ -47,7 +47,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $entityInstance = $event->getEntityInstance();
 
-        if (! $this->supportsEntity($entityInstance)) {
+        if (!$this->supportsEntity($entityInstance)) {
             return;
         }
 
@@ -96,7 +96,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
         $entityInstance = $event->getEntityInstance();
 
-        if (! $this->supportsEntity($entityInstance)) {
+        if (!$this->supportsEntity($entityInstance)) {
             return;
         }
 

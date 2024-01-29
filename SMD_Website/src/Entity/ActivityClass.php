@@ -28,9 +28,16 @@ class ActivityClass
     #[ORM\JoinColumn(nullable: false)]
     private ?Activity $activity = null;
 
+    /**
+     * @var Collection<int, Training>
+     */
     #[ORM\ManyToMany(targetEntity: Training::class, inversedBy: 'activityClasses')]
     private Collection $trainings;
 
+    /**
+     * @var Collection<int, Post>
+     * @ORM\ManyToMany(targetEntity=Post::class, mappedBy="activityClasses")
+     */
     #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'activityClasses')]
     private Collection $posts;
 
@@ -82,7 +89,7 @@ class ActivityClass
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getActivity(): ?Activity
@@ -107,7 +114,7 @@ class ActivityClass
 
     public function addTraining(Training $training): static
     {
-        if (! $this->trainings->contains($training)) {
+        if (!$this->trainings->contains($training)) {
             $this->trainings->add($training);
         }
 
@@ -131,7 +138,7 @@ class ActivityClass
 
     public function addPost(Post $post): static
     {
-        if (! $this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->addActivityClass($this);
         }

@@ -115,7 +115,7 @@ class Article
 
     public function __toString()
     {
-        return $this->title;
+        return $this->name ?? '';
     }
 
     public function getAssociation(): ?Association

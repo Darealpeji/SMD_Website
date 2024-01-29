@@ -28,12 +28,18 @@ class Role extends SymfonyRole
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @var Collection<int, Section>
+     */
     #[ORM\ManyToMany(targetEntity: Section::class, inversedBy: 'roles')]
     private Collection $sections;
 
     #[ORM\ManyToOne(inversedBy: 'roles')]
     private ?Association $association = null;
 
+    /**
+     * @var Collection<int, Member>
+     */
     #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'rolesMember')]
     private Collection $members;
 
@@ -45,7 +51,7 @@ class Role extends SymfonyRole
 
     public function getRole(): string
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getId(): ?int
@@ -102,7 +108,7 @@ class Role extends SymfonyRole
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getAssociation(): ?Association
@@ -127,7 +133,7 @@ class Role extends SymfonyRole
 
     public function addSections(Section $section): static
     {
-        if (! $this->sections->contains($section)) {
+        if (!$this->sections->contains($section)) {
             $this->sections->add($section);
         }
 
@@ -151,7 +157,7 @@ class Role extends SymfonyRole
 
     public function addMember(Member $member): static
     {
-        if (! $this->members->contains($member)) {
+        if (!$this->members->contains($member)) {
             $this->members->add($member);
         }
 
